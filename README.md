@@ -1,6 +1,8 @@
 
 # The Climb Within
 
+<img src="/img/logo.jpg" width="60%">
+
 Step into the **The Climb Within**, a _roguelike card game_ where every decision shapes your journey through the ever-shifting towers of emotions.
 
 Ascend floors filled with challenges inspired by primal feelings — *fear, joy, anger, and more* — each introducing unique cards and mechanics. Craft a deck that balances the ephemeral and the enduring as you strive to overcome emotional trials, unlock hidden strengths, and achieve **personal growth**.
