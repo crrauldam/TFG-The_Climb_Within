@@ -32,7 +32,7 @@ The primary color pallette for this game is the following
 
 
 ## Roadmap
-The roadmap is located on our [Trello Board](https://www.trello.com)
+The roadmap is located on our [Trello Board]([https://www.trello.com](https://trello.com/b/TysR7Hcf/the-climb-within-tfg))
 
 
 
