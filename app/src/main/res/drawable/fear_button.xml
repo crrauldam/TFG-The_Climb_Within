@@ -1,0 +1,9 @@
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <stroke
+    android:width="4dp"
+        android:color="@color/gunmetal"
+        />
+    <solid
+    android:color="@color/fear"
+        />
+</shape>
