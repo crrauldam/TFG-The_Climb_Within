@@ -1,0 +1,50 @@
+{
+    "basic": {
+        "icon": "icons/basic.png",
+        "color": "#D9D9D9",
+        "coin": "icons/coins/basic.png",
+        "cards": ["1000", "1001", "1002", "1003", "1004", "1005", "1006", "1007", "1008", "1009"]
+    },
+    "anger": {
+        "icon": "icons/anger.png",
+        "color": "#FFB09C",
+        "coin": "icons/coins/anger.png",
+        "cards": ["2000", "2001", "2002", "2003", "2004"]
+    },
+    "calm": {
+        "icon": "icons/calm.png",
+        "color": "#E0FBFC",
+        "coin": "icons/coins/calm.png",
+        "cards": ["3000", "3001", "3002", "3003", "3004"]
+    },
+    "disgust": {
+        "icon": "icons/disgust.png",
+        "color": "#C8E1CC",
+        "coin": "icons/coins/disgust.png",
+        "cards": ["4000", "4001", "4002", "4003", "4004"]
+    },
+    "fear": {
+        "icon": "icons/fear.png",
+        "color": "#F3CCFF",
+        "coin": "icons/coins/fear.png",
+        "cards": ["5000", "5001", "5002", "5003", "5004"]
+    },
+    "happiness": {
+        "icon": "icons/happiness.png",
+        "color": "#FFFDB7",
+        "coin": "icons/coins/happiness.png",
+        "cards": ["6000", "6001", "6002", "6003", "6004"]
+    },
+    "sadness": {
+        "icon": "icons/sadness.png",
+        "color": "#C8D9ED",
+        "coin": "icons/coins/sadness.png",
+        "cards": ["7000", "7001", "7002", "7003", "7004"]
+    },
+    "surprise": {
+        "icon": "icons/surprise.png",
+        "color": "#FFFFFF",
+        "coin": "icons/coins/surprise.png",
+        "cards": ["8000", "8001", "8002", "8003", "8004"]
+    }
+}

@@ -1,0 +1,24 @@
+{
+    "player": {
+        "name": "",
+        "maxhp": 0,
+        "hp": 0,
+        "unlocked_cards": [],
+        "tower_coins": 0,
+        "emotion_coins": {
+            "anger": 0,
+            "disgust": 0,
+            "fear": 0,
+            "happiness": 0,
+            "sadness": 0,
+            "surprise": 0
+        },
+        "deck": [],
+        "stats": {
+            "played_time": 0,
+            "cards_played": 0,
+            "damage_dealt": 0,
+            "damage_received": 0
+        }
+    }
+}
