@@ -1,0 +1,117 @@
+{
+    "towers": [
+        {
+            "id": 0,
+            "name": "tower0.name",
+            "img": "img/towers/happiness.png",
+            "enemies": {
+                "floor1": [],
+                "floor2": [],
+                "floor3": []
+            },
+            "bosses": {
+                "floor1": "",
+                "floor2": "",
+                "floor3": ""
+            },
+            "multiplier": 1.0,
+            "dialogues": "happiness"
+        },
+        {
+            "id": 1,
+            "name": "tower1.name",
+            "img": "img/towers/surprise.png",
+            "enemies": {
+                "floor1": [],
+                "floor2": [],
+                "floor3": []
+            },
+            "bosses": {
+                "floor1": "",
+                "floor2": "",
+                "floor3": ""
+            },
+            "multiplier": 1.0
+        },
+        {
+            "id": 2,
+            "name": "tower2.name",
+            "img": "img/towers/disgust.png",
+            "enemies": {
+                "floor1": [],
+                "floor2": [],
+                "floor3": []
+            },
+            "bosses": {
+                "floor1": "",
+                "floor2": "",
+                "floor3": ""
+            },
+            "multiplier": 1.0
+        },
+        {
+            "id": 3,
+            "name": "tower3.name",
+            "img": "img/towers/anger.png",
+            "enemies": {
+                "floor1": [],
+                "floor2": [],
+                "floor3": []
+            },
+            "bosses": {
+                "floor1": "",
+                "floor2": "",
+                "floor3": ""
+            },
+            "multiplier": 1.0
+        },
+        {
+            "id": 4,
+            "name": "tower4.name",
+            "img": "img/towers/sadness.png",
+            "enemies": {
+                "floor1": [],
+                "floor2": [],
+                "floor3": []
+            },
+            "bosses": {
+                "floor1": "",
+                "floor2": "",
+                "floor3": ""
+            },
+            "multiplier": 1.0
+        },
+        {
+            "id": 5,
+            "name": "tower5.name",
+            "img": "img/towers/fear.png",
+            "enemies": {
+                "floor1": [],
+                "floor2": [],
+                "floor3": []
+            },
+            "bosses": {
+                "floor1": "",
+                "floor2": "",
+                "floor3": ""
+            },
+            "multiplier": 1.0
+        },
+        {
+            "id": 6,
+            "name": "tower6.name",
+            "img": "img/towers/calm.png",
+            "enemies": {
+                "floor1": [],
+                "floor2": [],
+                "floor3": []
+            },
+            "bosses": {
+                "floor1": "",
+                "floor2": "",
+                "floor3": ""
+            },
+            "multiplier": 1.0
+        }
+    ]
+}

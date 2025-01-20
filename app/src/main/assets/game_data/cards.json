@@ -1,0 +1,504 @@
+{
+    "1000": {
+        "id": 1000,
+        "name": "1000.name",
+        "description": "1000.description",
+        "effect": 0,
+        "type": "",
+        "icon": "1000.icon",
+        "unlockable": true,
+        "unlock_cost": 0,
+        "in_game_cost": 0 
+    },
+    "1001": {
+        "id": 1001,
+        "name": "1001.name",
+        "description": "1001.description",
+        "effect": 0,
+        "type": "",
+        "icon": "1001.icon",
+        "unlockable": true,
+        "unlock_cost": 0,
+        "in_game_cost": 0 
+    },
+    "1002": {
+        "id": 1002,
+        "name": "1002.name",
+        "description": "1002.description",
+        "effect": 0,
+        "type": "",
+        "icon": "1002.icon",
+        "unlockable": true,
+        "unlock_cost": 0,
+        "in_game_cost": 0 
+    },
+    "1003": {
+        "id": 1003,
+        "name": "1003.name",
+        "description": "1003.description",
+        "effect": 0,
+        "type": "",
+        "icon": "1003.icon",
+        "unlockable": true,
+        "unlock_cost": 0,
+        "in_game_cost": 0 
+    },
+    "1004": {
+        "id": 1004,
+        "name": "1004.name",
+        "description": "1004.description",
+        "effect": 0,
+        "type": "",
+        "icon": "1004.icon",
+        "unlockable": true,
+        "unlock_cost": 0,
+        "in_game_cost": 0 
+    },
+    "1005": {
+        "id": 1005,
+        "name": "1005.name",
+        "description": "1005.description",
+        "effect": 0,
+        "type": "",
+        "icon": "1005.icon",
+        "unlockable": true,
+        "unlock_cost": 0,
+        "in_game_cost": 0 
+    },
+    "1006": {
+        "id": 1006,
+        "name": "1006.name",
+        "description": "1006.description",
+        "effect": 0,
+        "type": "",
+        "icon": "1006.icon",
+        "unlockable": true,
+        "unlock_cost": 0,
+        "in_game_cost": 0 
+    },
+    "1007": {
+        "id": 1007,
+        "name": "1007.name",
+        "description": "1007.description",
+        "effect": 0,
+        "type": "",
+        "icon": "1007.icon",
+        "unlockable": true,
+        "unlock_cost": 0,
+        "in_game_cost": 0 
+    },
+    "1008": {
+        "id": 1008,
+        "name": "1008.name",
+        "description": "1008.description",
+        "effect": 0,
+        "type": "",
+        "icon": "1008.icon",
+        "unlockable": true,
+        "unlock_cost": 0,
+        "in_game_cost": 0 
+    },
+    "1009": {
+        "id": 1009,
+        "name": "1009.name",
+        "description": "1009.description",
+        "effect": 0,
+        "type": "",
+        "icon": "1009.icon",
+        "unlockable": true,
+        "unlock_cost": 0,
+        "in_game_cost": 0 
+    },
+    
+    "2000": {
+        "id": 2000,
+        "name": "2000.name",
+        "description": "2000.description",
+        "effect": 0,
+        "type": "",
+        "icon": "2000.icon",
+        "unlockable": true,
+        "unlock_cost": 0,
+        "in_game_cost": 0 
+    },
+    "2001": {
+        "id": 2001,
+        "name": "2001.name",
+        "description": "2001.description",
+        "effect": 0,
+        "type": "",
+        "icon": "2001.icon",
+        "unlockable": true,
+        "unlock_cost": 0,
+        "in_game_cost": 0 
+    },
+    "2002": {
+        "id": 2002,
+        "name": "2002.name",
+        "description": "2002.description",
+        "effect": 0,
+        "type": "",
+        "icon": "2002.icon",
+        "unlockable": true,
+        "unlock_cost": 0,
+        "in_game_cost": 0 
+    },
+    "2003": {
+        "id": 2003,
+        "name": "2003.name",
+        "description": "2003.description",
+        "effect": 0,
+        "type": "",
+        "icon": "2003.icon",
+        "unlockable": true,
+        "unlock_cost": 0,
+        "in_game_cost": 0 
+    },
+    "2004": {
+        "id": 2004,
+        "name": "2004.name",
+        "description": "2004.description",
+        "effect": 0,
+        "type": "",
+        "icon": "2004.icon",
+        "unlockable": true,
+        "unlock_cost": 0,
+        "in_game_cost": 0 
+    },
+
+    "3000": {
+        "id": 3000,
+        "name": "3000.name",
+        "description": "3000.description",
+        "effect": 0,
+        "type": "",
+        "icon": "3000.icon",
+        "unlockable": true,
+        "unlock_cost": 0,
+        "in_game_cost": 0 
+    },
+    "3001": {
+        "id": 3001,
+        "name": "3001.name",
+        "description": "3001.description",
+        "effect": 0,
+        "type": "",
+        "icon": "3001.icon",
+        "unlockable": true,
+        "unlock_cost": 0,
+        "in_game_cost": 0 
+    },
+    "3002": {
+        "id": 3002,
+        "name": "3002.name",
+        "description": "3002.description",
+        "effect": 0,
+        "type": "",
+        "icon": "3002.icon",
+        "unlockable": true,
+        "unlock_cost": 0,
+        "in_game_cost": 0 
+    },
+    "3003": {
+        "id": 3003,
+        "name": "3003.name",
+        "description": "3003.description",
+        "effect": 0,
+        "type": "",
+        "icon": "3003.icon",
+        "unlockable": true,
+        "unlock_cost": 0,
+        "in_game_cost": 0 
+    },
+    "3004": {
+        "id": 3004,
+        "name": "3004.name",
+        "description": "3004.description",
+        "effect": 0,
+        "type": "",
+        "icon": "3004.icon",
+        "unlockable": true,
+        "unlock_cost": 0,
+        "in_game_cost": 0 
+    },
+
+    "4000": {
+        "id": 4000,
+        "name": "4000.name",
+        "description": "4000.description",
+        "effect": 0,
+        "type": "",
+        "icon": "4000.icon",
+        "unlockable": true,
+        "unlock_cost": 0,
+        "in_game_cost": 0 
+    },
+    "4001": {
+        "id": 4001,
+        "name": "4001.name",
+        "description": "4001.description",
+        "effect": 0,
+        "type": "",
+        "icon": "4001.icon",
+        "unlockable": true,
+        "unlock_cost": 0,
+        "in_game_cost": 0 
+    },
+    "4002": {
+        "id": 4002,
+        "name": "4002.name",
+        "description": "4002.description",
+        "effect": 0,
+        "type": "",
+        "icon": "4002.icon",
+        "unlockable": true,
+        "unlock_cost": 0,
+        "in_game_cost": 0 
+    },
+    "4003": {
+        "id": 4003,
+        "name": "4003.name",
+        "description": "4003.description",
+        "effect": 0,
+        "type": "",
+        "icon": "4003.icon",
+        "unlockable": true,
+        "unlock_cost": 0,
+        "in_game_cost": 0 
+    },
+    "4004": {
+        "id": 4004,
+        "name": "4004.name",
+        "description": "4004.description",
+        "effect": 0,
+        "type": "",
+        "icon": "4004.icon",
+        "unlockable": true,
+        "unlock_cost": 0,
+        "in_game_cost": 0 
+    },
+
+    "5000": {
+        "id": 5000,
+        "name": "5000.name",
+        "description": "5000.description",
+        "effect": 0,
+        "type": "",
+        "icon": "5000.icon",
+        "unlockable": true,
+        "unlock_cost": 0,
+        "in_game_cost": 0 
+    },
+    "5001": {
+        "id": 5001,
+        "name": "5001.name",
+        "description": "5001.description",
+        "effect": 0,
+        "type": "",
+        "icon": "5001.icon",
+        "unlockable": true,
+        "unlock_cost": 0,
+        "in_game_cost": 0 
+    },
+    "5002": {
+        "id": 5002,
+        "name": "5002.name",
+        "description": "5002.description",
+        "effect": 0,
+        "type": "",
+        "icon": "5002.icon",
+        "unlockable": true,
+        "unlock_cost": 0,
+        "in_game_cost": 0 
+    },
+    "5003": {
+        "id": 5003,
+        "name": "5003.name",
+        "description": "5003.description",
+        "effect": 0,
+        "type": "",
+        "icon": "5003.icon",
+        "unlockable": true,
+        "unlock_cost": 0,
+        "in_game_cost": 0 
+    },
+    "5004": {
+        "id": 5004,
+        "name": "5004.name",
+        "description": "5004.description",
+        "effect": 0,
+        "type": "",
+        "icon": "5004.icon",
+        "unlockable": true,
+        "unlock_cost": 0,
+        "in_game_cost": 0 
+    },
+
+    "6000": {
+        "id": 6000,
+        "name": "6000.name",
+        "description": "6000.description",
+        "effect": 0,
+        "type": "",
+        "icon": "6000.icon",
+        "unlockable": true,
+        "unlock_cost": 0,
+        "in_game_cost": 0 
+    },
+    "6001": {
+        "id": 6001,
+        "name": "6001.name",
+        "description": "6001.description",
+        "effect": 0,
+        "type": "",
+        "icon": "6001.icon",
+        "unlockable": true,
+        "unlock_cost": 0,
+        "in_game_cost": 0 
+    },
+    "6002": {
+        "id": 6002,
+        "name": "6002.name",
+        "description": "6002.description",
+        "effect": 0,
+        "type": "",
+        "icon": "6002.icon",
+        "unlockable": true,
+        "unlock_cost": 0,
+        "in_game_cost": 0 
+    },
+    "6003": {
+        "id": 6003,
+        "name": "6003.name",
+        "description": "6003.description",
+        "effect": 0,
+        "type": "",
+        "icon": "6003.icon",
+        "unlockable": true,
+        "unlock_cost": 0,
+        "in_game_cost": 0 
+    },
+    "6004": {
+        "id": 6004,
+        "name": "6004.name",
+        "description": "6004.description",
+        "effect": 0,
+        "type": "",
+        "icon": "6004.icon",
+        "unlockable": true,
+        "unlock_cost": 0,
+        "in_game_cost": 0 
+    },
+
+    "7000": {
+        "id": 7000,
+        "name": "7000.name",
+        "description": "7000.description",
+        "effect": 0,
+        "type": "",
+        "icon": "7000.icon",
+        "unlockable": true,
+        "unlock_cost": 0,
+        "in_game_cost": 0 
+    },
+    "7001": {
+        "id": 7001,
+        "name": "7001.name",
+        "description": "7001.description",
+        "effect": 0,
+        "type": "",
+        "icon": "7001.icon",
+        "unlockable": true,
+        "unlock_cost": 0,
+        "in_game_cost": 0 
+    },
+    "7002": {
+        "id": 7002,
+        "name": "7002.name",
+        "description": "7002.description",
+        "effect": 0,
+        "type": "",
+        "icon": "7002.icon",
+        "unlockable": true,
+        "unlock_cost": 0,
+        "in_game_cost": 0 
+    },
+    "7003": {
+        "id": 7003,
+        "name": "7003.name",
+        "description": "7003.description",
+        "effect": 0,
+        "type": "",
+        "icon": "7003.icon",
+        "unlockable": true,
+        "unlock_cost": 0,
+        "in_game_cost": 0 
+    },
+    "7004": {
+        "id": 7004,
+        "name": "7004.name",
+        "description": "7004.description",
+        "effect": 0,
+        "type": "",
+        "icon": "7004.icon",
+        "unlockable": true,
+        "unlock_cost": 0,
+        "in_game_cost": 0 
+    },
+
+    "8000": {
+        "id": 8000,
+        "name": "8000.name",
+        "description": "8000.description",
+        "effect": 0,
+        "type": "",
+        "icon": "8000.icon",
+        "unlockable": true,
+        "unlock_cost": 0,
+        "in_game_cost": 0 
+    },
+    "8001": {
+        "id": 8001,
+        "name": "8001.name",
+        "description": "8001.description",
+        "effect": 0,
+        "type": "",
+        "icon": "8001.icon",
+        "unlockable": true,
+        "unlock_cost": 0,
+        "in_game_cost": 0 
+    },
+    "8002": {
+        "id": 8002,
+        "name": "8002.name",
+        "description": "8002.description",
+        "effect": 0,
+        "type": "",
+        "icon": "8002.icon",
+        "unlockable": true,
+        "unlock_cost": 0,
+        "in_game_cost": 0 
+    },
+    "8003": {
+        "id": 8003,
+        "name": "8003.name",
+        "description": "8003.description",
+        "effect": 0,
+        "type": "",
+        "icon": "8003.icon",
+        "unlockable": true,
+        "unlock_cost": 0,
+        "in_game_cost": 0 
+    },
+    "8004": {
+        "id": 8004,
+        "name": "8004.name",
+        "description": "8004.description",
+        "effect": 0,
+        "type": "",
+        "icon": "8004.icon",
+        "unlockable": true,
+        "unlock_cost": 0,
+        "in_game_cost": 0 
+    }
+}
