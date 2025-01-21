@@ -13,8 +13,8 @@
         android:theme="@style/Theme.TFGThe_Climb_Within"
         tools:targetApi="31">
         <activity
-            android:name=".TowerSelection"
-            android:exported="false" />
+            android:name=".Your_Cards"
+            android:exported="true" />
         <activity
             android:name=".Shop"
             android:exported="true" />
