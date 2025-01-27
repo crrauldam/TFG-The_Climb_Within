@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main"
+    >
+
+    <!--    MENU TITLE -->
+    <TextView
+        android:id="@+id/menuTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_margin="40dp"
+
+        android:text="[MENU_TITLE]"
+        android:textColor="@color/white"
+        android:textSize="40sp"
+        android:fontFamily="@font/comfortaa_bold"
+        />
+
+<!--    WHATEVER END BATTLE INFO -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/menuTitle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        >
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+     <!--    RETRY BATTLE BUTTON -->
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/retryBattleButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        app:layout_constraintTop_toBottomOf="@id/info"
+        android:layout_margin="15dp"
+
+        app:icon="@drawable/retry_icon"
+        app:iconGravity="textStart"
+        app:iconTint="@color/gunmetal"
+
+        android:text="Retry battle"
+        android:textSize="20sp"
+        android:backgroundTint="@color/light_cyan"
+        android:textColor="@color/gunmetal"
+        />
+
+    <!--    LEAVE GAME BUTTON -->
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/returnToMainMenuButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        app:layout_constraintTop_toBottomOf="@id/retryBattleButton"
+        android:layout_margin="15dp"
+
+        app:icon="@drawable/exit_icon"
+        app:iconGravity="textStart"
+        app:iconTint="@color/gunmetal"
+
+        android:text="@string/return_to_main_menu"
+        android:textSize="20sp"
+        android:backgroundTint="@color/light_cyan"
+        android:textColor="@color/gunmetal"
+        />
+</androidx.constraintlayout.widget.ConstraintLayout>

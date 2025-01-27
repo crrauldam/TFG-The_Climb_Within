@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main"
+    android:padding="20dp"
+    >
+
+    <LinearLayout
+        android:id="@+id/towerInfo"
+        android:layout_width="350dp"
+        android:layout_height="400dp"
+        android:orientation="vertical"
+
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_margin="40dp"
+        >
+
+        <TextView
+            android:id="@+id/towerName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_margin="10dp"
+
+            android:text="[TOWER_NAME]"
+            android:textColor="@color/fear"
+            android:textAlignment="center"
+            android:textSize="35sp"
+            android:fontFamily="@font/comfortaa_bold"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_weight="5"
+            >
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                >
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_weight="2"
+                    android:layout_gravity="center"
+                    >
+                    <TextView
+                        android:id="@+id/floor"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+
+                        android:text="Floor 1"
+                        android:textSize="20sp"
+                        android:textColor="@color/white"
+                        />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_weight="2"
+                    android:layout_gravity="center"
+                    >
+                    <TextView
+                        android:id="@+id/stage"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+
+                        android:text="Stage 6"
+                        android:textSize="20sp"
+                        android:textColor="@color/white"
+                        />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/playerCoins"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+
+                    android:background="@drawable/card_img_price"
+
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toTopOf="@id/horiscroll"
+                    >
+
+                    <ImageView
+                        android:id="@+id/coin"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/custom_faq"
+
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+
+                        android:layout_marginStart="30dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp"
+                        />
+
+                    <TextView
+                        android:id="@+id/totalEmotionCoin"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:textSize="14sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/coin"
+                        android:text="500"
+                        android:textColor="@color/black"
+                        android:fontFamily="@font/comfortaa_bold"/>
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/towerImg"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:src="@drawable/example_tower"
+                android:layout_weight="1"
+
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_margin="20dp"
+                />
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+
+    <LinearLayout
+        android:id="@+id/twoButtons"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@id/towerInfo"
+        >
+        <!--    SETTINGS BUTTON -->
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:id="@+id/settingsButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+
+            app:layout_constraintTop_toBottomOf="@id/backtoBattleButton"
+            android:layout_margin="5dp"
+
+            app:icon="@drawable/settings_icon"
+            app:iconGravity="textStart"
+            app:iconTint="@color/gunmetal"
+
+            android:text="Settings"
+            android:textSize="20sp"
+            android:backgroundTint="@color/light_cyan"
+            android:textColor="@color/gunmetal"
+            />
+
+        <!--    LEAVE GAME BUTTON -->
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:id="@+id/exitBattleButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+
+            app:layout_constraintTop_toBottomOf="@id/settingsButton"
+            android:layout_margin="5dp"
+
+            app:icon="@drawable/exit_icon"
+            app:iconGravity="textStart"
+            app:iconTint="@color/gunmetal"
+
+            android:text="@string/exit_battle"
+            android:textSize="20sp"
+            android:backgroundTint="@color/light_cyan"
+            android:textColor="@color/gunmetal"
+            />
+
+
+    </LinearLayout>
+
+<!--    BACK TO BATTLE BUTTON -->
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/backtoBattleButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        app:layout_constraintTop_toBottomOf="@id/twoButtons"
+        android:layout_margin="5dp"
+        android:layout_marginBottom="30dp"
+
+        app:icon="@drawable/left_arrow_icon"
+        app:iconGravity="textStart"
+        app:iconTint="@color/gunmetal"
+
+        android:text="@string/back_to_battle"
+        android:textSize="20sp"
+        android:backgroundTint="@color/light_cyan"
+        android:textColor="@color/gunmetal"
+        />
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
