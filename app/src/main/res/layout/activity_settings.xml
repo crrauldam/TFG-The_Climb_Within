@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Settings">
+
+    <ImageView
+        android:id="@+id/background"
+        android:layout_width="0dp"
+        android:layout_height="1750dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/backgroundhomescreen"
+        app:layout_constraintTop_toTopOf="@id/main"
+        app:layout_constraintEnd_toEndOf="@id/main"
+        app:layout_constraintStart_toStartOf="@id/main" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="332dp"
+        android:layout_height="437dp"
+        android:background="@drawable/view_settings"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="260dp"
+            android:layout_height="62dp"
+            android:layout_marginTop="45dp"
+            android:background="@drawable/google_view_settings"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            >
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:id="@+id/about"
+            android:layout_width="282dp"
+            android:layout_height="52dp"
+            android:layout_marginBottom="45dp"
+            android:text="About"
+            android:fontFamily="@font/comfortaa_bold"
+            app:icon="@drawable/about_icon"
+            app:iconTint="@color/gunmetal"
+            app:iconGravity="textStart"
+            android:textColor="@color/gunmetal"
+            android:backgroundTint="@color/light_cyan"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
