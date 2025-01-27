@@ -13,6 +13,12 @@
         android:theme="@style/Theme.TFGThe_Climb_Within"
         tools:targetApi="31">
         <activity
+            android:name=".InGameShop"
+            android:exported="false" />
+        <activity
+            android:name=".Settings"
+            android:exported="false" />
+        <activity
             android:name=".BattleScreen"
             android:exported="true" />
         <activity
