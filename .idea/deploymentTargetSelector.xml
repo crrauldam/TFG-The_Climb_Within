@@ -5,6 +5,7 @@
       <SelectionState runConfigName="app">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
+
       <SelectionState runConfigName="HomeScreen">
         <option name="selectionMode" value="DROPDOWN" />
         <DropdownSelection timestamp="2025-01-27T11:36:52.188165800Z">
@@ -19,6 +20,7 @@
       <SelectionState runConfigName="BattleScreen">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
+
     </selectionStates>
   </component>
 </project>
