@@ -33,11 +33,8 @@
 
         <activity
             android:name=".BattleScreen"
-            android:exported="false" />
-
-        <activity
-            android:name=".BattleScreen"
             android:exported="true" />
+
         <activity
             android:name=".Your_Cards"
             android:exported="false" />
