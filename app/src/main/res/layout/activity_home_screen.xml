@@ -78,7 +78,7 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="280dp"
         app:layout_constraintBottom_toTopOf="@id/Continue"
         app:layout_constraintEnd_toEndOf="@id/main"

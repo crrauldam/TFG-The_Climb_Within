@@ -3,10 +3,16 @@
     <style name="Base.Theme.TFGThe_Climb_Within" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
-        <item name="android:background">@color/light_cyan</item>
+
+<!--        TODO: CHANGES ALL KIND OF BG COLOR TO THAT ONE, TEMPORALLY DISABLED -->
+        <!--        <item name="android:background">@color/light_cyan</item>-->
     </style>
 
     <style name="Theme.TFGThe_Climb_Within" parent="Base.Theme.TFGThe_Climb_Within">
         <item name="android:windowIsTranslucent">true</item>
+    </style>
+
+    <style name="Theme.TFGThe_Climb_Within.Splash" parent="Theme.TFGThe_Climb_Within">
+            <item name="android:background">@color/light_cyan</item>
     </style>
 </resources>
