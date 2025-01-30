@@ -25,11 +25,11 @@
         </activity>
         <activity
             android:name=".InGameShop"
-            android:exported="false" />
+            android:exported="true" />
 
         <activity
             android:name=".Settings"
-            android:exported="false" />
+            android:exported="true" />
 
         <activity
             android:name=".BattleScreen"
@@ -37,19 +37,23 @@
 
         <activity
             android:name=".Your_Cards"
-            android:exported="false" />
+            android:exported="true" />
 
         <activity
             android:name=".Shop"
-            android:exported="false" />
+            android:exported="true" />
 
         <activity
             android:name=".HomeScreen"
-            android:exported="false" />
+            android:exported="true" />
+
+        <activity
+            android:name=".TowerSelection"
+            android:exported="true"/>
 
         <activity
             android:name=".MainActivity"
-            android:exported="false"/>
+            android:exported="true"/>
 
         <meta-data
             android:name="preloaded_fonts"
