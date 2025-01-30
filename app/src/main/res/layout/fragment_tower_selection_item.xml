@@ -9,7 +9,7 @@
         android:id="@+id/towerImg"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:src="@drawable/example_tower"
+        android:scaleType="centerCrop"
         />
 
     <View
