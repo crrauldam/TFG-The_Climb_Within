@@ -17,6 +17,7 @@
         </DropdownSelection>
         <DialogSelection />
       </SelectionState>
+
       <SelectionState runConfigName="BattleScreen">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
