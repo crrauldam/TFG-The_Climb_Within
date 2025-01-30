@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".TowerSelection"
+    android:orientation="vertical"
+    >
+
+    <FrameLayout
+        android:id="@+id/frameLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+
+    <GridLayout
+        android:id="@+id/navMenu"
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
+        android:layout_weight="8"
+        android:columnCount="4"
+        android:rowCount="1"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        >
+
+        <ImageButton
+            android:id="@+id/leftArrow"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_columnSpan="1"
+            android:layout_columnWeight="1"
+            android:backgroundTint="@android:color/transparent"
+            android:src="@drawable/left_arrow_icon" />
+
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:id="@+id/playButton"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            app:backgroundTint="@color/bgcardcolor"
+            android:layout_columnWeight="6"
+            android:layout_columnSpan="2"
+            android:layout_margin="10dp"
+            android:padding="10dp"
+
+            app:icon="@drawable/play_icon"
+            app:iconGravity="textStart"
+            app:iconTint="@color/gunmetal"
+
+            android:textAlignment="center"
+            android:text="@string/play"
+            android:fontFamily="@font/kadwa_bold"
+            android:textStyle="bold"
+            android:textSize="25sp"
+            android:textColor="@color/gunmetal"
+            />
+
+        <ImageButton
+            android:id="@+id/rightArrow"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_columnWeight="1"
+            android:layout_columnSpan="1"
+            android:backgroundTint="@android:color/transparent"
+            android:src ="@drawable/right_arrow_icon"
+            />
+
+
+    </GridLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -2,4 +2,21 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <color name="gunmetal">#253237</color>
+    <color name="payne_gray">#5C6B73</color>
+    <color name="cadet_gray">#9DB4C0</color>
+    <color name="light_blue">#C2DFE3</color>
+    <color name="light_cyan">#E0FBFC</color>
+
+    <color name="bgcardcolor">#f2ebc7</color>
+
+    <color name="basic">#D9D9D9</color>
+    <color name="calm">#E0FBFC</color>
+    <color name="fear">#F3CCFF</color>
+    <color name="anger">#FFB09C </color>
+    <color name="sadness">#C8D9ED</color>
+    <color name="disgust">#C8E1CC</color>
+    <color name="happiness">#FFFDB7</color>
+    <color name="surprise">#FFFFFF</color>
 </resources>

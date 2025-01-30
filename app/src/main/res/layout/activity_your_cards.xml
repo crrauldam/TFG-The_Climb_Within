@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Shop"
+    android:background="@drawable/your_cards_bg">
+    <GridLayout
+        android:id="@+id/grid1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:columnCount="7"
+        android:rowCount="1"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        >
+
+        <ImageButton
+            android:id="@+id/basicTab"
+            android:layout_width="0dp"
+            android:layout_height="100dp"
+            android:layout_columnWeight="1"
+            android:scaleType="fitCenter"
+            android:padding="5dp"
+            android:src="@drawable/basic"
+            app:strokeWidth="2dp"
+            app:strokeColor="@color/black"
+            android:background="@drawable/basic_button"
+            />
+        <ImageButton
+            android:layout_width="0dp"
+            android:layout_height="100dp"
+            android:layout_columnWeight="1"
+            android:scaleType="fitCenter"
+            android:src="@drawable/fear"
+            app:strokeWidth="2dp"
+            app:strokeColor="@color/black"
+            android:background="@drawable/fear_button"
+            />
+        <ImageButton
+            android:layout_width="0dp"
+            android:layout_height="100dp"
+            android:layout_columnWeight="1"
+            android:scaleType="fitCenter"
+            android:padding="5dp"
+            android:src="@drawable/anger"
+            app:strokeWidth="2dp"
+            app:strokeColor="@color/black"
+            android:background="@drawable/anger_button"
+            />
+        <ImageButton
+            android:layout_width="0dp"
+            android:layout_height="100dp"
+            android:layout_columnWeight="1"
+            android:scaleType="fitCenter"
+            android:padding="5dp"
+            android:src="@drawable/sadness"
+            app:strokeWidth="2dp"
+            app:strokeColor="@color/black"
+            android:background="@drawable/sadness_button"
+            />
+        <ImageButton
+            android:layout_width="0dp"
+            android:layout_height="100dp"
+            android:layout_columnWeight="1"
+            android:scaleType="fitCenter"
+            android:padding="6dp"
+            android:src="@drawable/disgust"
+            app:strokeWidth="2dp"
+            app:strokeColor="@color/black"
+            android:background="@drawable/disgust_button"
+            />
+        <ImageButton
+            android:layout_width="0dp"
+            android:layout_height="100dp"
+            android:layout_columnWeight="1"
+            android:scaleType="fitCenter"
+            android:padding="5dp"
+            android:src="@drawable/happiness"
+            app:strokeWidth="2dp"
+            app:strokeColor="@color/black"
+            android:background="@drawable/happiness_button"
+            />
+        <ImageButton
+            android:layout_width="0dp"
+            android:layout_height="100dp"
+            android:layout_columnWeight="1"
+            android:scaleType="fitCenter"
+            android:padding="6dp"
+            android:src="@drawable/surprise"
+            app:strokeWidth="2dp"
+            app:strokeColor="@color/black"
+            android:background="@drawable/surprise_button"
+            />
+
+    </GridLayout>
+
+    <ScrollView
+        android:id="@+id/scroll"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:alpha="0.3"
+        android:background="@color/white"
+        android:padding="16dp"
+        app:layout_constraintBottom_toBottomOf="@id/main"
+        app:layout_constraintEnd_toEndOf="@id/main"
+
+        app:layout_constraintStart_toStartOf="@id/main"
+        app:layout_constraintTop_toBottomOf="@id/grid1">
+
+
+        <GridLayout
+            android:id="@+id/gridLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:columnCount="3" />
+    </ScrollView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

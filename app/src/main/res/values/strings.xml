@@ -1,3 +1,11 @@
 <resources>
-    <string name="app_name">TFG-The_Climb_Within</string>
+    <string name="app_name" translatable="false">TFG-The_Climb_Within</string>
+    <string name="play">PLAY</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="_0" translatable="false">0</string>
+    <string name="menu">MENU</string>
+    <string name="back_to_battle">Back to battle</string>
+    <string name="exit_battle">Exit battle</string>
+    <string name="return_to_main_menu">Return to main menu</string>
 </resources>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="play">JUGAR</string>
+    <string name="hello_blank_fragment">Hola fragment vacío</string>
+    <string name="menu">MENÚ</string>
+</resources>
