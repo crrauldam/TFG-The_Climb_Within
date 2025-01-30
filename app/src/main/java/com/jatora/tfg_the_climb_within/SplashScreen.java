@@ -55,6 +55,7 @@ public class SplashScreen extends AppCompatActivity {
         handler.postDelayed(runnable, 3500);
 
 
+        // Obtain the FirebaseAnalytics instance.
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
     }
