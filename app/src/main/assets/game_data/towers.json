@@ -3,11 +3,11 @@
         {
             "id": 0,
             "name": "tower0.name",
-            "img": "img/towers/happiness.png",
+            "img": "tower0.img",
             "enemies": {
-                "floor1": [],
-                "floor2": [],
-                "floor3": []
+                "floor1": ["6100","6101"],
+                "floor2": ["6105","6106"],
+                "floor3": ["6109"]
             },
             "bosses": {
                 "floor1": "",
@@ -20,98 +20,98 @@
         {
             "id": 1,
             "name": "tower1.name",
-            "img": "img/towers/surprise.png",
+            "img": "tower1.img",
             "enemies": {
-                "floor1": [],
-                "floor2": [],
-                "floor3": []
+                "floor1": ["8100","8101"],
+                "floor2": ["8105","8106"],
+                "floor3": ["8109"]
             },
             "bosses": {
                 "floor1": "",
                 "floor2": "",
                 "floor3": ""
             },
-            "multiplier": 1.0
+            "multiplier": 1.2
         },
         {
             "id": 2,
             "name": "tower2.name",
-            "img": "img/towers/disgust.png",
+            "img": "tower2.img",
             "enemies": {
-                "floor1": [],
-                "floor2": [],
-                "floor3": []
+                "floor1": ["4100","4101"],
+                "floor2": ["4105","4106"],
+                "floor3": ["4109"]
             },
             "bosses": {
                 "floor1": "",
                 "floor2": "",
                 "floor3": ""
             },
-            "multiplier": 1.0
+            "multiplier": 1.5
         },
         {
             "id": 3,
             "name": "tower3.name",
-            "img": "img/towers/anger.png",
+            "img": "tower3.img",
             "enemies": {
-                "floor1": [],
-                "floor2": [],
-                "floor3": []
+                "floor1": ["2100","2101"],
+                "floor2": ["2105","2106"],
+                "floor3": ["2109"]
             },
             "bosses": {
                 "floor1": "",
                 "floor2": "",
                 "floor3": ""
             },
-            "multiplier": 1.0
+            "multiplier": 1.6
         },
         {
             "id": 4,
             "name": "tower4.name",
-            "img": "img/towers/sadness.png",
+            "img": "tower4.img",
             "enemies": {
-                "floor1": [],
-                "floor2": [],
-                "floor3": []
+                "floor1": ["7100","7101"],
+                "floor2": ["7105","7106"],
+                "floor3": ["7109"]
             },
             "bosses": {
                 "floor1": "",
                 "floor2": "",
                 "floor3": ""
             },
-            "multiplier": 1.0
+            "multiplier": 1.7
         },
         {
             "id": 5,
             "name": "tower5.name",
-            "img": "img/towers/fear.png",
+            "img": "tower5.img",
             "enemies": {
-                "floor1": [],
-                "floor2": [],
-                "floor3": []
+                "floor1": ["5100","5101"],
+                "floor2": ["5105","5106"],
+                "floor3": ["5109"]
             },
             "bosses": {
                 "floor1": "",
                 "floor2": "",
                 "floor3": ""
             },
-            "multiplier": 1.0
+            "multiplier": 1.8
         },
         {
             "id": 6,
             "name": "tower6.name",
-            "img": "img/towers/calm.png",
+            "img": "tower6.img",
             "enemies": {
-                "floor1": [],
-                "floor2": [],
-                "floor3": []
+                "floor1": ["3100","3101"],
+                "floor2": ["3105","3106"],
+                "floor3": ["3109"]
             },
             "bosses": {
                 "floor1": "",
                 "floor2": "",
                 "floor3": ""
             },
-            "multiplier": 1.0
+            "multiplier": 2.0
         }
     ]
 }
