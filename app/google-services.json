@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1023426529717",
+    "project_id": "the-climb-within",
+    "storage_bucket": "the-climb-within.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1023426529717:android:283136292efb6a1655f1fc",
+        "android_client_info": {
+          "package_name": "com.jatora.tfg_the_climb_within"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBIfuSr0IwZAuuGo_Y3M7kxeutSajxQSfg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

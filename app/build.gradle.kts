@@ -1,5 +1,6 @@
 plugins {
     alias(libs.plugins.android.application)
+    alias(libs.plugins.google.gms.google.services)
 }
 
 android {
@@ -40,6 +41,7 @@ dependencies {
     implementation("com.airbnb.android:lottie:6.6.2")
 
     implementation("androidx.core:core-splashscreen:1.0.0")
+    implementation(libs.firebase.analytics)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)

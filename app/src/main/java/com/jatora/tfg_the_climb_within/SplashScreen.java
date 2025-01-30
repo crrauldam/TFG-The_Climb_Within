@@ -12,11 +12,13 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.airbnb.lottie.LottieAnimationView;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 public class SplashScreen extends AppCompatActivity {
 
     private Handler handler= new Handler();
     private Runnable runnable;
+    private FirebaseAnalytics mFirebaseAnalytics;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +54,11 @@ public class SplashScreen extends AppCompatActivity {
 
         handler.postDelayed(runnable, 3500);
 
+
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+
     }
+
 
     @Override
     protected void onDestroy() {
