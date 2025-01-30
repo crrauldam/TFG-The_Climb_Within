@@ -7,8 +7,6 @@
     android:layout_height="match_parent"
     tools:context=".HomeScreen">
 
-
-
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/Continue"
         android:layout_width="wrap_content"
