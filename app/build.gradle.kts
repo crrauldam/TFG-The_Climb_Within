@@ -41,18 +41,28 @@ dependencies {
     implementation("com.airbnb.android:lottie:6.6.2")
 
     implementation("androidx.core:core-splashscreen:1.0.0")
+
+
+
     implementation(libs.firebase.analytics)
 
-    // Import the BoM for the Firebase platform
-    implementation(platform("com.google.firebase:firebase-bom:33.8.0"))
 
     // Add the dependency for the Analytics library
     // When using the BoM, you don't specify versions in Firebase library dependencies
     implementation("com.google.firebase:firebase-analytics")
+    implementation(libs.firebase.auth)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
+
+    implementation (platform("com.google.firebase:firebase-bom:33.8.0"))
+    implementation("com.google.firebase:firebase-auth")
+    implementation ("com.google.android.gms:play-services-auth:21.3.0")
+
+
+
+
 
 
 }

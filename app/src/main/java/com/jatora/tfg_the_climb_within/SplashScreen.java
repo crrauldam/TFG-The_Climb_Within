@@ -2,6 +2,7 @@ package com.jatora.tfg_the_climb_within;
 
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.credentials.CredentialManager;
 import android.os.Bundle;
 import android.os.Handler;
 
@@ -57,6 +58,7 @@ public class SplashScreen extends AppCompatActivity {
 
         // Obtain the FirebaseAnalytics instance.
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+
 
     }
 
