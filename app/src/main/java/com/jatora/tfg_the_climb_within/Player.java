@@ -4,10 +4,10 @@ public class Player {
     private String name;
     private int maxhp;
     private int hp;
-    private int unlocked_cards;
+    private Integer[] unlocked_cards;
     private int tower_coins;
     private EmotionCoins emotionCoins;
-    private int deck;
+    private Integer[] deck;
     private Stats stats;
 
     static class EmotionCoins {
@@ -130,11 +130,11 @@ public class Player {
         this.hp = hp;
     }
 
-    public int getUnlocked_cards() {
+    public Integer[] getUnlocked_cards() {
         return unlocked_cards;
     }
 
-    public void setUnlocked_cards(int unlocked_cards) {
+    public void setUnlocked_cards(Integer[] unlocked_cards) {
         this.unlocked_cards = unlocked_cards;
     }
 
@@ -154,11 +154,11 @@ public class Player {
         this.emotionCoins = emotionCoins;
     }
 
-    public int getDeck() {
+    public Integer[] getDeck() {
         return deck;
     }
 
-    public void setDeck(int deck) {
+    public void setDeck(Integer[] deck) {
         this.deck = deck;
     }
 

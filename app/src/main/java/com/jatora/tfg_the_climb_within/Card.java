@@ -1,5 +1,7 @@
 package com.jatora.tfg_the_climb_within;
 
+import androidx.annotation.NonNull;
+
 public class Card {
     private int id;
     private String name;
@@ -81,5 +83,11 @@ public class Card {
 
     public void setIn_game_cost(int in_game_cost) {
         this.in_game_cost = in_game_cost;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return String.valueOf(this.getId());
     }
 }

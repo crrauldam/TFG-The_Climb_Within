@@ -38,8 +38,8 @@
             android:exported="false" />
 
         <activity
-            android:name=".Your_Cards"
-            android:exported="false"
+            android:name=".YourCards"
+            android:exported="true"
             android:parentActivityName=".HomeScreen"
             />
 

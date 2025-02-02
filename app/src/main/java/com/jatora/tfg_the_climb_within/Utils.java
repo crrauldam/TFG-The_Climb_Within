@@ -61,6 +61,7 @@ public class Utils {
 
         try {
             while ((line = br.readLine()) != null) {
+                line.split(";");
                 fileContent.append(line);
             }
         } catch (IOException e) {
@@ -165,7 +166,7 @@ public class Utils {
 
         Log.d("A", "Getting player's saved data: "+playerJSON);
 
-        return gson.fromJson(playerJSON.get("player").getAsString(), Player.class);
+        return gson.fromJson(playerJSON.get("player"), Player.class);
     }
 
     public static ArrayList<Card> getCardsData(Context context) {
@@ -184,12 +185,14 @@ public class Utils {
         JsonObject cardsProperties = propertiesENJSON.getAsJsonObject("cards");
 
         for (String key : cardsJSON.keySet()) {
-            Log.d("A", "checking card: "+key);
+            Log.d("Utils-getCardsData", "checking card: "+key);
+            Log.d("Utils-getCardsData", "checking card: "+cardsJSON.get(key));
 
-            Card card = gson.fromJson(cardsJSON.get(key).getAsString(), Card.class);
-            card.setName(String.valueOf(cardsProperties.get(card.getName())));
-            card.setDescription(String.valueOf(cardsProperties.get(card.getDescription())));
-            card.setIcon(String.valueOf(cardsProperties.get(card.getIcon())));
+
+            Card card = gson.fromJson(cardsJSON.get(key), Card.class);
+            card.setName(String.valueOf(cardsProperties.get(card.getName()).getAsString()));
+            card.setDescription(String.valueOf(cardsProperties.get(card.getDescription()).getAsString()));
+            card.setIcon(String.valueOf(cardsProperties.get(card.getIcon()).getAsString()));
 
             cards.add(card);
         }
@@ -208,9 +211,9 @@ public class Utils {
         ArrayList<Deck> decks = new ArrayList<>();
 
         for (String key : decksJSON.keySet()) {
-            Log.d("A", "checking card: "+key);
+            Log.d("Utils-getDecksData", "checking deck: "+key);
 
-            Deck deck = gson.fromJson(decksJSON.get(key).getAsString(), Deck.class);
+            Deck deck = gson.fromJson(decksJSON.get(key), Deck.class);
             deck.setName(key);
 
             decks.add(deck);
