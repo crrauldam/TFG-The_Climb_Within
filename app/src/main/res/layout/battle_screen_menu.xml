@@ -111,7 +111,7 @@
                     >
 
                     <ImageView
-                        android:id="@+id/coin"
+                        android:id="@+id/coinImg"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
                         android:src="@drawable/custom_faq"
@@ -126,14 +126,14 @@
                         />
 
                     <TextView
-                        android:id="@+id/totalEmotionCoin"
+                        android:id="@+id/totalEmotionCoins"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         app:layout_constraintTop_toTopOf="parent"
                         android:textSize="14sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@id/coin"
+                        app:layout_constraintStart_toEndOf="@id/coinImg"
                         android:text="500"
                         android:textColor="@color/black"
                         android:fontFamily="@font/comfortaa_bold"/>

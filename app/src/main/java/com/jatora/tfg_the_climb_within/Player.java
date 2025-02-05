@@ -6,9 +6,16 @@ public class Player {
     private int hp;
     private Integer[] unlocked_cards;
     private int tower_coins;
-    private EmotionCoins emotionCoins;
+    private Integer[] unlocked_towers;
+    private EmotionCoins emotion_coins;
     private Integer[] deck;
     private Stats stats;
+
+    public Player() {
+        this.unlocked_cards = new Integer[0];
+        this.unlocked_towers = new Integer[0];
+        this.deck = new Integer[0];
+    }
 
     static class EmotionCoins {
         private int anger;
@@ -18,53 +25,56 @@ public class Player {
         private int sadness;
         private int surprise;
 
-        public int getAnger() {
-            return anger;
+        public int getCoin(String name) {
+            int coins = -1;
+
+            switch (name) {
+                case "anger":
+                    coins = anger;
+                    break;
+                case "disgust":
+                    coins = disgust;
+                    break;
+                case "fear":
+                    coins = fear;
+                    break;
+                case "happiness":
+                    coins = happiness;
+                    break;
+                case "sadness":
+                    coins = sadness;
+                    break;
+                case "surprise":
+                    coins = surprise;
+                    break;
+            }
+
+            return coins;
         }
 
-        public void setAnger(int anger) {
-            this.anger = anger;
+        public void setCoin(String name, int newCoins) {
+            switch (name) {
+                case "anger":
+                    anger = newCoins;
+                    break;
+                case "disgust":
+                    disgust = newCoins;
+                    break;
+                case "fear":
+                    fear = newCoins;
+                    break;
+                case "happiness":
+                    happiness = newCoins;
+                    break;
+                case "sadness":
+                    sadness = newCoins;
+                    break;
+                case "surprise":
+                    surprise = newCoins;
+                    break;
+            }
         }
 
-        public int getDisgust() {
-            return disgust;
-        }
-
-        public void setDisgust(int disgust) {
-            this.disgust = disgust;
-        }
-
-        public int getFear() {
-            return fear;
-        }
-
-        public void setFear(int fear) {
-            this.fear = fear;
-        }
-
-        public int getHappiness() {
-            return happiness;
-        }
-
-        public void setHappiness(int happiness) {
-            this.happiness = happiness;
-        }
-
-        public int getSadness() {
-            return sadness;
-        }
-
-        public void setSadness(int sadness) {
-            this.sadness = sadness;
-        }
-
-        public int getSurprise() {
-            return surprise;
-        }
-
-        public void setSurprise(int surprise) {
-            this.surprise = surprise;
-        }
     }
 
     static class Stats {
@@ -146,12 +156,20 @@ public class Player {
         this.tower_coins = tower_coins;
     }
 
-    public EmotionCoins getEmotionCoins() {
-        return emotionCoins;
+    public Integer[] getUnlocked_towers() {
+        return unlocked_towers;
     }
 
-    public void setEmotionCoins(EmotionCoins emotionCoins) {
-        this.emotionCoins = emotionCoins;
+    public void setUnlocked_towers(Integer[] unlocked_towers) {
+        this.unlocked_towers = unlocked_towers;
+    }
+
+    public EmotionCoins getEmotion_coins() {
+        return emotion_coins;
+    }
+
+    public void setEmotion_coins(EmotionCoins emotion_coins) {
+        this.emotion_coins = emotion_coins;
     }
 
     public Integer[] getDeck() {

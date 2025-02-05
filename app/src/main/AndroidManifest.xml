@@ -25,17 +25,17 @@
         </activity>
         <activity
             android:name=".InGameShop"
-            android:exported="false" />
+            android:exported="true" />
 
         <activity
             android:name=".Settings"
-            android:exported="false"
+            android:exported="true"
             android:parentActivityName=".HomeScreen"
             />
 
         <activity
             android:name=".BattleScreen"
-            android:exported="false" />
+            android:exported="true" />
 
         <activity
             android:name=".YourCards"
@@ -45,7 +45,7 @@
 
         <activity
             android:name=".Shop"
-            android:exported="false"
+            android:exported="true"
             android:parentActivityName=".HomeScreen"
             />
 
@@ -55,7 +55,7 @@
 
         <activity
             android:name=".TowerSelection"
-            android:exported="false"
+            android:exported="true"
             android:parentActivityName=".HomeScreen"
             />
 

@@ -12,13 +12,47 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 
 public class Utils {
     // constants for game files
     private static final String SAVE_FILE = "save.json";
+
+    // TODO: CHANGE THIS DATA TO "DEFAULT_SAVE_DATA" AND CHANGE CONTENT TO **REAL** DEFAULT SAVE DATA
+    private static final String DEFAULT_TEST_SAVE_DATA = "{\n" +
+            "    \"player\": {\n" +
+            "        \"name\": \"\",\n" +
+            "        \"maxhp\": 100,\n" +
+            "        \"hp\": 100,\n" +
+            "        \"unlocked_cards\": [1000, 1001, 1002, 1003, 1004, 1005, 1006, 1007, 1008, 1009,  6003],\n" +
+            "        \"tower_coins\": 0,\n" +
+            "        \"emotion_coins\": {\n" +
+            "            \"anger\": 100,\n" +
+            "            \"disgust\": 110,\n" +
+            "            \"fear\": 120,\n" +
+            "            \"happiness\": 130,\n" +
+            "            \"sadness\": 140,\n" +
+            "            \"surprise\": 150\n" +
+            "        },\n" +
+            "        \"deck\": [],\n" +
+            "        \"stats\": {\n" +
+            "            \"played_time\": 0,\n" +
+            "            \"cards_played\": 0,\n" +
+            "            \"damage_dealt\": 0,\n" +
+            "            \"damage_received\": 0\n" +
+            "        }\n" +
+            "    }\n" +
+            "}";
+
+
     private static final String PROPERTIES_EN_FILE = "game_data/properties_en.json";
     private static final String PROPERTIES_ES_FILE = "game_data/properties_es.json";
     private static final String STORY_FILE = "game_data/story.json";
@@ -47,14 +81,15 @@ public class Utils {
      * @return A String with the given file's content
      */
     public static String readFile(Context context, String path) {
-        Log.d("Utils-readFile()", "Retrieving file content: "+path);
+        final String TAG = "Utils-readFile()";
+        Log.d(TAG, "Retrieving file content: "+path);
 
         // fetch file
         BufferedReader br = null;
         try {
             br = new BufferedReader(new InputStreamReader(context.getAssets().open(path)));
         } catch (IOException e) {
-            Log.e("Utils-readFile()", "Error while opening file: " + e);
+            Log.e(TAG, "Error while opening file: " + e);
         }
         StringBuilder fileContent = new StringBuilder();
         String line;
@@ -65,13 +100,13 @@ public class Utils {
                 fileContent.append(line);
             }
         } catch (IOException e) {
-            Log.e("Utils-readFile()", "Error while reading file: " + e);
+            Log.e(TAG, "Error while reading file: " + e);
         }
 
         try {
             br.close();
         } catch (IOException e) {
-            Log.e("Utils-readFile()", "Error while closing BufferedReader: " + e);
+            Log.e(TAG, "Error while closing BufferedReader: " + e);
         }
 
         return fileContent.toString();
@@ -88,6 +123,8 @@ public class Utils {
      * @return A JsonObject containing the properties info in the specified language
      */
     public static JsonObject getProperties(Context context, int lang) {
+        final String TAG = "Utils-getProperties()";
+
         String file = (lang == 1) ? PROPERTIES_ES_FILE : PROPERTIES_EN_FILE;
 
         String fileData = Utils.readFile(context, file);
@@ -97,6 +134,8 @@ public class Utils {
 
 
     public static ArrayList<Tower> getTowersData(Context context) {
+        final String TAG = "Utils-getTowersData()";
+
         // get file's content as String
         String towersData = Utils.readFile(context, TOWERS_FILE);
 
@@ -121,7 +160,7 @@ public class Utils {
             tower.setName(String.valueOf(towerProperties.get(tower.getName())));
 //            tower.setImg(String.valueOf(towerProperties.get(tower.getImg())));
 
-            Log.e("A", "onCreate: "+tower.getImg());
+            Log.e(TAG, "tower img: "+tower.getImg());
 
             towers.add(tower);
         }
@@ -129,7 +168,10 @@ public class Utils {
         return towers;
     }
 
+
     public static ArrayList<Enemy> getEnemiesData(Context context) {
+        final String TAG = "Utils-getEnemiesData()";
+
         // get file's content as String
         String enemiesData = Utils.readFile(context, ENEMIES_FILE);
 
@@ -145,7 +187,7 @@ public class Utils {
         JsonObject enemiesProperties = propertiesENJSON.getAsJsonObject("enemies");
 
         for (String key : enemiesJSON.keySet()) {
-            Log.d("A", "checking enemy: "+key);
+            Log.d(TAG, "checking enemy: "+key);
 
             Enemy enemy = gson.fromJson(enemiesJSON.get(key).getAsString(), Enemy.class);
             enemy.setName(String.valueOf(enemiesProperties.get(enemy.getName())));
@@ -157,19 +199,81 @@ public class Utils {
         return enemies;
     }
 
+
+    /**
+     * Checks if the save.json file exists in the internal storage, if not, it creates it.
+     * @param context
+     */
+    public static void checkSaveFileExistence(Context context) {
+        final String TAG = "Utils-checkSaveFileExistence";
+
+        File file = new File(context.getFilesDir(), "save.json");
+
+        if (!file.exists()) {
+            Log.d(TAG, "creating and inserting default data into save.json in internal storage");
+            try (FileOutputStream fos = context.openFileOutput(SAVE_FILE, Context.MODE_PRIVATE)) {
+                fos.write(DEFAULT_TEST_SAVE_DATA.getBytes());
+            } catch (IOException e) {
+                Log.e(TAG, "Failed to create save.json");
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
     public static Player getPlayerData(Context context) {
-        // get file's content as String
-        String playerData = Utils.readFile(context, SAVE_FILE);
+        final String TAG = "Utils-getPlayerData()";
+
+        StringBuilder sb = new StringBuilder();
+
+        try (FileInputStream fis = context.openFileInput(SAVE_FILE)) {
+            int ch;
+            while ((ch = fis.read()) != -1) {
+                sb.append((char) ch);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
 
         // parse enemies data to JSON
-        JsonObject playerJSON = gson.fromJson(playerData, JsonObject.class);
+        JsonObject playerJSON = gson.fromJson(sb.toString(), JsonObject.class);
 
-        Log.d("A", "Getting player's saved data: "+playerJSON);
+        Log.d(TAG, "Getting player's saved data: "+playerJSON);
 
         return gson.fromJson(playerJSON.get("player"), Player.class);
     }
 
+
+    public static void savePlayerData(Context context, Player playerObject) throws IOException {
+        final String TAG = "Utils-savePlayerData()";
+
+        Log.d(TAG, "parsing player object into string and adding to jsonobject.");
+        JsonObject jo = new JsonObject();
+        jo.add("player", gson.toJsonTree(playerObject));
+
+        Log.d(TAG, "Writing into file: "+SAVE_FILE);
+
+        try (FileOutputStream fos = context.openFileOutput(SAVE_FILE, Context.MODE_PRIVATE)) {
+            fos.write(jo.toString().getBytes());
+            Log.d(TAG, "Successfully wrote into file.");
+        } catch (IOException e) {
+            Log.e(TAG, "Failed to write into the file.");
+            e.printStackTrace();
+        }
+//
+//        try (FileWriter fw = new FileWriter(context.getAssets().open(SAVE_FILE))) {
+//            fw.write(jo.toString());
+//            Log.d(TAG, "Successfully wrote into file.");
+//        } catch (Exception e) {
+//            Log.e(TAG, "Failed to write into the file.");
+//        }
+
+    }
+
+
     public static ArrayList<Card> getCardsData(Context context) {
+        final String TAG = "Utils-getCardsData()";
+
         // get file's content as String
         String cardsData = Utils.readFile(context, CARDS_FILE);
 
@@ -185,8 +289,8 @@ public class Utils {
         JsonObject cardsProperties = propertiesENJSON.getAsJsonObject("cards");
 
         for (String key : cardsJSON.keySet()) {
-            Log.d("Utils-getCardsData", "checking card: "+key);
-            Log.d("Utils-getCardsData", "checking card: "+cardsJSON.get(key));
+            Log.d(TAG, "checking card (ID): "+key);
+            Log.d(TAG, "checking card (DATA): "+cardsJSON.get(key));
 
 
             Card card = gson.fromJson(cardsJSON.get(key), Card.class);
@@ -200,7 +304,10 @@ public class Utils {
         return cards;
     }
 
+
     public static ArrayList<Deck> getDecksData(Context context) {
+        final String TAG = "Utils-getDecksData()";
+
         // get file's content as String
         String decksData = Utils.readFile(context, DECKS_FILE);
 
@@ -211,7 +318,7 @@ public class Utils {
         ArrayList<Deck> decks = new ArrayList<>();
 
         for (String key : decksJSON.keySet()) {
-            Log.d("Utils-getDecksData", "checking deck: "+key);
+            Log.d(TAG, "checking deck: "+key);
 
             Deck deck = gson.fromJson(decksJSON.get(key), Deck.class);
             deck.setName(key);
@@ -222,7 +329,10 @@ public class Utils {
         return decks;
     }
 
+
     public static ArrayList<DialogueSet> getStoryData(Context context) {
+        final String TAG = "Utils-getStoryData()";
+
         // get file's content as String
         String storyData = Utils.readFile(context, STORY_FILE);
 

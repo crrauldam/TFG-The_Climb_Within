@@ -50,6 +50,9 @@ public class SplashScreen extends AppCompatActivity {
             }
         };
 
+        // CHECK IF PLAYER SAVE FILE EXISTS, IF NOT, IT CREATES IT
+        Utils.checkSaveFileExistence(this);
+
         handler.postDelayed(runnable, 3500);
 
     }

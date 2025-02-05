@@ -5,13 +5,14 @@
         "hp": 100,
         "unlocked_cards": [1000, 1001, 1002, 1003, 1004, 1005, 1006, 1007, 1008, 1009,  6003],
         "tower_coins": 0,
+        "unlocked_towers": [0],
         "emotion_coins": {
-            "anger": 0,
-            "disgust": 0,
-            "fear": 0,
-            "happiness": 0,
-            "sadness": 0,
-            "surprise": 0
+            "anger": 100,
+            "disgust": 110,
+            "fear": 120,
+            "happiness": 130,
+            "sadness": 140,
+            "surprise": 150
         },
         "deck": [],
         "stats": {

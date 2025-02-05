@@ -6,10 +6,10 @@
 
     <stroke
         android:color="@color/gunmetal"
-        android:width="8dp"/>
+        android:width="4dp"/>
 
     <solid
-        android:color="#66FFFFFF" />
+        android:color="#ccFFFFFF" />
 
 
 </shape>

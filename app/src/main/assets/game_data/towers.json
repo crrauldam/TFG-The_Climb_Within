@@ -31,7 +31,8 @@
                 "floor2": "",
                 "floor3": ""
             },
-            "multiplier": 1.2
+            "multiplier": 1.2,
+            "dialogues": "surprise"
         },
         {
             "id": 2,
@@ -47,7 +48,8 @@
                 "floor2": "",
                 "floor3": ""
             },
-            "multiplier": 1.5
+            "multiplier": 1.5,
+            "dialogues": "disgust"
         },
         {
             "id": 3,
@@ -63,7 +65,8 @@
                 "floor2": "",
                 "floor3": ""
             },
-            "multiplier": 1.6
+            "multiplier": 1.6,
+            "dialogues": "anger"
         },
         {
             "id": 4,
@@ -79,7 +82,8 @@
                 "floor2": "",
                 "floor3": ""
             },
-            "multiplier": 1.7
+            "multiplier": 1.7,
+            "dialogues": "sadness"
         },
         {
             "id": 5,
@@ -95,7 +99,8 @@
                 "floor2": "",
                 "floor3": ""
             },
-            "multiplier": 1.8
+            "multiplier": 1.8,
+            "dialogues": "fear"
         },
         {
             "id": 6,
@@ -111,7 +116,8 @@
                 "floor2": "",
                 "floor3": ""
             },
-            "multiplier": 2.0
+            "multiplier": 2.0,
+            "dialogues": "calm"
         }
     ]
 }

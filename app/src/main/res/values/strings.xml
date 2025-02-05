@@ -9,4 +9,12 @@
     <string name="exit_battle">Exit battle</string>
     <string name="return_to_main_menu">Return to main menu</string>
     <string name="you_don_t_have_cards_for_this_deck_yet">YOU DON\'T HAVE CARDS FOR THIS DECK YET!</string>
+    <string name="surprise">Surprise</string>
+    <string name="happiness">Happiness</string>
+    <string name="disgust">Disgust</string>
+    <string name="sadness">Sadness</string>
+    <string name="anger">Anger</string>
+    <string name="fear">Fear</string>
+    <string name="basic">Basic</string>
+    <string name="you_have_all_cards_of_this_deck_unlocked_already">YOU HAVE ALL CARDS OF THIS DECK UNLOCKED ALREADY</string>
 </resources>
