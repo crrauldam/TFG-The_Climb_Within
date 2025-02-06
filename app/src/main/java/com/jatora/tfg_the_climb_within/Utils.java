@@ -34,6 +34,7 @@ public class Utils {
             "        \"hp\": 100,\n" +
             "        \"unlocked_cards\": [1000, 1001, 1002, 1003, 1004, 1005, 1006, 1007, 1008, 1009,  6003],\n" +
             "        \"tower_coins\": 0,\n" +
+            "        \"unlocked_towers\": [0, 1],\n" +
             "        \"emotion_coins\": {\n" +
             "            \"anger\": 100,\n" +
             "            \"disgust\": 110,\n" +
@@ -111,7 +112,6 @@ public class Utils {
 
         return fileContent.toString();
     }
-
 
     /**
      * Get the properties in the specified language:
@@ -220,55 +220,72 @@ public class Utils {
         }
     }
 
-    public static Player getPlayerData(Context context) {
-        final String TAG = "Utils-getPlayerData()";
+    /**
+     * FOR TESTING PURPOSES, RESETS THE SAVE FILE CONTENT TO DEFAULT
+     * @param context
+     */
+    public static void resetSaveFileContent(Context context) {
+        final String TAG = "Utils-resetSaveFileContent";
 
-        StringBuilder sb = new StringBuilder();
+        File file = new File(context.getFilesDir(), "save.json");
 
-        try (FileInputStream fis = context.openFileInput(SAVE_FILE)) {
-            int ch;
-            while ((ch = fis.read()) != -1) {
-                sb.append((char) ch);
-            }
+        try {
+            file.createNewFile();
         } catch (IOException e) {
-            e.printStackTrace();
-            return null;
+            throw new RuntimeException(e);
         }
 
-        // parse enemies data to JSON
-        JsonObject playerJSON = gson.fromJson(sb.toString(), JsonObject.class);
-
-        Log.d(TAG, "Getting player's saved data: "+playerJSON);
-
-        return gson.fromJson(playerJSON.get("player"), Player.class);
-    }
-
-
-    public static void savePlayerData(Context context, Player playerObject) throws IOException {
-        final String TAG = "Utils-savePlayerData()";
-
-        Log.d(TAG, "parsing player object into string and adding to jsonobject.");
-        JsonObject jo = new JsonObject();
-        jo.add("player", gson.toJsonTree(playerObject));
-
-        Log.d(TAG, "Writing into file: "+SAVE_FILE);
-
+        Log.d(TAG, "resetting data into save.json in internal storage");
         try (FileOutputStream fos = context.openFileOutput(SAVE_FILE, Context.MODE_PRIVATE)) {
-            fos.write(jo.toString().getBytes());
-            Log.d(TAG, "Successfully wrote into file.");
+            fos.write(DEFAULT_TEST_SAVE_DATA.getBytes());
         } catch (IOException e) {
-            Log.e(TAG, "Failed to write into the file.");
-            e.printStackTrace();
+            Log.e(TAG, "Failed to reset save.json");
+            throw new RuntimeException(e);
         }
-//
-//        try (FileWriter fw = new FileWriter(context.getAssets().open(SAVE_FILE))) {
-//            fw.write(jo.toString());
-//            Log.d(TAG, "Successfully wrote into file.");
-//        } catch (Exception e) {
-//            Log.e(TAG, "Failed to write into the file.");
-//        }
-
     }
+
+
+//    public static Player getPlayerData(Context context) {
+//        final String TAG = "Utils-getPlayerData()";
+//
+//        StringBuilder sb = new StringBuilder();
+//
+//        try (FileInputStream fis = context.openFileInput(SAVE_FILE)) {
+//            int ch;
+//            while ((ch = fis.read()) != -1) {
+//                sb.append((char) ch);
+//            }
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//            return null;
+//        }
+//
+//        // parse enemies data to JSON
+//        JsonObject playerJSON = gson.fromJson(sb.toString(), JsonObject.class);
+//
+//        Log.d(TAG, "Getting player's saved data: "+playerJSON);
+//
+//        return gson.fromJson(playerJSON.get("player"), Player.class);
+//    }
+
+
+//    public static void savePlayerData(Context context, Player playerObject) throws IOException {
+//        final String TAG = "Utils-savePlayerData()";
+//
+//        Log.d(TAG, "parsing player object into string and adding to jsonobject.");
+//        JsonObject jo = new JsonObject();
+//        jo.add("player", gson.toJsonTree(playerObject));
+//
+//        Log.d(TAG, "Writing into file: "+SAVE_FILE);
+//
+//        try (FileOutputStream fos = context.openFileOutput(SAVE_FILE, Context.MODE_PRIVATE)) {
+//            fos.write(jo.toString().getBytes());
+//            Log.d(TAG, "Successfully wrote into file.");
+//        } catch (IOException e) {
+//            Log.e(TAG, "Failed to write into the file.");
+//            e.printStackTrace();
+//        }
+//    }
 
 
     public static ArrayList<Card> getCardsData(Context context) {

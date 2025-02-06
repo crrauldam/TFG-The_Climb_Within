@@ -1,19 +1,21 @@
 package com.jatora.tfg_the_climb_within;
 
+import java.util.Arrays;
+
 public class Player {
     private String name;
     private int maxhp;
     private int hp;
     private Integer[] unlocked_cards;
     private int tower_coins;
-    private Integer[] unlocked_towers;
+    private int[] unlocked_towers;
     private EmotionCoins emotion_coins;
     private Integer[] deck;
     private Stats stats;
 
     public Player() {
         this.unlocked_cards = new Integer[0];
-        this.unlocked_towers = new Integer[0];
+        this.unlocked_towers = new int[0];
         this.deck = new Integer[0];
     }
 
@@ -74,7 +76,6 @@ public class Player {
                     break;
             }
         }
-
     }
 
     static class Stats {
@@ -156,11 +157,11 @@ public class Player {
         this.tower_coins = tower_coins;
     }
 
-    public Integer[] getUnlocked_towers() {
+    public int[] getUnlocked_towers() {
         return unlocked_towers;
     }
 
-    public void setUnlocked_towers(Integer[] unlocked_towers) {
+    public void setUnlocked_towers(int[] unlocked_towers) {
         this.unlocked_towers = unlocked_towers;
     }
 
@@ -186,5 +187,20 @@ public class Player {
 
     public void setStats(Stats stats) {
         this.stats = stats;
+    }
+
+    @Override
+    public String toString() {
+        return "Player{" +
+                "name='" + name + '\'' +
+                ", maxhp=" + maxhp +
+                ", hp=" + hp +
+                ", unlocked_cards=" + Arrays.toString(unlocked_cards) +
+                ", tower_coins=" + tower_coins +
+                ", unlocked_towers=" + Arrays.toString(unlocked_towers) +
+                ", emotion_coins=" + emotion_coins +
+                ", deck=" + Arrays.toString(deck) +
+                ", stats=" + stats +
+                '}';
     }
 }

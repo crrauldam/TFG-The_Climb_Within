@@ -50,6 +50,7 @@ public class TowerSelection extends AppCompatActivity {
         SelectionAdapter selectionAdapter = new SelectionAdapter(this);
         viewPager.setAdapter(selectionAdapter);
 
+        // TODO: DELETE ARROWS WHEN BREADCRUMB DISPLAYED
         // ARROW NAVIGATION FUNCTIONALITY
         // go back
         leftArrow.setOnClickListener(v -> {

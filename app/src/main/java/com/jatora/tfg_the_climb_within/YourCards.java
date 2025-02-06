@@ -65,7 +65,9 @@ public class YourCards extends AppCompatActivity {
 
         ArrayList<Card> cards = Utils.getCardsData(this);
         ArrayList<Deck> decks = Utils.getDecksData(this);
-        Player player = Utils.getPlayerData(this);
+
+        Player player = PlayerManager.getInstance(this);
+
         // player unlocked cards (ONLY IDs)
         ArrayList<Integer> pucs = new ArrayList<>(Arrays.asList(player.getUnlocked_cards()));
         // player unlocked cards (objects)

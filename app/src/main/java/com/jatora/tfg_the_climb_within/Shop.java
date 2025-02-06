@@ -71,7 +71,9 @@ public class Shop extends AppCompatActivity {
 
         ArrayList<Card> cards = Utils.getCardsData(this);
         ArrayList<Deck> decks = Utils.getDecksData(this);
-        Player player = Utils.getPlayerData(this);
+
+        Player player = PlayerManager.getInstance(this);
+
         // player unlocked cards (ONLY IDs)
         ArrayList<Integer> pucs = new ArrayList<>(Arrays.asList(player.getUnlocked_cards()));
         // player unlocked cards (objects)
@@ -211,11 +213,14 @@ public class Shop extends AppCompatActivity {
                     Log.e(TAG, "Error while getting bitmap image from assets: " + e);
                 }
 
+                // set price to the card price label
                 TextView cardPrice = shopItemLayout.findViewById(R.id.cardPrice);
                 cardPrice.setText(String.valueOf(c.getUnlock_cost()));
 
+                // add click listener to card for it to be able to be bought
                 addClickListenerToShopItemLayout(context, player, searchedDeck, shopItemLayout, c, pucs, playerNonUnlockedCards);
 
+                // add card to layout
                 newlinearLayout.addView(shopItemLayout);
             }
 
@@ -273,13 +278,9 @@ public class Shop extends AppCompatActivity {
 
                         // TODO: AFTER ADDING NEW CARD, UPDATE SAVE.JSON FILE (MAKE METHOD IN UTILS CLASS)
                         Log.d(TAG, "saving player data");
-                        try {
-                            Utils.savePlayerData(context, player);
-                            Log.d(TAG, "successfully saved player data");
-                        } catch (IOException e) {
-                            Log.e(TAG, "failed to save player data");
-                            throw new RuntimeException(e);
-                        }
+                        PlayerManager.savePlayerData(v.getContext(), player);
+//                            Utils.savePlayerData(context, player);
+                        Log.d(TAG, "successfully saved player data");
 
                         Log.d(TAG, "player unlocked cards: "+ Arrays.toString(pucs.toArray()));
 
