@@ -19,6 +19,8 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.tbuonomo.viewpagerdotsindicator.DotsIndicator;
+import com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator;
 
 import java.util.ArrayList;
 
@@ -27,7 +29,7 @@ public class TowerSelection extends AppCompatActivity {
 
     private int actualFragment = 0;
 
-    ImageButton leftArrow, rightArrow;
+//    ImageButton leftArrow, rightArrow;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,33 +42,54 @@ public class TowerSelection extends AppCompatActivity {
             return insets;
         });
 
-        leftArrow = findViewById(R.id.leftArrow);
-        rightArrow = findViewById(R.id.rightArrow);
+//        leftArrow = findViewById(R.id.leftArrow);
+//        rightArrow = findViewById(R.id.rightArrow);
 
         // VIEWPAGER FUNCTIONALITY (CARROUSEL-LIKE FRAGMENT DISPLAY)
         ViewPager2 viewPager = findViewById(R.id.viewPager);
-
+        WormDotsIndicator dotsIndicator = findViewById(R.id.dotsIndicator);
         // creation of adapter
         SelectionAdapter selectionAdapter = new SelectionAdapter(this);
         viewPager.setAdapter(selectionAdapter);
 
-        // TODO: DELETE ARROWS WHEN BREADCRUMB DISPLAYED
-        // ARROW NAVIGATION FUNCTIONALITY
-        // go back
-        leftArrow.setOnClickListener(v -> {
-            if (actualFragment > 0) {
-                actualFragment--;
-                viewPager.setCurrentItem(actualFragment);
+
+        viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+            @Override
+            public void onPageSelected(int position) {
+                super.onPageSelected(position);
+
+                // Si está en los dos primeros dots
+                if (position == 0 || position == 1) {
+                    dotsIndicator.setDotIndicatorColor(getResources().getColor(R.color.gunmetal));
+                    dotsIndicator.setStrokeDotsIndicatorColor(getResources().getColor(R.color.gunmetal));
+                } else {
+                    dotsIndicator.setDotIndicatorColor(getResources().getColor(R.color.light_blue));
+                    dotsIndicator.setStrokeDotsIndicatorColor(getResources().getColor(R.color.light_blue));
+                }
+
+                dotsIndicator.refreshDots();  // Actualiza el estado de los puntos
             }
         });
 
-        // go next
-        rightArrow.setOnClickListener(v -> {
-            if (actualFragment < TOTAL_FRAGMENTS) {
-                actualFragment++;
-                viewPager.setCurrentItem(actualFragment);
-            }
-        });
+        dotsIndicator.attachTo(viewPager);
+
+        // TODO: DELETE ARROWS WHEN BREADCRUMB DISPLAYED
+        // ARROW NAVIGATION FUNCTIONALITY
+        // go back
+//        leftArrow.setOnClickListener(v -> {
+//            if (actualFragment > 0) {
+//                actualFragment--;
+//                viewPager.setCurrentItem(actualFragment);
+//            }
+//        });
+//
+//        // go next
+//        rightArrow.setOnClickListener(v -> {
+//            if (actualFragment < TOTAL_FRAGMENTS) {
+//                actualFragment++;
+//                viewPager.setCurrentItem(actualFragment);
+//            }
+//        });
 
 
     }
