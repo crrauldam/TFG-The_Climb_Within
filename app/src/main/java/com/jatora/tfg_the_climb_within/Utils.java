@@ -4,7 +4,11 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
+import android.view.View;
 
+import com.google.android.gms.common.SignInButton;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.ktx.Firebase;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
@@ -31,6 +35,9 @@ public class Utils {
     private static final Gson gson = new GsonBuilder()
             .setPrettyPrinting()
             .create();
+
+    // Firebase
+    private Firebase mAuth;
 
     public static void changeActivity(Activity from, Class to, int fromAnim, int toAnim) {
         Intent intent = new Intent(from, to);
@@ -94,6 +101,22 @@ public class Utils {
         return gson.fromJson(fileData, JsonObject.class);
     }
 
+    public static void checkPlayerSignedIn(Context context) {
+
+    }
+
+    public static void initiateFirebaseLoginSequence(Context context, FirebaseUser user) {
+        if(user != null) {
+            Log.d("MainActivity-updateUI", "User (" + user + ") was found.");
+//            startActivity(new Intent(this, Home.class));
+//            finish();
+        }
+        else {
+            Log.d("MainActivity-updateUI", "User was NOT found: " + user);
+//            startActivity(new Intent(this, Login.class));
+//            finish();
+        }
+    }
 
     public static ArrayList<Tower> getTowersData(Context context) {
         // get file's content as String
