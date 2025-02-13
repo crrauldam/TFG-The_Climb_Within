@@ -17,4 +17,12 @@
     <string name="fear">Fear</string>
     <string name="basic">Basic</string>
     <string name="you_have_all_cards_of_this_deck_unlocked_already">YOU HAVE ALL CARDS OF THIS DECK UNLOCKED ALREADY</string>
+    <string name="continueButton">CONTINUE</string>
+    <string name="new_game">NEW GAME</string>
+    <string name="your_cards">YOUR CARDS</string>
+    <string name="shop">SHOP</string>
+    <string name="about">About</string>
+    <string name="settings">Settings</string>
+    <string name="stage_cleared">STAGE CLEARED</string>
+    <string name="you_lost">YOU LOST</string>
 </resources>

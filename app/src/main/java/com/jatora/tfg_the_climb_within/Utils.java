@@ -74,6 +74,11 @@ public class Utils {
         from.overridePendingTransition(toAnim, fromAnim);
     }
 
+    public static void changeActivity(Intent intent, Activity from, Class to, int fromAnim, int toAnim) {
+        from.startActivity(intent);
+        from.overridePendingTransition(toAnim, fromAnim);
+    }
+
 
     /**
      * Reads the given file from the assets folder.
@@ -157,8 +162,8 @@ public class Utils {
             // parse JSON object to Tower Java object
             Tower tower = gson.fromJson(je.toString(), Tower.class);
             // replace initial name (towerN.name) with property stored in the properties data
-            tower.setName(String.valueOf(towerProperties.get(tower.getName())));
-//            tower.setImg(String.valueOf(towerProperties.get(tower.getImg())));
+            tower.setName(towerProperties.get(tower.getName()).getAsString());
+            tower.setImg(towerProperties.get(tower.getImg()).getAsString());
 
             Log.e(TAG, "tower img: "+tower.getImg());
 
@@ -189,9 +194,9 @@ public class Utils {
         for (String key : enemiesJSON.keySet()) {
             Log.d(TAG, "checking enemy: "+key);
 
-            Enemy enemy = gson.fromJson(enemiesJSON.get(key).getAsString(), Enemy.class);
-            enemy.setName(String.valueOf(enemiesProperties.get(enemy.getName())));
-            enemy.setImg(String.valueOf(enemiesProperties.get(enemy.getImg())));
+            Enemy enemy = gson.fromJson(enemiesJSON.get(key), Enemy.class);
+            enemy.setName(enemiesProperties.get(enemy.getName()).getAsString());
+            enemy.setImg(enemiesProperties.get(enemy.getImg()).getAsString());
 
             enemies.add(enemy);
         }
@@ -245,56 +250,13 @@ public class Utils {
     }
 
 
-//    public static Player getPlayerData(Context context) {
-//        final String TAG = "Utils-getPlayerData()";
-//
-//        StringBuilder sb = new StringBuilder();
-//
-//        try (FileInputStream fis = context.openFileInput(SAVE_FILE)) {
-//            int ch;
-//            while ((ch = fis.read()) != -1) {
-//                sb.append((char) ch);
-//            }
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//            return null;
-//        }
-//
-//        // parse enemies data to JSON
-//        JsonObject playerJSON = gson.fromJson(sb.toString(), JsonObject.class);
-//
-//        Log.d(TAG, "Getting player's saved data: "+playerJSON);
-//
-//        return gson.fromJson(playerJSON.get("player"), Player.class);
-//    }
-
-
-//    public static void savePlayerData(Context context, Player playerObject) throws IOException {
-//        final String TAG = "Utils-savePlayerData()";
-//
-//        Log.d(TAG, "parsing player object into string and adding to jsonobject.");
-//        JsonObject jo = new JsonObject();
-//        jo.add("player", gson.toJsonTree(playerObject));
-//
-//        Log.d(TAG, "Writing into file: "+SAVE_FILE);
-//
-//        try (FileOutputStream fos = context.openFileOutput(SAVE_FILE, Context.MODE_PRIVATE)) {
-//            fos.write(jo.toString().getBytes());
-//            Log.d(TAG, "Successfully wrote into file.");
-//        } catch (IOException e) {
-//            Log.e(TAG, "Failed to write into the file.");
-//            e.printStackTrace();
-//        }
-//    }
-
-
     public static ArrayList<Card> getCardsData(Context context) {
         final String TAG = "Utils-getCardsData()";
 
         // get file's content as String
         String cardsData = Utils.readFile(context, CARDS_FILE);
 
-        // parse enemies data to JSON
+        // parse cards data to JSON
         JsonObject cardsJSON = gson.fromJson(cardsData, JsonObject.class);
 
         // ArrayList for storing towers
@@ -302,7 +264,7 @@ public class Utils {
 
         // get properties data
         JsonObject propertiesENJSON = getProperties(context, 0);
-        // get object with enemies properties from inside properties (en) JSON object, located with key "enemies"
+        // get object with cards properties from inside properties (en) JSON object, located with key "cards"
         JsonObject cardsProperties = propertiesENJSON.getAsJsonObject("cards");
 
         for (String key : cardsJSON.keySet()) {
@@ -311,9 +273,9 @@ public class Utils {
 
 
             Card card = gson.fromJson(cardsJSON.get(key), Card.class);
-            card.setName(String.valueOf(cardsProperties.get(card.getName()).getAsString()));
-            card.setDescription(String.valueOf(cardsProperties.get(card.getDescription()).getAsString()));
-            card.setIcon(String.valueOf(cardsProperties.get(card.getIcon()).getAsString()));
+            card.setName(cardsProperties.get(card.getName()).getAsString());
+            card.setDescription(cardsProperties.get(card.getDescription()).getAsString());
+            card.setIcon(cardsProperties.get(card.getIcon()).getAsString());
 
             cards.add(card);
         }
@@ -328,7 +290,7 @@ public class Utils {
         // get file's content as String
         String decksData = Utils.readFile(context, DECKS_FILE);
 
-        // parse enemies data to JSON
+        // parse decks data to JSON
         JsonObject decksJSON = gson.fromJson(decksData, JsonObject.class);
 
         // ArrayList for storing towers
@@ -353,12 +315,12 @@ public class Utils {
         // get file's content as String
         String storyData = Utils.readFile(context, STORY_FILE);
 
-        // parse enemies data to JSON
+        // parse story data to JSON
         JsonObject storyJSON = gson.fromJson(storyData, JsonObject.class);
 
         // get properties data
         JsonObject propertiesENJSON = getProperties(context, 0);
-        // get object with enemies properties from inside properties (en) JSON object, located with key "enemies"
+        // get object with story properties from inside properties (en) JSON object, located with key "story"
         JsonObject storyProperties = propertiesENJSON.getAsJsonObject("story");
 
         ArrayList<DialogueSet> story = new ArrayList<>();

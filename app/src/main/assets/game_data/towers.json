@@ -5,14 +5,14 @@
             "name": "tower0.name",
             "img": "tower0.img",
             "enemies": {
-                "floor1": ["6100","6101"],
-                "floor2": ["6105","6106"],
-                "floor3": ["6109"]
+                "floor1": [2100,2101],
+                "floor2": [2105,2106],
+                "floor3": [2109]
             },
             "bosses": {
-                "floor1": "",
-                "floor2": "",
-                "floor3": ""
+                "floor1": 0,
+                "floor2": 0,
+                "floor3": 0
             },
             "multiplier": 1.0,
             "dialogues": "happiness"
@@ -22,14 +22,14 @@
             "name": "tower1.name",
             "img": "tower1.img",
             "enemies": {
-                "floor1": ["8100","8101"],
-                "floor2": ["8105","8106"],
-                "floor3": ["8109"]
+                "floor1": [3100,3101],
+                "floor2": [3105,3106],
+                "floor3": [3109]
             },
             "bosses": {
-                "floor1": "",
-                "floor2": "",
-                "floor3": ""
+                "floor1": 0,
+                "floor2": 0,
+                "floor3": 0
             },
             "multiplier": 1.2,
             "dialogues": "surprise"
@@ -39,14 +39,14 @@
             "name": "tower2.name",
             "img": "tower2.img",
             "enemies": {
-                "floor1": ["4100","4101"],
-                "floor2": ["4105","4106"],
-                "floor3": ["4109"]
+                "floor1": [4100,4101],
+                "floor2": [4105,4106],
+                "floor3": [4109]
             },
             "bosses": {
-                "floor1": "",
-                "floor2": "",
-                "floor3": ""
+                "floor1": 0,
+                "floor2": 0,
+                "floor3": 0
             },
             "multiplier": 1.5,
             "dialogues": "disgust"
@@ -56,14 +56,14 @@
             "name": "tower3.name",
             "img": "tower3.img",
             "enemies": {
-                "floor1": ["2100","2101"],
-                "floor2": ["2105","2106"],
-                "floor3": ["2109"]
+                "floor1": [5100,5101],
+                "floor2": [5105,5106],
+                "floor3": [5109]
             },
             "bosses": {
-                "floor1": "",
-                "floor2": "",
-                "floor3": ""
+                "floor1": 0,
+                "floor2": 0,
+                "floor3": 0
             },
             "multiplier": 1.6,
             "dialogues": "anger"
@@ -73,14 +73,14 @@
             "name": "tower4.name",
             "img": "tower4.img",
             "enemies": {
-                "floor1": ["7100","7101"],
-                "floor2": ["7105","7106"],
-                "floor3": ["7109"]
+                "floor1": [6100,6101],
+                "floor2": [6105,6106],
+                "floor3": [6109]
             },
             "bosses": {
-                "floor1": "",
-                "floor2": "",
-                "floor3": ""
+                "floor1": 0,
+                "floor2": 0,
+                "floor3": 0
             },
             "multiplier": 1.7,
             "dialogues": "sadness"
@@ -90,14 +90,14 @@
             "name": "tower5.name",
             "img": "tower5.img",
             "enemies": {
-                "floor1": ["5100","5101"],
-                "floor2": ["5105","5106"],
-                "floor3": ["5109"]
+                "floor1": [7100,7101],
+                "floor2": [7105,7106],
+                "floor3": [7109]
             },
             "bosses": {
-                "floor1": "",
-                "floor2": "",
-                "floor3": ""
+                "floor1": 0,
+                "floor2": 0,
+                "floor3": 0
             },
             "multiplier": 1.8,
             "dialogues": "fear"
@@ -107,14 +107,14 @@
             "name": "tower6.name",
             "img": "tower6.img",
             "enemies": {
-                "floor1": ["3100","3101"],
-                "floor2": ["3105","3106"],
-                "floor3": ["3109"]
+                "floor1": [8100,8101],
+                "floor2": [8105,8106],
+                "floor3": [8109]
             },
             "bosses": {
-                "floor1": "",
-                "floor2": "",
-                "floor3": ""
+                "floor1": 0,
+                "floor2": 0,
+                "floor3": 0
             },
             "multiplier": 2.0,
             "dialogues": "calm"

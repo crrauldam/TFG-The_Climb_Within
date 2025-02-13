@@ -2,10 +2,10 @@ package com.jatora.tfg_the_climb_within;
 
 import java.util.Arrays;
 
-public class Player {
-    private String name;
-    private int maxhp;
-    private int hp;
+public class Player extends Entity {
+//    private String name;
+//    private int maxhp;
+//    private int hp;
     private Integer[] unlocked_cards;
     private int tower_coins;
     private int[] unlocked_towers;
@@ -117,29 +117,29 @@ public class Player {
         }
     }
 
-    public String getName() {
-        return name;
-    }
+//    public String getName() {
+//        return name;
+//    }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+//    public void setName(String name) {
+//        this.name = name;
+//    }
 
-    public int getMaxhp() {
-        return maxhp;
-    }
+//    public int getMaxhp() {
+//        return maxhp;
+//    }
 
-    public void setMaxhp(int maxhp) {
-        this.maxhp = maxhp;
-    }
+//    public void setMaxhp(int maxhp) {
+//        this.maxhp = maxhp;
+//    }
 
-    public int getHp() {
-        return hp;
-    }
+//    public int getHp() {
+//        return hp;
+//    }
 
-    public void setHp(int hp) {
-        this.hp = hp;
-    }
+//    public void setHp(int hp) {
+//        this.hp = hp;
+//    }
 
     public Integer[] getUnlocked_cards() {
         return unlocked_cards;
@@ -192,9 +192,9 @@ public class Player {
     @Override
     public String toString() {
         return "Player{" +
-                "name='" + name + '\'' +
-                ", maxhp=" + maxhp +
-                ", hp=" + hp +
+//                "name='" + name + '\'' +
+//                ", maxhp=" + maxhp +
+//                ", hp=" + hp +
                 ", unlocked_cards=" + Arrays.toString(unlocked_cards) +
                 ", tower_coins=" + tower_coins +
                 ", unlocked_towers=" + Arrays.toString(unlocked_towers) +

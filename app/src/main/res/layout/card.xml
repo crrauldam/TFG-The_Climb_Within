@@ -6,6 +6,8 @@
     android:layout_height="wrap_content"
 
     android:layout_weight="1"
+    android:layout_columnWeight="1"
+    android:layout_rowWeight="1"
 
     android:layout_margin="4dp"
     android:padding="0dp"

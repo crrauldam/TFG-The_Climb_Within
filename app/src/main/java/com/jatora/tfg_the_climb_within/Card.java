@@ -7,7 +7,7 @@ public class Card {
     private String name;
     private String description;
     private int effect;
-    private String type;
+    private CARDTYPES type;
     private String icon;
     private boolean unlockable;
     private int unlock_cost;
@@ -29,7 +29,7 @@ public class Card {
         return effect;
     }
 
-    public String getType() {
+    public CARDTYPES getType() {
         return type;
     }
 
@@ -69,7 +69,7 @@ public class Card {
         this.effect = effect;
     }
 
-    public void setType(String type) {
+    public void setType(CARDTYPES type) {
         this.type = type;
     }
 

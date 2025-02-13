@@ -49,7 +49,7 @@ public class PlayerManager {
             return null;
         }
 
-        // parse enemies data to JSON
+        // parse player data to JSON
         JsonObject playerJSON = gson.fromJson(sb.toString(), JsonObject.class);
 
         Log.d(TAG, "Getting player's saved data: "+playerJSON);

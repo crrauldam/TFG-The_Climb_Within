@@ -208,16 +208,18 @@
     <!--    PLAYABLE CARDS -->
     <GridLayout
         android:id="@+id/playableCards"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="210dp"
         android:rowCount="1"
-        android:columnCount="4"
+        android:columnCount="3"
+
 
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toTopOf="@id/playerHPContainer"
         android:layout_marginBottom="20dp"
-        android:paddingBottom="5dp"
-        android:paddingTop="50dp"
+        android:paddingBottom="0dp"
+        android:paddingTop="55dp"
         android:clipToPadding="false"
         >
     </GridLayout>
