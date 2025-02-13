@@ -29,7 +29,9 @@
 
         <activity
             android:name=".Settings"
-            android:exported="true" />
+            android:exported="true"
+            android:parentActivityName=".HomeScreen"
+            />
 
         <activity
             android:name=".BattleScreen"
@@ -37,23 +39,25 @@
 
         <activity
             android:name=".Your_Cards"
-            android:exported="true" />
+            android:exported="false"
+            android:parentActivityName=".HomeScreen"
+            />
 
         <activity
             android:name=".Shop"
-            android:exported="true" />
+            android:exported="true"
+            android:parentActivityName=".HomeScreen"
+            />
 
         <activity
             android:name=".HomeScreen"
-            android:exported="true" />
+            android:exported="false" />
 
         <activity
             android:name=".TowerSelection"
-            android:exported="true"/>
-
-        <activity
-            android:name=".MainActivity"
-            android:exported="true"/>
+            android:exported="true"
+            android:parentActivityName=".HomeScreen"
+            />
 
         <meta-data
             android:name="preloaded_fonts"

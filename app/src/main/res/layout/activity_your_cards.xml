@@ -7,8 +7,10 @@
     android:layout_height="match_parent"
     tools:context=".Shop"
     android:background="@drawable/your_cards_bg">
+
+<!--    TAB BUTTONS -->
     <GridLayout
-        android:id="@+id/grid1"
+        android:id="@+id/tabButtons"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:columnCount="7"
@@ -31,6 +33,7 @@
             android:background="@drawable/basic_button"
             />
         <ImageButton
+            android:id="@+id/fearTab"
             android:layout_width="0dp"
             android:layout_height="100dp"
             android:layout_columnWeight="1"
@@ -41,6 +44,7 @@
             android:background="@drawable/fear_button"
             />
         <ImageButton
+            android:id="@+id/angerTab"
             android:layout_width="0dp"
             android:layout_height="100dp"
             android:layout_columnWeight="1"
@@ -52,6 +56,7 @@
             android:background="@drawable/anger_button"
             />
         <ImageButton
+            android:id="@+id/sadnessTab"
             android:layout_width="0dp"
             android:layout_height="100dp"
             android:layout_columnWeight="1"
@@ -63,6 +68,7 @@
             android:background="@drawable/sadness_button"
             />
         <ImageButton
+            android:id="@+id/disgustTab"
             android:layout_width="0dp"
             android:layout_height="100dp"
             android:layout_columnWeight="1"
@@ -74,6 +80,7 @@
             android:background="@drawable/disgust_button"
             />
         <ImageButton
+            android:id="@+id/happinessTab"
             android:layout_width="0dp"
             android:layout_height="100dp"
             android:layout_columnWeight="1"
@@ -85,6 +92,7 @@
             android:background="@drawable/happiness_button"
             />
         <ImageButton
+            android:id="@+id/surpriseTab"
             android:layout_width="0dp"
             android:layout_height="100dp"
             android:layout_columnWeight="1"
@@ -98,26 +106,64 @@
 
     </GridLayout>
 
+<!--    CARDS CONTAINER -->
     <ScrollView
         android:id="@+id/scroll"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:alpha="0.3"
-        android:background="@color/white"
-        android:padding="16dp"
+
+        android:alpha="1"
+
+        android:background="@android:color/transparent"
+
+        android:padding="15dp"
         app:layout_constraintBottom_toBottomOf="@id/main"
         app:layout_constraintEnd_toEndOf="@id/main"
 
         app:layout_constraintStart_toStartOf="@id/main"
-        app:layout_constraintTop_toBottomOf="@id/grid1">
+        app:layout_constraintTop_toBottomOf="@id/tabButtons">
 
 
-        <GridLayout
-            android:id="@+id/gridLayout"
+<!--        <GridLayout-->
+<!--            android:id="@+id/gridLayout"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:columnCount="3"-->
+<!--            android:background="@color/white"-->
+<!--            >-->
+
+
+
+<!--        </GridLayout>-->
+
+        <LinearLayout
+            android:id="@+id/linearLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:columnCount="3" />
+            android:orientation="vertical"
+            >
+
+        </LinearLayout>
     </ScrollView>
 
+    <TextView
+        android:id="@+id/youDontHaveCards"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        app:layout_constraintTop_toBottomOf="@id/tabButtons"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:padding="20dp"
+        android:layout_margin="30dp"
+
+        android:text="@string/you_don_t_have_cards_for_this_deck_yet"
+        android:textSize="30sp"
+        android:textColor="@color/white"
+        android:textAlignment="center"
+        android:background="@drawable/message_bg"
+        android:fontFamily="@font/comfortaa_bold"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

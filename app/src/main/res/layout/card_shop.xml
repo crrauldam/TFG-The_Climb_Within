@@ -1,29 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_columnWeight="1"
+
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_margin="20dp"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_weight="1"
     >
 
+<!--    CARD -->
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
         android:id="@+id/card"
-        android:layout_weight="8"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
 
+        android:layout_weight="5"
+        android:layout_margin="0dp"
+        android:padding="0dp"
         android:background="@drawable/card_bg"
         >
 
+        <!-- CARD INNER FRAME-->
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
 
-            android:layout_margin="15dp"
+            android:layout_margin="5dp"
             android:background="@drawable/card_img_shape"
+            android:padding="5dp"
+            android:paddingStart="15dp"
+            android:paddingEnd="15dp"
 
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -31,23 +38,11 @@
             app:layout_constraintTop_toTopOf="parent"
             >
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/kadwa_bold"
-                android:text="BASIC"
-                android:textColor="@color/gunmetal"
-                android:textSize="60sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/cardImageFrame" />
-
+            <!--        CARD ICON -->
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/cardImageFrame"
-                android:layout_width="280dp"
-                android:layout_height="400dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
 
 
                 android:background="@drawable/card_img_fear"
@@ -60,39 +55,79 @@
                 >
 
                 <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:scaleType="centerInside"
+                    android:id="@+id/cardIcon"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:scaleType="centerCrop"
                     android:src="@drawable/basic"
+                    android:padding="10dp"
+
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
                     />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!--        CARD NAME-->
+            <TextView
+                android:id="@+id/cardName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/kadwa_bold"
+                android:text="BASIC"
+                android:textColor="@color/gunmetal"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:textAlignment="center"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/cardImageFrame"
+                />
+
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
+        <View
+            android:id="@+id/hideCard"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@color/black"
+
+            android:alpha=".7"
+
+            android:visibility="invisible"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<!--    PRICE CONTAINER -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/priceContainer"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-
         android:layout_weight="1"
-        android:id="@+id/priceContainer"
         android:background="@drawable/card_img_price"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="40dp"
-        android:layout_marginRight="40dp"
         >
 
+
         <ImageView
-            android:id="@+id/coin"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:id="@+id/cardCoinImg"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginLeft="40dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
             android:src="@drawable/custom_faq"
             />
 
@@ -100,16 +135,33 @@
             android:id="@+id/cardPrice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+
             app:layout_constraintTop_toTopOf="parent"
-            android:textSize="35sp"
+            android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/coin"
-            android:layout_marginRight="80dp"
+            app:layout_constraintStart_toEndOf="@id/cardCoinImg"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="30dp"
             android:text="500"
             android:textColor="@color/black"
             android:fontFamily="@font/comfortaa_bold"/>
 
+        <View
+            android:id="@+id/hidePrice"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@color/black"
+            android:alpha=".7"
 
+            android:visibility="invisible"
+
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            />
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 </LinearLayout>

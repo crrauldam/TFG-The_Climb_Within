@@ -3,4 +3,24 @@
     <string name="play">JUGAR</string>
     <string name="hello_blank_fragment">Hola fragment vacío</string>
     <string name="menu">MENÚ</string>
+    <string name="back_to_battle">Volver a la batalla</string>
+    <string name="exit_battle">Salir de la batalla</string>
+    <string name="return_to_main_menu">Volver al menú principal</string>
+    <string name="you_don_t_have_cards_for_this_deck_yet">¡NO TIENES CARTAS PARA ESTE MAZO AÚN!</string>
+    <string name="surprise">Sorpresa</string>
+    <string name="happiness">Alegría</string>
+    <string name="disgust">Asco</string>
+    <string name="sadness">Tristeza</string>
+    <string name="anger">Ira</string>
+    <string name="fear">Miedo</string>
+    <string name="basic">Básico</string>
+    <string name="you_have_all_cards_of_this_deck_unlocked_already">YA TIENES TODAS LAS CARTAS DE ESTE MAZO DESBLOQUEADAS</string>
+    <string name="continueButton">CONTINUAR</string>
+    <string name="new_game">NUEVA PARTIDA</string>
+    <string name="your_cards">TUS CARTAS</string>
+    <string name="shop">TIENDA</string>
+    <string name="about">Sobre</string>
+    <string name="settings">Ajustes</string>
+    <string name="stage_cleared">ETAPA SUPERADA</string>
+    <string name="you_lost">HAS PERDIDO</string>
 </resources>
