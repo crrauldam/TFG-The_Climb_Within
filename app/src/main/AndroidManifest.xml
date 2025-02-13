@@ -38,7 +38,7 @@
             android:exported="true" />
 
         <activity
-            android:name=".Your_Cards"
+            android:name=".YourCards"
             android:exported="false"
             android:parentActivityName=".HomeScreen"
             />

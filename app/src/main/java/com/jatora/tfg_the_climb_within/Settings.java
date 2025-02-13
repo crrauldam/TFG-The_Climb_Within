@@ -226,6 +226,9 @@ public class Settings extends AppCompatActivity {
             TextView userId = findViewById(R.id.userId);
             userId.setText(user.getEmail());
             userId.setVisibility(View.VISIBLE);
+
+            PlayerManager.checkRemotePlayerData(context, user);
+
         } else {
             Toast.makeText(this, "Login failed", Toast.LENGTH_SHORT).show();
         }
