@@ -1,7 +1,5 @@
 package com.jatora.tfg_the_climb_within;
 
-import com.google.gson.annotations.SerializedName;
-
 public class Tower {
     private int id;
     private String name;
@@ -9,42 +7,58 @@ public class Tower {
 //    @SerializedName("enemies")
     private Enemies enemies;
     private Bosses bosses;
-    private double multiplier;
+    private float multiplier;
     private String dialogues;
 
     static class Enemies {
-        private String[] floor1;
-        private String[] floor2;
-        private String[] floor3;
+        private int[] floor1;
+        private int[] floor2;
+        private int[] floor3;
 
-        public String[] getFloor1() {
-            return floor1;
-        }
+        public int[] getFloor(int searchedFloor) {
+            int[] floor;
 
-        public String[] getFloor2() {
-            return floor2;
-        }
+            switch (searchedFloor) {
+                case 1:
+                    floor = floor1;
+                    break;
+                case 2:
+                    floor = floor2;
+                    break;
+                case 3:
+                    floor = floor3;
+                    break;
+                default:
+                    floor = null;
+            }
 
-        public String[] getFloor3() {
-            return floor3;
+            return floor;
         }
     }
 
     static class Bosses {
-        private String floor1;
-        private String floor2;
-        private String floor3;
+        private int floor1;
+        private int floor2;
+        private int floor3;
 
-        public String getFloor1() {
-            return floor1;
-        }
+        public int getFloor(int searchedFloor) {
+            int floor;
 
-        public String getFloor2() {
-            return floor2;
-        }
+            switch (searchedFloor) {
+                case 1:
+                    floor = floor1;
+                    break;
+                case 2:
+                    floor = floor2;
+                    break;
+                case 3:
+                    floor = floor3;
+                    break;
+                default:
+                    floor = 0;
+            }
 
-        public String getFloor3() {
-            return floor3;
+            return floor;
         }
     }
 
@@ -68,7 +82,7 @@ public class Tower {
         return bosses;
     }
 
-    public double getMultiplier() {
+    public float getMultiplier() {
         return multiplier;
     }
 

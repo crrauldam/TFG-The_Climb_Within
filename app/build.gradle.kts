@@ -43,6 +43,7 @@ dependencies {
 
     implementation("androidx.core:core-splashscreen:1.0.0")
     implementation(libs.firebase.auth)
+    implementation(libs.firebase.firestore)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
@@ -50,6 +51,7 @@ dependencies {
 
     implementation("com.google.code.gson:gson:2.8.6")
 
+    implementation("com.tbuonomo:dotsindicator:5.1.0")
     // Import the BoM for the Firebase platform
     implementation(platform("com.google.firebase:firebase-bom:33.8.0"))
 

@@ -61,7 +61,7 @@ public class Settings extends AppCompatActivity {
 
         googleBtnUi();
 
-        // signInButton = findViewById(R.id.signInButton);
+        signInButton = findViewById(R.id.google_button);
         signInButton.setOnClickListener(view -> signIn());
 
         // Firebase Auth Instance
@@ -222,9 +222,15 @@ public class Settings extends AppCompatActivity {
             Log.d("Login-updateUI", "updateUI() called");
             SignInButton googleButton = (SignInButton) findViewById(R.id.google_button);
             googleButton.setVisibility(View.INVISIBLE);
-            // Toast.makeText(this, "Login successful.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Login successful.", Toast.LENGTH_SHORT).show();
+            TextView userId = findViewById(R.id.userId);
+            userId.setText(user.getEmail());
+            userId.setVisibility(View.VISIBLE);
+
+            PlayerManager.checkRemotePlayerData(context, user);
+
         } else {
-            // Toast.makeText(this, "Login failed", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Login failed", Toast.LENGTH_SHORT).show();
         }
     }
 

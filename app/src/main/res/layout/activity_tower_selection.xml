@@ -19,7 +19,25 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         />
-
+    <com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator
+        android:id="@+id/dotsIndicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="40dp"
+        app:dotsColor="@color/light_blue"
+        app:dotsCornerRadius="8dp"
+        app:dotsSize="20dp"
+        app:dotsSpacing="10dp"
+        app:dotsWidthFactor="2.5"
+        app:progressMode="true"
+        app:dotsStrokeColor="@color/light_blue"
+        app:dotsStrokeWidth="2dp"
+        app:selectedDotColor="@color/gunmetal"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        />
 <!--    <FrameLayout-->
 <!--        android:id="@+id/frameLayout"-->
 <!--        android:layout_width="match_parent"-->
@@ -44,14 +62,14 @@
         app:layout_constraintEnd_toEndOf="parent"
         >
 
-        <ImageButton
-            android:id="@+id/leftArrow"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_columnSpan="1"
-            android:layout_columnWeight="1"
-            android:backgroundTint="@android:color/white"
-            android:src="@drawable/left_arrow_icon" />
+<!--        <ImageButton-->
+<!--            android:id="@+id/leftArrow"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:layout_columnSpan="1"-->
+<!--            android:layout_columnWeight="1"-->
+<!--            android:backgroundTint="@android:color/white"-->
+<!--            android:src="@drawable/left_arrow_icon" />-->
 
         <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
             android:id="@+id/playButton"
@@ -75,15 +93,15 @@
             android:textColor="@color/gunmetal"
             />
 
-        <ImageButton
-            android:id="@+id/rightArrow"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_columnWeight="1"
-            android:layout_columnSpan="1"
-            android:backgroundTint="@android:color/white"
-            android:src ="@drawable/right_arrow_icon"
-            />
+<!--        <ImageButton-->
+<!--            android:id="@+id/rightArrow"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:layout_columnWeight="1"-->
+<!--            android:layout_columnSpan="1"-->
+<!--            android:backgroundTint="@android:color/white"-->
+<!--            android:src ="@drawable/right_arrow_icon"-->
+<!--            />-->
 
 
     </GridLayout>

@@ -33,18 +33,16 @@
     -->
 
 
-    <!--
-    <Button
-        android:id="@+id/signUpButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Sign Up with Google"
-        android:textColor="@android:color/white"
-        android:backgroundTint="@color/googleGreen"
-        android:padding="12dp"
-        android:layout_marginTop="16dp"
-        />
-    -->
+<!--    <Button-->
+<!--        android:id="@+id/signUpButton"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="Sign Up with Google"-->
+<!--        android:textColor="@android:color/white"-->
+<!--        android:backgroundTint="@color/googleGreen"-->
+<!--        android:padding="12dp"-->
+<!--        android:layout_marginTop="16dp"-->
+<!--        />-->
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="332dp"
@@ -73,10 +71,18 @@
                 android:layout_margin="10dp"
                 android:text="Text"
                 android:textSize="18sp"
-                android:visibility="invisible"
                 tools:layout_editor_absoluteX="10dp"
                 tools:layout_editor_absoluteY="10dp" />
 
+            <TextView
+                android:id="@+id/userId"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="invisible"
+                android:textColor="@color/gunmetal"
+                android:textSize="20sp"
+                android:fontFamily="@font/comfortaa_bold"
+                android:textAlignment="center"/>
 
 
 
@@ -87,7 +93,7 @@
             android:layout_width="282dp"
             android:layout_height="52dp"
             android:layout_marginBottom="45dp"
-            android:text="About"
+            android:text="@string/about"
             android:fontFamily="@font/comfortaa_bold"
             app:icon="@drawable/about_icon"
             app:iconTint="@color/gunmetal"

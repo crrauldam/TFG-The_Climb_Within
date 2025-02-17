@@ -1,11 +1,13 @@
 package com.jatora.tfg_the_climb_within;
 
+import androidx.annotation.NonNull;
+
 public class Card {
     private int id;
     private String name;
     private String description;
     private int effect;
-    private String type;
+    private CARDTYPES type;
     private String icon;
     private boolean unlockable;
     private int unlock_cost;
@@ -27,7 +29,7 @@ public class Card {
         return effect;
     }
 
-    public String getType() {
+    public CARDTYPES getType() {
         return type;
     }
 
@@ -67,7 +69,7 @@ public class Card {
         this.effect = effect;
     }
 
-    public void setType(String type) {
+    public void setType(CARDTYPES type) {
         this.type = type;
     }
 
@@ -81,5 +83,11 @@ public class Card {
 
     public void setIn_game_cost(int in_game_cost) {
         this.in_game_cost = in_game_cost;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return String.valueOf(this.getId());
     }
 }

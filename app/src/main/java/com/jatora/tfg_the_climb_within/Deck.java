@@ -4,7 +4,7 @@ public class Deck {
     private String name;
     private String color;
     private String coin;
-    private String[] cards;
+    private int[] cards;
 
     public String getName() {
         return name;
@@ -22,7 +22,7 @@ public class Deck {
         return coin;
     }
 
-    public String[] getCards() {
+    public int[] getCards() {
         return cards;
     }
 }
