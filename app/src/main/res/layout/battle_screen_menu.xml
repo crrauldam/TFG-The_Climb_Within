@@ -54,7 +54,7 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="wrap_content"
                     android:layout_height="0dp"
-                    android:layout_weight="2"
+                    android:layout_weight="3"
                     android:layout_gravity="center"
                     >
                     <TextView
@@ -77,7 +77,7 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="wrap_content"
                     android:layout_height="0dp"
-                    android:layout_weight="2"
+                    android:layout_weight="3"
                     android:layout_gravity="center"
                     >
                     <TextView
@@ -98,10 +98,11 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/playerCoins"
+                    android:id="@+id/coins"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
+                    android:layout_margin="7dp"
 
                     android:background="@drawable/card_img_price"
 
@@ -111,7 +112,7 @@
                     >
 
                     <ImageView
-                        android:id="@+id/coin"
+                        android:id="@+id/coinImg"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
                         android:src="@drawable/custom_faq"
@@ -126,14 +127,14 @@
                         />
 
                     <TextView
-                        android:id="@+id/totalEmotionCoin"
+                        android:id="@+id/amount"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         app:layout_constraintTop_toTopOf="parent"
                         android:textSize="14sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@id/coin"
+                        app:layout_constraintStart_toEndOf="@id/coinImg"
                         android:text="500"
                         android:textColor="@color/black"
                         android:fontFamily="@font/comfortaa_bold"/>
@@ -182,7 +183,7 @@
             app:iconGravity="textStart"
             app:iconTint="@color/gunmetal"
 
-            android:text="Settings"
+            android:text="@string/settings"
             android:textSize="20sp"
             android:backgroundTint="@color/light_cyan"
             android:textColor="@color/gunmetal"

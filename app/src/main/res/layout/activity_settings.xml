@@ -44,7 +44,7 @@
             android:layout_width="282dp"
             android:layout_height="52dp"
             android:layout_marginBottom="45dp"
-            android:text="About"
+            android:text="@string/about"
             android:fontFamily="@font/comfortaa_bold"
             app:icon="@drawable/about_icon"
             app:iconTint="@color/gunmetal"

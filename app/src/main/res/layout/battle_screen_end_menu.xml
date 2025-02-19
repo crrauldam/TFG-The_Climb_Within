@@ -4,6 +4,8 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/main"
+
+    android:padding="20dp"
     >
 
     <!--    MENU TITLE -->
@@ -23,36 +25,95 @@
         android:fontFamily="@font/comfortaa_bold"
         />
 
-<!--    WHATEVER END BATTLE INFO -->
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/info"
+    <LinearLayout
+        android:id="@+id/endGameData"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+
         app:layout_constraintTop_toBottomOf="@id/menuTitle"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        android:layout_margin="10dp"
         >
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/towerProgress"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
 
-     <!--    RETRY BATTLE BUTTON -->
-    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-        android:id="@+id/retryBattleButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+            android:fontFamily="@font/comfortaa_bold"
+            android:text="Tower: hapinness\n Floor: 3\nStage: 1"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="14sp" />
 
-        app:layout_constraintTop_toBottomOf="@id/info"
-        android:layout_margin="15dp"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/coins"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_margin="7dp"
+            >
 
-        app:icon="@drawable/retry_icon"
-        app:iconGravity="textStart"
-        app:iconTint="@color/gunmetal"
+            <ImageView
+                android:id="@+id/coinImg"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/custom_faq"
 
-        android:text="Retry battle"
-        android:textSize="20sp"
-        android:backgroundTint="@color/light_cyan"
-        android:textColor="@color/gunmetal"
-        />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                />
+
+            <TextView
+                android:id="@+id/amount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/coinImg"
+                android:layout_margin="10dp"
+
+                android:text="+500"
+                android:textSize="14sp"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:fontFamily="@font/comfortaa_bold"
+                />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
+
+
+<!--     &lt;!&ndash;    RETRY BATTLE BUTTON &ndash;&gt;-->
+<!--    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton-->
+<!--        android:id="@+id/retryBattleButton"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+
+<!--        app:layout_constraintTop_toBottomOf="@id/dialogTitle"-->
+<!--        android:layout_margin="15dp"-->
+
+<!--        app:icon="@drawable/retry_icon"-->
+<!--        app:iconGravity="textStart"-->
+<!--        app:iconTint="@color/gunmetal"-->
+
+<!--        android:text="Retry battle"-->
+<!--        android:textSize="20sp"-->
+<!--        android:backgroundTint="@color/light_cyan"-->
+<!--        android:textColor="@color/gunmetal"-->
+<!--        />-->
 
     <!--    LEAVE GAME BUTTON -->
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
@@ -60,7 +121,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
 
-        app:layout_constraintTop_toBottomOf="@id/retryBattleButton"
+        app:layout_constraintTop_toBottomOf="@id/endGameData"
         android:layout_margin="15dp"
 
         app:icon="@drawable/exit_icon"

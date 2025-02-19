@@ -44,7 +44,7 @@ public class HomeScreen extends AppCompatActivity {
         });
 
         yourCardsButton.setOnClickListener(v -> {
-            Utils.changeActivity(this, Your_Cards.class, R.anim.slide_out_top, R.anim.slide_in_bottom);
+            Utils.changeActivity(this, YourCards.class, R.anim.slide_out_top, R.anim.slide_in_bottom);
         });
 
         shopButton.setOnClickListener(v -> {

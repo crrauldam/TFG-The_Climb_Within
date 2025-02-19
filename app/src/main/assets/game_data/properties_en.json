@@ -7,7 +7,7 @@
         },
         "anger": {
             "0": "You're ANGER...",
-            "1": "Embrace your inner fire and may it fuel your desire to conquer what isn't."
+            "1": "...embrace your inner fire and may it fuel your desire to conquer what isn't."
         },
         "calm": {
             "0": "You have appeased yourself...",
@@ -16,23 +16,23 @@
         },
         "disgust": {
             "0": "You're also the DISGUST...",
-            "1": "Allow the repulsion to be the judge of everything that should not be."
+            "1": "...allow the repulsion to be the judge of everything that should not be."
         },
         "fear": {
             "0": "The FEAR is you too...",
-            "1": "May the watchful eyes open a new world of possibilities."
+            "1": "...may the watchful eyes open a new world of possibilities."
         },
         "happiness": {
             "0": "You're HAPPINESS...",
-            "1": "Let the unending spark boost your evey step."
+            "1": "...let the unending spark boost your evey step."
         },
         "sadness": {
             "0": "The SADNESS is who you also are...",
-            "1": "Embrace the eternal sea and let it be the guide to your sail."
+            "1": "...embrace the eternal sea and let it be the guide to your sail."
         },
         "surprise": {
             "0": "SURPRISE is yourself...",
-            "1": "Allow the unexpected to impulse your climb."
+            "1": "...allow the unexpected to impulse your climb."
         }
     },
     "cards": {

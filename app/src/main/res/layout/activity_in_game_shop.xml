@@ -21,7 +21,7 @@
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/playerCoins"
+        android:id="@+id/coins"
         android:background="@drawable/card_img_price"
         android:layout_marginLeft="40dp"
         android:layout_marginRight="40dp"
@@ -32,7 +32,7 @@
         >
 
         <ImageView
-            android:id="@+id/coin"
+            android:id="@+id/coinImg"
             android:layout_width="wrap_content"
             android:layout_height="30dp"
             app:layout_constraintStart_toStartOf="parent"
@@ -45,14 +45,14 @@
             />
 
         <TextView
-            android:id="@+id/totalEmotionCoin"
+            android:id="@+id/totalEmotionCoins"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent"
             android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/coin"
+            app:layout_constraintStart_toEndOf="@id/coinImg"
             android:layout_marginRight="80dp"
             android:text="500"
             android:textColor="@color/black"

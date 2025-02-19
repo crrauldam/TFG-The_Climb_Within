@@ -4,6 +4,14 @@
     <selectionStates>
       <SelectionState runConfigName="app">
         <option name="selectionMode" value="DROPDOWN" />
+        <DropdownSelection timestamp="2025-02-17T12:26:43.044705Z">
+          <Target type="DEFAULT_BOOT">
+            <handle>
+              <DeviceId pluginId="PhysicalDevice" identifier="serial=cquodeyxwkaupvlz" />
+            </handle>
+          </Target>
+        </DropdownSelection>
+        <DialogSelection />
       </SelectionState>
       <SelectionState runConfigName="HomeScreen">
         <option name="selectionMode" value="DROPDOWN" />
@@ -16,6 +24,11 @@
         </DropdownSelection>
         <DialogSelection />
       </SelectionState>
+      
+      <SelectionState runConfigName="Shop">
+        <option name="selectionMode" value="DROPDOWN" />
+      </SelectionState>
+      
     </selectionStates>
   </component>
 </project>

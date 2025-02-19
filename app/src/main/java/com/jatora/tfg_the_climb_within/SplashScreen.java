@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.View;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -49,6 +50,14 @@ public class SplashScreen extends AppCompatActivity {
                 finish();
             }
         };
+
+        // CHECK IF PLAYER SAVE FILE EXISTS, IF NOT, IT CREATES IT
+        Utils.checkSaveFileExistence(this);
+
+        // TODO: COMMENT THIS LINE WHEN NOT IN TESTING PHASES
+        Utils.resetSaveFileContent(this);
+
+        PlayerManager.getInstance(this);
 
         handler.postDelayed(runnable, 3500);
 
