@@ -170,10 +170,10 @@ public class BattleScreen extends AppCompatActivity {
     private void startGame() {
         final String TAG = "BattleScreen-startGame";
 
-        // TODO: DELETE WHEN NOT TESTING
-        new Handler().postDelayed(() -> {
-            Utils.playStoryNarration(this, storyNarrationBackground, storyNarrationView, tower.getName());
-        }, 3000);
+//        // TODO: DELETE WHEN NOT TESTING
+//        new Handler().postDelayed(() -> {
+//            Utils.playStoryNarration(this, storyNarrationBackground, storyNarrationView, tower.getName());
+//        }, 3000);
 
         // set up player for whole game
         player = PlayerManager.getInstance(this);
