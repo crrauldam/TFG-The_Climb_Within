@@ -1,11 +1,13 @@
 package com.jatora.tfg_the_climb_within;
 
 import android.content.Context;
+
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
+
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,7 +22,9 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.content.res.AppCompatResources;
 import androidx.constraintlayout.widget.ConstraintLayout;
+
 import androidx.core.content.res.ResourcesCompat;
+
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -130,6 +134,7 @@ public class Shop extends AppCompatActivity {
      * @param playerNonUnlockedCards
      * @param targetLayout
      */
+
     public void drawCards(Context context, Player player, String searchedDeck, ArrayList<Deck> decks, List<Card> playerNonUnlockedCards, LinearLayout targetLayout, ImageView coinImg, TextView totalEmotionCoins, ArrayList<Integer> pucs) {
         final String TAG = "Shop-drawCards";
 
@@ -323,6 +328,7 @@ public class Shop extends AppCompatActivity {
 
         shopItemLayout.setOnClickListener(v -> {
             Log.d(TAG, "card pressed: "+c.getId());
+
             showConfirmationDialog(context, player, searchedDeck, shopItemLayout, c, pucs, playerNonUnlockedCards, targetDeck);
         });
     }
@@ -399,7 +405,6 @@ public class Shop extends AppCompatActivity {
         no.setOnClickListener(v -> {
             dialog.cancel();
         });
-
     }
 
 

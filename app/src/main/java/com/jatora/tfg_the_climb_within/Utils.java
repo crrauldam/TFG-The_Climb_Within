@@ -10,11 +10,15 @@ import android.content.Intent;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
+
 import android.view.WindowManager;
 import android.widget.TextView;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import com.google.android.gms.common.SignInButton;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.ktx.Firebase;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
@@ -79,6 +83,9 @@ public class Utils {
             .setPrettyPrinting()
             .create();
 
+    // Firebase
+    private Firebase mAuth;
+
     public static void changeActivity(Activity from, Class to, int fromAnim, int toAnim) {
         Intent intent = new Intent(from, to);
 
@@ -131,7 +138,6 @@ public class Utils {
         return fileContent.toString();
     }
 
-
     /**
      * Retrieve language of device. If language is not set, it defaults to English.
      *
@@ -156,6 +162,7 @@ public class Utils {
      *
      * @return A JsonObject containing the properties info in the specified language
      */
+
     public static JsonObject getProperties(Context context) {
         final String TAG = "Utils-getProperties()";
 
@@ -166,6 +173,23 @@ public class Utils {
         return gson.fromJson(fileData, JsonObject.class);
     }
 
+    public static void checkPlayerSignedIn(Context context) {
+
+    }
+
+    public static void initiateFirebaseLoginSequence(Context context, FirebaseUser user) {
+        final String TAG = "Utils-initiateFirebaseLoginSequence";
+        if(user != null) {
+            Log.d(TAG, "User (" + user + ") was found.");
+//            startActivity(new Intent(this, Home.class));
+//            finish();
+        }
+        else {
+            Log.d(TAG, "User was NOT found: " + user);
+//            startActivity(new Intent(this, Login.class));
+//            finish();
+        }
+    }
 
     public static ArrayList<Tower> getTowersData(Context context) {
         final String TAG = "Utils-getTowersData()";
@@ -236,7 +260,6 @@ public class Utils {
 
     /**
      * Checks if the save.json file exists in the internal storage, if not, it creates it.
-     *
      * @param context
      */
     public static void checkSaveFileExistence(Context context) {
@@ -295,13 +318,13 @@ public class Utils {
 
         // get properties data
         JsonObject propertiesENJSON = getProperties(context);
+
         // get object with cards properties from inside properties (en) JSON object, located with key "cards"
         JsonObject cardsProperties = propertiesENJSON.getAsJsonObject("cards");
 
         for (String key : cardsJSON.keySet()) {
             Log.d(TAG, "checking card (ID): " + key);
             Log.d(TAG, "checking card (DATA): " + cardsJSON.get(key));
-
 
             Card card = gson.fromJson(cardsJSON.get(key), Card.class);
             card.setName(cardsProperties.get(card.getName()).getAsString());
@@ -351,6 +374,7 @@ public class Utils {
 
         // get properties data
         JsonObject propertiesENJSON = getProperties(context);
+
         // get object with story properties from inside properties (en) JSON object, located with key "story"
         JsonObject storyProperties = propertiesENJSON.getAsJsonObject("story");
 

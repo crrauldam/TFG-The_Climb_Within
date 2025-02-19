@@ -51,11 +51,10 @@
 
         <activity
             android:name=".HomeScreen"
-            android:exported="true" />
+            android:exported="false" />
 
         <activity
             android:name=".TowerSelection"
-
             android:exported="true"
             android:parentActivityName=".HomeScreen"
             />

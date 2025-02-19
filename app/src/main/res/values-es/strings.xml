@@ -23,6 +23,7 @@
     <string name="settings">Ajustes</string>
     <string name="stage_cleared">ETAPA SUPERADA</string>
     <string name="you_lost">HAS PERDIDO</string>
+
     <string name="play_again">JUGAR DE NUEVO</string>
     <string name="no_more_cards">SIN CARTAS</string>
     <string name="tower_not_unlocked">Torre no desbloqueada</string>

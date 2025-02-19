@@ -118,6 +118,7 @@ public class TowerSelection extends AppCompatActivity {
 //            intent.putExtra("towerID", viewPager.getCurrentItem());
 //            Utils.changeActivity(intent, this, BattleScreen.class, R.anim.slide_out_left, R.anim.slide_in_right);
 
+
             // TODO: UNCOMMENT FOR REAL USE
             // check if selected tower is unlocked
             for (int towerID : unlockedTowers) {

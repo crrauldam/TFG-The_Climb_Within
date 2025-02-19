@@ -49,6 +49,7 @@ public class BattleScreen extends AppCompatActivity {
     final int TOTAL_STAGES = 5; // total stages the player will face in the tower
     final int TOTAL_FLOORS = 3; // 3 floors
     final int STAGES_TO_REST = 2; // how many stages the player will have to fight to go to shop and rest
+
     // TODO: DEFINE GAME ECONOMY
     final int TOWER_COINS_PER_STAGE = 0;
     final int EMOTION_COINS_PER_STAGE = 0;
@@ -83,6 +84,7 @@ public class BattleScreen extends AppCompatActivity {
 
     // shields
     TextView enemyShieldView;
+
     private final int[] enemyShield = new int[]{0};
     TextView playerShieldView;
     private final int[] playerShield = new int[]{0};
@@ -137,6 +139,7 @@ public class BattleScreen extends AppCompatActivity {
         playerHP = findViewById(R.id.playerHP);
 
         enemyShieldView = findViewById(R.id.enemyShield);
+      
         playerShieldView = findViewById(R.id.playerShield);
 
         startGame();
@@ -306,7 +309,6 @@ public class BattleScreen extends AppCompatActivity {
         return stageState;
     }
 
-
     /**
      * <ul>
      *     <li>- shuffles the deck and displays the cards</li>
@@ -363,6 +365,7 @@ public class BattleScreen extends AppCompatActivity {
             bitmap = BitmapFactory.decodeStream(this.getAssets().open("img/enemies/enemie.png"));
         }
         enemyImg.setImageBitmap(bitmap);
+
         enemyImg.setVisibility(View.VISIBLE);
         enemyImg.setAlpha(1f);
     }
@@ -572,6 +575,7 @@ public class BattleScreen extends AppCompatActivity {
                 int enemyhp = enemy.getHp();
                 int enemymaxhp = enemy.getMaxhp();
                 int enemyatk = enemy.getAtk();
+              
                 Log.d(TAG, "tower multiplier: " + towerMultiplier);
                 Log.d(TAG, "enemy hp: " + enemyhp + " enemy maxhp: " + enemymaxhp + " enemy atk: " + enemyatk);
                 enemy.setMaxhp((int) (enemymaxhp * towerMultiplier));
@@ -971,6 +975,7 @@ public class BattleScreen extends AppCompatActivity {
     private void showEndGameDialog(String titleText) {
         final String TAG = "BattleScreen-showEndGameDialog";
         Log.d(TAG, "Showing end game dialog");
+
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         View menu = getLayoutInflater().inflate(R.layout.battle_screen_end_menu, null);
 

@@ -19,4 +19,8 @@
     <color name="disgust">#C8E1CC</color>
     <color name="happiness">#FFFDB7</color>
     <color name="surprise">#FFFFFF</color>
+
+    <color name="googleGreen">#FF34A853</color>
+    <color name="googleBlue">#FF4285F4</color>
+    <color name="googleRed">#FFEA4335</color>
 </resources>
