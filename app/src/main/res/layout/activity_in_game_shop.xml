@@ -21,7 +21,7 @@
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/playerCoins"
+        android:id="@+id/coins"
         android:background="@drawable/card_img_price"
         android:layout_marginLeft="40dp"
         android:layout_marginRight="40dp"

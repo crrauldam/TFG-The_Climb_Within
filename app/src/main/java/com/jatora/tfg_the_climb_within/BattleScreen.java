@@ -20,6 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.content.res.AppCompatResources;
@@ -29,6 +30,8 @@ import androidx.core.content.res.ResourcesCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+
+import org.w3c.dom.Text;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -46,8 +49,21 @@ public class BattleScreen extends AppCompatActivity {
     final int TOTAL_STAGES = 5; // total stages the player will face in the tower
     final int TOTAL_FLOORS = 3; // 3 floors
     final int STAGES_TO_REST = 2; // how many stages the player will have to fight to go to shop and rest
+    // TODO: DEFINE GAME ECONOMY
+    final int TOWER_COINS_PER_STAGE = 0;
+    final int EMOTION_COINS_PER_STAGE = 0;
 
+    // flag for game state [true = game still in progress | false = game over]
+    boolean game = true;
+    int floor = 1;
+    int stage = 1;
+
+    // entities
+    Player player;
     Tower tower;
+
+    TextView storyNarrationView;
+    ConstraintLayout storyNarrationBackground;
 
     ImageButton menuButton;
     TextView enemyName;
@@ -67,9 +83,9 @@ public class BattleScreen extends AppCompatActivity {
 
     // shields
     TextView enemyShieldView;
-    private int[] enemyShield;
+    private final int[] enemyShield = new int[]{0};
     TextView playerShieldView;
-    private int[] playerShield;
+    private final int[] playerShield = new int[]{0};
 
     // flag to know battle state
     boolean hasEndDialogBeenShown;
@@ -85,6 +101,14 @@ public class BattleScreen extends AppCompatActivity {
             return insets;
         });
 
+        // show game menu on system back button functionality to prevent the player from unintentionally leaving game
+        getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                showMenu(getBaseContext());
+            }
+        });
+
         ALL_DECKS = Utils.getDecksData(this);
         ALL_CARDS = Utils.getCardsData(this);
         ALL_ENEMIES = Utils.getEnemiesData(this);
@@ -95,6 +119,9 @@ public class BattleScreen extends AppCompatActivity {
         tower = getTowerInfo(towerID);
 
         // get visual components
+        storyNarrationView = findViewById(R.id.storyNarrationView);
+        storyNarrationBackground = findViewById(R.id.storyNarrationBackground);
+
         menuButton = findViewById(R.id.menuButton);
         enemyName = findViewById(R.id.enemyName);
         enemyImg = findViewById(R.id.enemyImg);
@@ -110,40 +137,40 @@ public class BattleScreen extends AppCompatActivity {
         playerHP = findViewById(R.id.playerHP);
 
         enemyShieldView = findViewById(R.id.enemyShield);
-        enemyShield = new int[]{0};
         playerShieldView = findViewById(R.id.playerShield);
-        playerShield = new int[]{0};
 
         startGame();
     }
 
     /**
      * Game structure:
-     *  - Floor = 1
-     *      - rests = 0
-     *      - stage = 1
-     *      show stage + (rests (0) * STAGES_TO_REST) = 1
-     *      - stage = 2
-     *      show stage + (rests (0) * STAGES_TO_REST) = 2
-     *  - REST (stage == STAGES_TO_REST)
-     *      - rests += 1 (1)
-     *  - Floor++ (2)
-     *      - stage = 1
-     *      show stage + (rests (1) * STAGES_TO_REST) = 3
-     *      - stage = 2
-     *      show stage + (rests (1) * STAGES_TO_REST) = 4
-     *  - REST (stage == STAGES_TO_REST)
-     *      - rests += 1 (2)
-     *  - Floor++ (3)
-     *      - BOSS (rests == totalRests (TOTAL_STAGES / STAGES_TO_REST))
-     *          - stage = 1
-     *          show stage + (rests (2) * STAGES_TO_REST) = 5
+     * - Floor = 1
+     * - rests = 0
+     * - stage = 1
+     * show stage + (rests (0) * STAGES_TO_REST) = 1
+     * - stage = 2
+     * show stage + (rests (0) * STAGES_TO_REST) = 2
+     * - REST (stage == STAGES_TO_REST)
+     * - rests += 1 (1)
+     * - Floor++ (2)
+     * - stage = 1
+     * show stage + (rests (1) * STAGES_TO_REST) = 3
+     * - stage = 2
+     * show stage + (rests (1) * STAGES_TO_REST) = 4
+     * - REST (stage == STAGES_TO_REST)
+     * - rests += 1 (2)
+     * - Floor++ (3)
+     * - BOSS (rests == totalRests (TOTAL_STAGES / STAGES_TO_REST))
+     * - stage = 1
+     * show stage + (rests (2) * STAGES_TO_REST) = 5
      */
     private void startGame() {
         final String TAG = "BattleScreen-startGame";
 
-        // entities
-        Player player;
+        // TODO: DELETE WHEN NOT TESTING
+        new Handler().postDelayed(() -> {
+            Utils.playStoryNarration(this, storyNarrationBackground, storyNarrationView, tower.getName());
+        }, 3000);
 
         // set up player for whole game
         player = PlayerManager.getInstance(this);
@@ -155,74 +182,15 @@ public class BattleScreen extends AppCompatActivity {
         int totalRests = TOTAL_STAGES / STAGES_TO_REST;
         int rests = 0;
 
-        int floor = 1;
-        int stage = 1;
-
+        floor = 1;
+        stage = 1;
 
         // show pop up menu with enemy info and options
-        int finalFloor = floor;
-        int finalStage = stage;
+        int[] finalFloor = {floor};
+        int[] finalStage = {stage};
+
         menuButton.setOnClickListener(v -> {
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            View menu = getLayoutInflater().inflate(R.layout.battle_screen_menu, null);
-
-            // set enemy name
-            TextView towerName = menu.findViewById(R.id.towerName);
-            towerName.setText(tower.getName().toUpperCase());
-
-            // set enemy image
-            ImageView towerImg = menu.findViewById(R.id.towerImg);
-            try {
-                Log.d(TAG, "Tower img: "+tower.getImg());
-                Bitmap bitmap = BitmapFactory.decodeStream(v.getContext().getAssets().open(tower.getImg()));
-                towerImg.setImageBitmap(bitmap);
-            } catch (IOException e) {
-                Log.e("BattleScreen", "Error while getting bitmap image from assets: " + e);
-            }
-
-            // set floor
-            TextView floorView = menu.findViewById(R.id.floor);
-            floorView.setText("Floor: "+finalFloor);
-
-            // set stage
-            TextView stageView = menu.findViewById(R.id.stage);
-            stageView.setText("Stage: "+finalStage);
-
-            // set total amount of tower coins
-            TextView totalTowerCoins = menu.findViewById(R.id.totalTowerCoins);
-            totalTowerCoins.setText(String.valueOf(player.getTower_coins()));
-
-            // set tower coin image
-            ImageView coinImg = menu.findViewById(R.id.coinImg);
-            try {
-                Bitmap bitmap = BitmapFactory.decodeStream(getAssets().open("img/coins/tower.png"));
-                coinImg.setImageBitmap(bitmap);
-            } catch (IOException e) {
-                Log.e(TAG, "Error while getting bitmap image from assets: " + e);
-            }
-
-            // open pop up menu
-            builder.setView(menu);
-            AlertDialog dialog = builder.create();
-            dialog.getWindow().setBackgroundDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.battle_screen_menu_bg, null));
-            dialog.show();
-
-            // set return to battle functionality
-            Button backtoBattleButton = menu.findViewById(R.id.backtoBattleButton);
-            backtoBattleButton.setOnClickListener(v1 -> {
-                dialog.cancel();
-            });
-
-            // set exit battle functionality
-            Button exitBattleButton = menu.findViewById(R.id.exitBattleButton);
-            exitBattleButton.setOnClickListener(v1 -> {
-                this.finish();
-            });
-
-            Button settingsButton = menu.findViewById(R.id.settingsButton);
-            settingsButton.setOnClickListener(v1 -> {
-                Utils.changeActivity(this, Settings.class, R.anim.slide_out_bottom, R.anim.slide_in_top);
-            });
+            showMenu(v.getContext());
         });
 
         playStage(player, tower, floor, stage);
@@ -247,8 +215,73 @@ public class BattleScreen extends AppCompatActivity {
 //        }
     }
 
+    private void showMenu(Context context) {
+        final String TAG = "BattleScreen-showMenu";
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        View menu = getLayoutInflater().inflate(R.layout.battle_screen_menu, null);
+
+        // set enemy name
+        TextView towerName = menu.findViewById(R.id.towerName);
+        towerName.setText(tower.getName().toUpperCase());
+
+        // set enemy image
+        ImageView towerImg = menu.findViewById(R.id.towerImg);
+        try {
+            Log.d(TAG, "Tower img: " + tower.getImg());
+            Bitmap bitmap = BitmapFactory.decodeStream(context.getAssets().open(tower.getImg()));
+            towerImg.setImageBitmap(bitmap);
+        } catch (IOException e) {
+            Log.e("BattleScreen", "Error while getting bitmap image from assets: " + e);
+        }
+
+        // set floor
+        TextView floorView = menu.findViewById(R.id.floor);
+        floorView.setText("Floor: " + floor);
+
+        // set stage
+        TextView stageView = menu.findViewById(R.id.stage);
+        stageView.setText("Stage: " + (stage - (STAGES_TO_REST * (floor - 1))));
+
+        // set total amount of tower coins
+        TextView totalTowerCoins = menu.findViewById(R.id.amount);
+        totalTowerCoins.setText(String.valueOf(player.getTower_coins()));
+
+        // set tower coin image
+        ImageView coinImg = menu.findViewById(R.id.coinImg);
+        try {
+            Bitmap bitmap = BitmapFactory.decodeStream(getAssets().open("img/coins/tower.png"));
+            coinImg.setImageBitmap(bitmap);
+        } catch (IOException e) {
+            Log.e(TAG, "Error while getting bitmap image from assets: " + e);
+        }
+
+        // open pop up menu
+        builder.setView(menu);
+        AlertDialog dialog = builder.create();
+        dialog.getWindow().setBackgroundDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.battle_screen_menu_bg, null));
+        dialog.show();
+
+        // set return to battle functionality
+        Button backtoBattleButton = menu.findViewById(R.id.backtoBattleButton);
+        backtoBattleButton.setOnClickListener(v1 -> {
+            dialog.cancel();
+        });
+
+        // set exit battle functionality
+        Button exitBattleButton = menu.findViewById(R.id.exitBattleButton);
+        exitBattleButton.setOnClickListener(v1 -> {
+            this.finish();
+        });
+
+        Button settingsButton = menu.findViewById(R.id.settingsButton);
+        settingsButton.setOnClickListener(v1 -> {
+            Utils.changeActivity(this, Settings.class, R.anim.slide_out_bottom, R.anim.slide_in_top);
+        });
+    }
+
     /**
      * Play a stage of the tower.
+     *
      * @param player
      * @param tower
      * @return true = continue game | false = player lost stage = stop game
@@ -272,7 +305,6 @@ public class BattleScreen extends AppCompatActivity {
 
         return stageState;
     }
-
 
 
     /**
@@ -331,6 +363,8 @@ public class BattleScreen extends AppCompatActivity {
             bitmap = BitmapFactory.decodeStream(this.getAssets().open("img/enemies/enemie.png"));
         }
         enemyImg.setImageBitmap(bitmap);
+        enemyImg.setVisibility(View.VISIBLE);
+        enemyImg.setAlpha(1f);
     }
 
     // TODO: ADD FUNCTIONALITY TO CARDS FOR THEM TO BE PLAYED
@@ -353,7 +387,7 @@ public class BattleScreen extends AppCompatActivity {
 
         // add functionality to each card
         for (Card c : playerDeck) {
-            Log.d(TAG, "Drawing card: "+c.getId());
+            Log.d(TAG, "Drawing card: " + c.getId());
 
             String cardDeck = "basic";
             for (Deck d : ALL_DECKS) {
@@ -372,7 +406,7 @@ public class BattleScreen extends AppCompatActivity {
                 // initial position to let the player focus only on one card at a time
                 if (hoveredCard != null) {
                     if (hoveredCard == card) {
-                        Toast.makeText(this, "You played: "+c.getId(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, "You played: " + c.getId(), Toast.LENGTH_SHORT).show();
 //                        hoveredCard.setVisibility(View.GONE);
 //                        cardDescription.setVisibility(View.INVISIBLE);
 //                        cardDescription.setText("");
@@ -431,6 +465,7 @@ public class BattleScreen extends AppCompatActivity {
 
     /**
      * Inflates a card layout with the info of the Card object passed as parameter
+     *
      * @param context
      * @param searchedDeck
      * @param c
@@ -438,7 +473,7 @@ public class BattleScreen extends AppCompatActivity {
      */
     public static ConstraintLayout getCardLayout(Context context, String searchedDeck, Card c) {
         final String TAG = "BattleScreen-getCardLayout";
-        Log.d(TAG, "Player card: "+c.getId());
+        Log.d(TAG, "Player card: " + c.getId());
 
         // inflate card template
         ConstraintLayout cardLayout = (ConstraintLayout) LayoutInflater.from(context).inflate(R.layout.card, null);
@@ -510,6 +545,7 @@ public class BattleScreen extends AppCompatActivity {
 
     /**
      * Generates a random enemy for the player to face based on the tower and floor its in.
+     *
      * @param tower
      * @param floor
      * @return The Enemy object representing the chosen enemy.
@@ -536,12 +572,12 @@ public class BattleScreen extends AppCompatActivity {
                 int enemyhp = enemy.getHp();
                 int enemymaxhp = enemy.getMaxhp();
                 int enemyatk = enemy.getAtk();
-                Log.d(TAG, "tower multiplier: "+towerMultiplier);
-                Log.d(TAG, "enemy hp: "+enemyhp+" enemy maxhp: "+enemymaxhp+" enemy atk: "+enemyatk);
-                enemy.setMaxhp((int) (enemymaxhp*towerMultiplier));
-                enemy.setHp((int) (enemyhp*towerMultiplier));
-                enemy.setAtk((int) (enemyatk*towerMultiplier));
-                Log.d(TAG, "enemy new hp: "+enemy.getHp()+" enemy new maxhp: "+enemy.getMaxhp()+" enemy new atk: "+enemy.getAtk());
+                Log.d(TAG, "tower multiplier: " + towerMultiplier);
+                Log.d(TAG, "enemy hp: " + enemyhp + " enemy maxhp: " + enemymaxhp + " enemy atk: " + enemyatk);
+                enemy.setMaxhp((int) (enemymaxhp * towerMultiplier));
+                enemy.setHp((int) (enemyhp * towerMultiplier));
+                enemy.setAtk((int) (enemyatk * towerMultiplier));
+                Log.d(TAG, "enemy new hp: " + enemy.getHp() + " enemy new maxhp: " + enemy.getMaxhp() + " enemy new atk: " + enemy.getAtk());
 //                enemy.setMaxhp((int) (enemy.getMaxhp() * tower.getMultiplier()));
 //                enemy.setHp((int) (enemy.getHp() * tower.getMultiplier()));
 //                enemy.setAtk((int) (enemy.getAtk() * tower.getMultiplier()));
@@ -549,7 +585,7 @@ public class BattleScreen extends AppCompatActivity {
             }
         }
 
-        Log.d(TAG, "Generated enemy id: "+ enemy.getId()+ " name: "+ enemy.getName());
+        Log.d(TAG, "Generated enemy id: " + enemy.getId() + " name: " + enemy.getName());
         return enemy;
     }
 
@@ -577,9 +613,9 @@ public class BattleScreen extends AppCompatActivity {
     }
 
 
-
     /**
      * Realizes the action described on the selected card.
+     *
      * @param c
      * @param hoveredCard
      * @param player
@@ -605,7 +641,7 @@ public class BattleScreen extends AppCompatActivity {
                 break;
             case HEAL:
                 if (player.getHp() == player.getMaxhp()) {
-                    showNarration("HP is full");
+                    showBattleNarration("HP is full");
                     playResult = -1;
                 } else {
                     heal(player, c.getEffect(), playerHP, playerHPBar);
@@ -623,18 +659,18 @@ public class BattleScreen extends AppCompatActivity {
                         case 0: // heal
                             if (!(player.getHp() == player.getMaxhp())) {
                                 heal(player, c.getEffect(), playerHP, playerHPBar);
-                                showNarration("Player healed");
+                                showBattleNarration("Player healed");
                                 isEffectChosen = true;
                             }
                             break;
                         case 1: // attack
                             attack(enemy, c.getEffect(), enemyShield, enemyShieldView, enemyHP, enemyHPBar);
-                            showNarration("Attacking enemy");
+                            showBattleNarration("Attacking enemy");
                             isEffectChosen = true;
                             break;
                         case 2: // shield
                             increaseShield(playerShield, c.getEffect(), playerShieldView);
-                            showNarration("Shield increased");
+                            showBattleNarration("Shield increased");
                             isEffectChosen = true;
                             break;
                     }
@@ -645,12 +681,12 @@ public class BattleScreen extends AppCompatActivity {
                 if ((int) (Math.random() * 2) == 1) {
                     attack(enemy, c.getEffect(), enemyShield, enemyShieldView, enemyHP, enemyHPBar);
                 } else {
-                    showNarration("Nothing happened");
+                    showBattleNarration("Nothing happened");
                 }
                 break;
             case SACRIFICE: // less hp but attacks
                 if (player.getHp() < c.getEffect()) {
-                    showNarration("Not enough HP to use this card.");
+                    showBattleNarration("Not enough HP to use this card.");
                     playResult = -1;
                 } else {
                     sacrifice(c, player, enemy, enemyShield, enemyShieldView, playerHP, playerHPBar, enemyHP, enemyHPBar);
@@ -751,7 +787,7 @@ public class BattleScreen extends AppCompatActivity {
      */
     private void increaseShield(int[] shield, int amount, TextView targetShield) {
         final String TAG = "BattleScreen-increaseShield";
-        Log.d(TAG, "Increasing shield: +"+amount);
+        Log.d(TAG, "Increasing shield: +" + amount);
 
         shield[0] += amount;
 
@@ -876,49 +912,17 @@ public class BattleScreen extends AppCompatActivity {
 
     /**
      * Change text of the narration view and play animation.
+     *
      * @param text
      */
-    private void showNarration(String text) {
+    private void showBattleNarration(String text) {
         narrationView.setText(text);
-        playFadeInOutAnimation(narrationView);
+        Utils.playFadeInFadeOutAnimation(narrationView, 300, 700);
     }
-
-
-    /**
-     * Actual playing of the animation.
-     * @param targetView
-     */
-    private void playFadeInOutAnimation(View targetView) {
-        final String TAG = "BattleScreen-playFadeInOutAnimation";
-
-        final long FADE_IN_DURATION = 300;
-        final long WAIT_DURATION = 700;
-        final long FADE_OUT_DURATION = 300;
-
-        Log.d(TAG, "Setting animation.");
-
-        // setting fade-in animation
-        ObjectAnimator fadeIn = ObjectAnimator.ofFloat(targetView, "alpha", 0f, 1f);
-        fadeIn.setDuration(FADE_IN_DURATION);
-
-        // setting wait animation (won't do anything but has to be done for the object to stay the same Xms)
-        ObjectAnimator wait = ObjectAnimator.ofFloat(targetView, "alpha", 1f, 1f);
-        wait.setDuration(WAIT_DURATION);
-
-        // setting fade-out animation
-        ObjectAnimator fadeOut = ObjectAnimator.ofFloat(targetView, "alpha", 1f, 0f);
-        fadeOut.setDuration(FADE_OUT_DURATION);
-
-        // creating the set of animations we'll play in a specific order
-        AnimatorSet animatorSet = new AnimatorSet(); // creation
-        animatorSet.playSequentially(fadeIn, wait, fadeOut);
-        Log.d(TAG, "Playing animation.");
-        animatorSet.start();
-    }
-
 
     /**
      * Checks if there is a winner for the battle. Shows end battle dialog if there is.
+     *
      * @param player
      * @param enemy
      * @return True if there is winner, false if not.
@@ -931,23 +935,29 @@ public class BattleScreen extends AppCompatActivity {
             Log.d(TAG, "-------------------------------- ENDED BATTLE --------------------------------");
 
             isThereWinner = true;
-            hasEndDialogBeenShown = true;
+//            hasEndDialogBeenShown = true;
 
             if (enemy.getHp() == 0) {
                 Log.d(TAG, "STAGE CLEARED");
-                showEndGameDialog(getResources().getString(R.string.stage_cleared));
+                showEndStageDialog(getResources().getString(R.string.stage_cleared), 1000, enemy);
 
 //                playSFX("plankton_aaa_meme");
 
                 ObjectAnimator fadeOut = ObjectAnimator.ofFloat(enemyImg, "alpha", 1f, 0f);
-                fadeOut.setDuration(4000);
+                fadeOut.setDuration(700);
                 fadeOut.start();
             } else if (player.getHp() == 0) {
-                Log.d(TAG, "LOOSE");
+                Log.d(TAG, "GAME OVER");
                 showEndGameDialog(getResources().getString(R.string.you_lost));
 
 //                playSFX("loose");
             }
+        // if there is no winner, but the player ran out of cards
+        }
+
+        if (!isThereWinner && playableCards.getChildCount() == 0) {
+            Log.d(TAG, "NO MORE CARDS");
+            showEndGameDialog(getResources().getString(R.string.no_more_cards));
         }
 
         return isThereWinner;
@@ -955,9 +965,12 @@ public class BattleScreen extends AppCompatActivity {
 
     /**
      * Shows end game dialog with given text as title
+     *
      * @param titleText
      */
     private void showEndGameDialog(String titleText) {
+        final String TAG = "BattleScreen-showEndGameDialog";
+        Log.d(TAG, "Showing end game dialog");
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         View menu = getLayoutInflater().inflate(R.layout.battle_screen_end_menu, null);
 
@@ -965,20 +978,45 @@ public class BattleScreen extends AppCompatActivity {
         TextView title = menu.findViewById(R.id.menuTitle);
         title.setText(titleText);
 
+        TextView towerProgress = menu.findViewById(R.id.towerProgress);
+        towerProgress.setText("Tower: " + tower.getName() + "\nFloor: " + floor + "\nStage: " + (stage - (STAGES_TO_REST * (floor - 1))));
+
+        // set tower coin image
+        ImageView coinImg = menu.findViewById(R.id.coinImg);
+        try {
+            Bitmap bitmap = BitmapFactory.decodeStream(getAssets().open("img/coins/tower.png"));
+            coinImg.setImageBitmap(bitmap);
+        } catch (IOException e) {
+            Log.e(TAG, "Error while getting bitmap image from assets: " + e);
+        }
+
+        TextView amount = menu.findViewById(R.id.amount);
+        amount.setText("+"+(stage*EMOTION_COINS_PER_STAGE));
+
         // open pop up menu
         builder.setView(menu);
         AlertDialog dialog = builder.create();
         dialog.getWindow().setBackgroundDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.battle_screen_menu_bg, null));
 
-        new Handler().postDelayed(dialog::show, 4000);
+        new Handler().postDelayed(dialog::show, 700);
 
-        // set return to battle functionality
-        Button retryBattleButton = menu.findViewById(R.id.retryBattleButton);
-        retryBattleButton.setOnClickListener(v1 -> {
-            dialog.cancel();
-            dialog.cancel();
-//            startBattle();
+        dialog.setOnDismissListener(dialog1 -> {
+            if (titleText.equalsIgnoreCase(getResources().getString(R.string.you_won))) {
+                // show end tower narration with 1s delay
+                new Handler().postDelayed(() -> {
+                    Utils.playStoryNarration(this, storyNarrationBackground, storyNarrationView, tower.getName());
+                }, 1000);
+            }
         });
+
+
+//        // set return to battle functionality
+//        Button retryBattleButton = menu.findViewById(R.id.retryBattleButton);
+//        retryBattleButton.setOnClickListener(v1 -> {
+//            dialog.cancel();
+//            dialog.cancel();
+////            startBattle();
+//        });
 
         // set exit battle functionality
         Button returnToMainMenuButton = menu.findViewById(R.id.returnToMainMenuButton);
@@ -988,5 +1026,81 @@ public class BattleScreen extends AppCompatActivity {
             Intent intent = new Intent(this, HomeScreen.class);
             startActivity(intent);
         });
+    }
+
+    /**
+     * Shows end game dialog with given text as title
+     *
+     * @param titleText
+     * @param delay
+     * @param enemy
+     */
+    private void showEndStageDialog(String titleText, long delay, Enemy enemy) {
+        final String TAG = "BattleScreen-showEndStageDialog";
+        Log.d(TAG, "Showing end stage dialog");
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        View menu = getLayoutInflater().inflate(R.layout.battle_screen_end_stage_dialog, null);
+
+        // set end battle menu title
+        TextView title = menu.findViewById(R.id.menuTitle);
+        title.setText(titleText);
+
+        // set tower coin image
+        ImageView coinImg = menu.findViewById(R.id.coinImg);
+        try {
+            Bitmap bitmap = BitmapFactory.decodeStream(getAssets().open("img/coins/tower.png"));
+            coinImg.setImageBitmap(bitmap);
+        } catch (IOException e) {
+            Log.e(TAG, "Error while getting bitmap image from assets: " + e);
+        }
+
+        TextView amount = menu.findViewById(R.id.amount);
+        amount.setText("+"+(stage*TOWER_COINS_PER_STAGE));
+
+        // open pop up menu
+        builder.setView(menu);
+        AlertDialog dialog = builder.create();
+        dialog.getWindow().setBackgroundDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.battle_screen_menu_bg, null));
+
+        new Handler().postDelayed(dialog::show, delay);
+
+        player.setTower_coins(player.getTower_coins()+TOWER_COINS_PER_STAGE);
+
+        dialog.setOnDismissListener(dialog1 -> {
+            Log.d(TAG, "End stage dialog dismissed");
+            // what to do when dismissing the STAGE END DIALOG (play next stage / rest (if applicable))
+            if ((stage % STAGES_TO_REST) == 0) {
+                Log.d(TAG, stage + " % " + STAGES_TO_REST + " = " + (stage % STAGES_TO_REST));
+                Log.d(TAG, "REST");
+                rest(player, tower);
+                // if rest, then means next floor
+                floor++;
+                stage++;
+                // TODO: ERASE THE FOLLOWING LINE ONLY FOR TEST PURPOSES!!
+                // add "de estrangis" extra card of that tower for letting it complete the tower
+                // since the basic deck isnt enough
+                Integer[] deck = player.getDeck();
+                deck = Arrays.copyOf(deck, deck.length + 1);
+                deck[deck.length - 1] = 5000;
+                player.setDeck(deck);
+                playStage(player, tower, floor, stage);
+
+            } else if (stage >= TOTAL_STAGES) {
+                Log.d(TAG, "Tower ended, player won");
+                showEndGameDialog(getResources().getString(R.string.you_won));
+            } else {
+                Log.d(TAG, "Play next stage");
+                stage++;
+                playStage(player, tower, floor, stage);
+            }
+        });
+    }
+
+    private void rest(Player player, Tower tower) {
+        // TODO: SEND TO IN-GAME SHOP
+        // player recovers 1/4 of its max hp
+        // player HP + 1/4 of maxHP
+        player.setHp(player.getHp()+(player.getMaxhp()/4));
     }
 }

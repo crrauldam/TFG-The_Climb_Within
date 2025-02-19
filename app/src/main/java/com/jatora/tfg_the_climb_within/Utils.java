@@ -1,9 +1,19 @@
 package com.jatora.tfg_the_climb_within;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Handler;
 import android.util.Log;
+import android.view.View;
+import android.view.WindowManager;
+import android.widget.TextView;
+
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -21,6 +31,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 
 public class Utils {
     // constants for game files
@@ -82,13 +94,14 @@ public class Utils {
 
     /**
      * Reads the given file from the assets folder.
+     *
      * @param context
      * @param path
      * @return A String with the given file's content
      */
     public static String readFile(Context context, String path) {
         final String TAG = "Utils-readFile()";
-        Log.d(TAG, "Retrieving file content: "+path);
+        Log.d(TAG, "Retrieving file content: " + path);
 
         // fetch file
         BufferedReader br = null;
@@ -118,19 +131,35 @@ public class Utils {
         return fileContent.toString();
     }
 
+
     /**
-     * Get the properties in the specified language:
-     * <ul>
-     *     <li>0 for English</li>
-     *     <li>1 for Spanish</li>
-     * </ul>
-     * @param lang
+     * Retrieve language of device. If language is not set, it defaults to English.
+     *
+     * @param context
+     * @return 0 = English | 1 = Spanish
+     */
+    public static int getLang(Context context) {
+        final String TAG = "Utils-getLang()";
+        int lang = 0;
+
+        // if spanish, change language to spanish, if not it stays in english
+        if (Locale.getDefault().getLanguage().equalsIgnoreCase("es")) {
+            lang = 1;
+        }
+
+        return lang;
+    }
+
+    /**
+     * Get the properties of the game, returns data in device's language.
+     * See {@link #getLang(Context)} for language retrieving.
+     *
      * @return A JsonObject containing the properties info in the specified language
      */
-    public static JsonObject getProperties(Context context, int lang) {
+    public static JsonObject getProperties(Context context) {
         final String TAG = "Utils-getProperties()";
 
-        String file = (lang == 1) ? PROPERTIES_ES_FILE : PROPERTIES_EN_FILE;
+        String file = (getLang(context) == 1) ? PROPERTIES_ES_FILE : PROPERTIES_EN_FILE;
 
         String fileData = Utils.readFile(context, file);
 
@@ -152,7 +181,7 @@ public class Utils {
         ArrayList<Tower> towers = new ArrayList<>();
 
         // get properties data
-        JsonObject propertiesENJSON = getProperties(context, 0);
+        JsonObject propertiesENJSON = getProperties(context);
         // get object with tower properties from inside properties (en) JSON object, located with key "towers"
         JsonObject towerProperties = propertiesENJSON.getAsJsonObject("towers");
 
@@ -165,7 +194,7 @@ public class Utils {
             tower.setName(towerProperties.get(tower.getName()).getAsString());
             tower.setImg(towerProperties.get(tower.getImg()).getAsString());
 
-            Log.e(TAG, "tower img: "+tower.getImg());
+            Log.e(TAG, "tower img: " + tower.getImg());
 
             towers.add(tower);
         }
@@ -187,12 +216,12 @@ public class Utils {
         ArrayList<Enemy> enemies = new ArrayList<>();
 
         // get properties data
-        JsonObject propertiesENJSON = getProperties(context, 0);
+        JsonObject propertiesENJSON = getProperties(context);
         // get object with enemies properties from inside properties (en) JSON object, located with key "enemies"
         JsonObject enemiesProperties = propertiesENJSON.getAsJsonObject("enemies");
 
         for (String key : enemiesJSON.keySet()) {
-            Log.d(TAG, "checking enemy: "+key);
+            Log.d(TAG, "checking enemy: " + key);
 
             Enemy enemy = gson.fromJson(enemiesJSON.get(key), Enemy.class);
             enemy.setName(enemiesProperties.get(enemy.getName()).getAsString());
@@ -207,6 +236,7 @@ public class Utils {
 
     /**
      * Checks if the save.json file exists in the internal storage, if not, it creates it.
+     *
      * @param context
      */
     public static void checkSaveFileExistence(Context context) {
@@ -227,6 +257,7 @@ public class Utils {
 
     /**
      * FOR TESTING PURPOSES, RESETS THE SAVE FILE CONTENT TO DEFAULT
+     *
      * @param context
      */
     public static void resetSaveFileContent(Context context) {
@@ -263,13 +294,13 @@ public class Utils {
         ArrayList<Card> cards = new ArrayList<>();
 
         // get properties data
-        JsonObject propertiesENJSON = getProperties(context, 0);
+        JsonObject propertiesENJSON = getProperties(context);
         // get object with cards properties from inside properties (en) JSON object, located with key "cards"
         JsonObject cardsProperties = propertiesENJSON.getAsJsonObject("cards");
 
         for (String key : cardsJSON.keySet()) {
-            Log.d(TAG, "checking card (ID): "+key);
-            Log.d(TAG, "checking card (DATA): "+cardsJSON.get(key));
+            Log.d(TAG, "checking card (ID): " + key);
+            Log.d(TAG, "checking card (DATA): " + cardsJSON.get(key));
 
 
             Card card = gson.fromJson(cardsJSON.get(key), Card.class);
@@ -297,7 +328,7 @@ public class Utils {
         ArrayList<Deck> decks = new ArrayList<>();
 
         for (String key : decksJSON.keySet()) {
-            Log.d(TAG, "checking deck: "+key);
+            Log.d(TAG, "checking deck: " + key);
 
             Deck deck = gson.fromJson(decksJSON.get(key), Deck.class);
             deck.setName(key);
@@ -319,7 +350,7 @@ public class Utils {
         JsonObject storyJSON = gson.fromJson(storyData, JsonObject.class);
 
         // get properties data
-        JsonObject propertiesENJSON = getProperties(context, 0);
+        JsonObject propertiesENJSON = getProperties(context);
         // get object with story properties from inside properties (en) JSON object, located with key "story"
         JsonObject storyProperties = propertiesENJSON.getAsJsonObject("story");
 
@@ -349,5 +380,107 @@ public class Utils {
         }
 
         return story;
+    }
+
+
+    /**
+     * Actual playing of the animation.
+     *
+     * @param targetView
+     */
+    public static void playFadeInFadeOutAnimation(View targetView, long fadeDuration, long waitDuration) {
+        final String TAG = "BattleScreen-playFadeInOutAnimation";
+
+        Log.d(TAG, "Setting animation.");
+
+        // setting fade-in animation
+        ObjectAnimator fadeIn = ObjectAnimator.ofFloat(targetView, "alpha", 0f, 1f);
+        fadeIn.setDuration(fadeDuration);
+
+        // setting wait animation (won't do anything but has to be done for the object to stay the same Xms)
+        ObjectAnimator wait = ObjectAnimator.ofFloat(targetView, "alpha", 1f, 1f);
+        wait.setDuration(waitDuration);
+
+        // setting fade-out animation
+        ObjectAnimator fadeOut = ObjectAnimator.ofFloat(targetView, "alpha", 1f, 0f);
+        fadeOut.setDuration(fadeDuration);
+
+        // creating the set of animations we'll play in a specific order
+        AnimatorSet animatorSet = new AnimatorSet(); // creation
+        animatorSet.playSequentially(fadeIn, wait, fadeOut);
+        Log.d(TAG, "Playing animation.");
+        animatorSet.start();
+    }
+
+    /**
+     * Play story narration for target part.
+     * @param context
+     * @param storyNarrationBackground
+     * @param storyNarrationView
+     * @param target
+     */
+    public static void playStoryNarration(Context context, ConstraintLayout storyNarrationBackground, TextView storyNarrationView, String target) {
+        final String TAG = "BattleScreen-playStoryNarration";
+
+        ((Activity) context).getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+        ArrayList<DialogueSet> storyData = getStoryData(context);
+        DialogueSet narration = storyData.stream().filter(ds -> ds.getId().equalsIgnoreCase(target)).findFirst().orElse(new DialogueSet());
+//        // TODO: REMOVE WHEN NOT IN TESTING, LINE ABOVE IS FOR REAL GAME
+//        DialogueSet narration = storyData.stream().filter(ds -> ds.getId().equalsIgnoreCase("intro")).findFirst().orElse(new DialogueSet());
+
+        // change from gone to visible (though alpha is 0 for appearing effect)
+        storyNarrationBackground.setVisibility(View.VISIBLE);
+        storyNarrationBackground.setAlpha(0f);
+        // fade in from invisible to visible
+        ObjectAnimator fadeIn = ObjectAnimator.ofFloat(storyNarrationBackground, "alpha", 0f, 1f);
+        fadeIn.setDuration(700);
+        fadeIn.start();
+
+        new Handler().postDelayed(() -> {
+            playDialogueSequence(storyNarrationBackground, storyNarrationView, narration.getDialogues(), 0);
+        }, 700);
+    }
+
+    private static void playDialogueSequence(ConstraintLayout storyNarrationBackground, TextView storyNarrationView, List<String> dialogues, int index) {
+        long fadeDuration = 700;
+        long waitDuration = 3000;
+
+        if (index >= dialogues.size()) {
+            // Once all dialogues are shown, fade out the background and hide it
+            ObjectAnimator fadeOutBackground = ObjectAnimator.ofFloat(storyNarrationBackground, "alpha", 1f, 0f);
+            fadeOutBackground.setDuration(fadeDuration);
+            fadeOutBackground.addListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    storyNarrationBackground.setVisibility(View.GONE); // Hide it after fading out
+                }
+            });
+            fadeOutBackground.start();
+            return; // exit when all dialogues are shown
+        }
+
+
+        storyNarrationView.setText(dialogues.get(index));
+
+        // Create fade-in animation
+        ObjectAnimator fadeIn = ObjectAnimator.ofFloat(storyNarrationView, "alpha", 0f, 1f);
+        fadeIn.setDuration(fadeDuration);
+
+        // Create fade-out animation
+        ObjectAnimator fadeOut = ObjectAnimator.ofFloat(storyNarrationView, "alpha", 1f, 0f);
+        fadeOut.setDuration(fadeDuration);
+        fadeOut.setStartDelay(waitDuration);
+
+        AnimatorSet set = new AnimatorSet();
+        set.playSequentially(fadeIn, fadeOut);
+        set.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                playDialogueSequence(storyNarrationBackground, storyNarrationView, dialogues, index + 1); // Call next dialogue
+            }
+        });
+
+        set.start();
     }
 }
