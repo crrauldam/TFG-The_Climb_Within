@@ -149,13 +149,14 @@ public class Utils {
     }
 
     public static void initiateFirebaseLoginSequence(Context context, FirebaseUser user) {
+        final String TAG = "Utils-initiateFirebaseLoginSequence";
         if(user != null) {
-            Log.d("MainActivity-updateUI", "User (" + user + ") was found.");
+            Log.d(TAG, "User (" + user + ") was found.");
 //            startActivity(new Intent(this, Home.class));
 //            finish();
         }
         else {
-            Log.d("MainActivity-updateUI", "User was NOT found: " + user);
+            Log.d(TAG, "User was NOT found: " + user);
 //            startActivity(new Intent(this, Login.class));
 //            finish();
         }

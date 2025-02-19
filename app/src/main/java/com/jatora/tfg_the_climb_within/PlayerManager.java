@@ -140,6 +140,7 @@ public class PlayerManager {
             Log.d("Firestore", "Save cargado: " + saveRemoto);
 
             Player player = gson.fromJson(saveRemoto, Player.class);
+            instance = player;
             savePlayerData(context, player);
 
         } else {

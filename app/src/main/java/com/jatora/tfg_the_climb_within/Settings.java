@@ -59,6 +59,7 @@ public class Settings extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_settings);
 
+
         googleBtnUi();
 
         signInButton = findViewById(R.id.google_button);
@@ -67,6 +68,9 @@ public class Settings extends AppCompatActivity {
         // Firebase Auth Instance
         mAuth = FirebaseAuth.getInstance();
 
+        // Update UI depending if the user is logged in or not
+        updateUI(this, mAuth.getCurrentUser());
+
         // Build the One Tap sign-in request
         signInRequest = BeginSignInRequest.builder()
                 .setGoogleIdTokenRequestOptions(BeginSignInRequest.GoogleIdTokenRequestOptions.builder()
@@ -74,7 +78,7 @@ public class Settings extends AppCompatActivity {
                         // Use your server's client ID, not the Android client ID.
                         .setServerClientId(getString(R.string.default_web_client_id))
                         // Optionally filter to only show accounts previously used to sign in.
-                        .setFilterByAuthorizedAccounts(true)
+                        .setFilterByAuthorizedAccounts(false)
                         .build())
                 .build();
 
