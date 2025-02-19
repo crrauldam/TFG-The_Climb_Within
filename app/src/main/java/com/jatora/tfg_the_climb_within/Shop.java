@@ -1,9 +1,13 @@
 package com.jatora.tfg_the_climb_within;
 
 import android.content.Context;
+
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.os.Handler;
+
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,12 +18,18 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.content.res.AppCompatResources;
 import androidx.constraintlayout.widget.ConstraintLayout;
+
+import androidx.core.content.res.ResourcesCompat;
+
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -124,7 +134,8 @@ public class Shop extends AppCompatActivity {
      * @param playerNonUnlockedCards
      * @param targetLayout
      */
-    public static void drawCards(Context context, Player player, String searchedDeck, ArrayList<Deck> decks, List<Card> playerNonUnlockedCards, LinearLayout targetLayout, ImageView coinImg, TextView totalEmotionCoins, ArrayList<Integer> pucs) {
+
+    public void drawCards(Context context, Player player, String searchedDeck, ArrayList<Deck> decks, List<Card> playerNonUnlockedCards, LinearLayout targetLayout, ImageView coinImg, TextView totalEmotionCoins, ArrayList<Integer> pucs) {
         final String TAG = "Shop-drawCards";
 
         // clear layout so that there are no accumulated cards from previous tab selections
@@ -218,7 +229,7 @@ public class Shop extends AppCompatActivity {
                 cardPrice.setText(String.valueOf(c.getUnlock_cost()));
 
                 // add click listener to card for it to be able to be bought
-                addClickListenerToShopItemLayout(context, player, searchedDeck, shopItemLayout, c, pucs, playerNonUnlockedCards);
+                addClickListenerToShopItemLayoutTEST(context, player, searchedDeck, shopItemLayout, c, pucs, playerNonUnlockedCards, targetDeck);
 
                 // add card to layout
                 newlinearLayout.addView(shopItemLayout);
@@ -236,6 +247,73 @@ public class Shop extends AppCompatActivity {
     }
 
 
+//    /**
+//     * Adds a click listener to the LinearLayout passed as argument so that it is able to detect
+//     * the intention of buying it.
+//     * @param context
+//     * @param player
+//     * @param searchedDeck
+//     * @param shopItemLayout
+//     * @param c
+//     */
+//    private void addClickListenerToShopItemLayout(Context context, Player player, String searchedDeck, LinearLayout shopItemLayout, Card c, ArrayList<Integer> pucs, List<Card> playerNonUnlockedCards) {
+//        final String TAG = "Shop-addClickListenerToShopItemLayout";
+//
+//        shopItemLayout.setOnClickListener(v -> {
+//            Log.d(TAG, "card pressed: "+c.getId());
+//
+//            // if any other item has been selected before
+//            if (prevItem != 0) {
+//                // if it isnt the same as the actual selected item
+//                if (prevItem != c.getId()) {
+//                    // the "previous" now is the actual one
+//                    prevItem = c.getId();
+//                } else {
+//                    // TODO: CHECK IF PLAYER HAS ENOUGH COINS TO BUY THAT CARD
+//                    if (player.getEmotion_coins().getCoin(searchedDeck) >= c.getUnlock_cost()) {
+//                        // update player unlocked cards
+//                        // add the card's ID to the player's collection
+//                        pucs.add(c.getId());
+////                        Integer[] pucs = player.getUnlocked_cards();
+////                        pucs = Arrays.copyOf(pucs, pucs.length+1);
+////                        pucs[pucs.length-1] = c.getId();
+//                        player.setUnlocked_cards(pucs.toArray(new Integer[0]));
+//
+//                        // update player emotion coins for that specific deck
+//                        Player.EmotionCoins newEmotionCoins = player.getEmotion_coins();
+//                        newEmotionCoins.setCoin(searchedDeck, newEmotionCoins.getCoin(searchedDeck)-c.getUnlock_cost());
+//                        player.setEmotion_coins(newEmotionCoins);
+//
+//                        // update the non-unlocked cards list and remove
+//                        playerNonUnlockedCards.remove(c);
+//
+//                        // TODO: AFTER ADDING NEW CARD, UPDATE SAVE.JSON FILE (MAKE METHOD IN UTILS CLASS)
+//                        Log.d(TAG, "saving player data");
+//                        PlayerManager.savePlayerData(v.getContext(), player);
+////                            Utils.savePlayerData(context, player);
+//                        Log.d(TAG, "successfully saved player data");
+//
+//                        Log.d(TAG, "player unlocked cards: "+ Arrays.toString(pucs.toArray()));
+//
+//                        // reset item selected
+//                        prevItem = 0;
+//                        // show card as no available for buying
+//                        shopItemLayout.findViewById(R.id.hideCard).setVisibility(View.VISIBLE);
+//                        shopItemLayout.findViewById(R.id.hidePrice).setVisibility(View.VISIBLE);
+//                        v.setClickable(false);
+//                    } else {
+//                        // if not enough coins, show toast with message indicating so
+//                        Toast.makeText(context, "Not enough coins", Toast.LENGTH_SHORT).show();
+//                    }
+//                }
+//            } else {
+//                // the "previous" now is the actual one
+//                prevItem = c.getId();
+//            }
+//        });
+//    }
+
+    // TODO: TEST TO IMPLEMENT CONFIRMATION WHEN BUYING
     /**
      * Adds a click listener to the LinearLayout passed as argument so that it is able to detect
      * the intention of buying it.
@@ -245,60 +323,87 @@ public class Shop extends AppCompatActivity {
      * @param shopItemLayout
      * @param c
      */
-    private static void addClickListenerToShopItemLayout(Context context, Player player, String searchedDeck, LinearLayout shopItemLayout, Card c, ArrayList<Integer> pucs, List<Card> playerNonUnlockedCards) {
+    private void addClickListenerToShopItemLayoutTEST(Context context, Player player, String searchedDeck, LinearLayout shopItemLayout, Card c, ArrayList<Integer> pucs, List<Card> playerNonUnlockedCards, Deck targetDeck) {
         final String TAG = "Shop-addClickListenerToShopItemLayout";
 
         shopItemLayout.setOnClickListener(v -> {
             Log.d(TAG, "card pressed: "+c.getId());
 
-            // if any other item has been selected before
-            if (prevItem != 0) {
-                // if it isnt the same as the actual selected item
-                if (prevItem != c.getId()) {
-                    // the "previous" now is the actual one
-                    prevItem = c.getId();
-                } else {
-                    // TODO: CHECK IF PLAYER HAS ENOUGH COINS TO BUY THAT CARD
-                    if (player.getEmotion_coins().getCoin(searchedDeck) >= c.getUnlock_cost()) {
-                        // update player unlocked cards
-                        // add the card's ID to the player's collection
-                        pucs.add(c.getId());
+            showConfirmationDialog(context, player, searchedDeck, shopItemLayout, c, pucs, playerNonUnlockedCards, targetDeck);
+        });
+    }
+
+    public void showConfirmationDialog(Context context, Player player, String searchedDeck, LinearLayout shopItemLayout, Card c, ArrayList<Integer> pucs, List<Card> playerNonUnlockedCards, Deck targetDeck) {
+        final String TAG = "Shop-showConfirmationDialog";
+
+        Log.d(TAG, "Showing confirm buy dialog");
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        View menu = getLayoutInflater().inflate(R.layout.shop_confirm_buy_dialog, null);
+
+        // set tower coin image
+        ImageView coinImg = menu.findViewById(R.id.coinImg);
+        try {
+            Bitmap bitmap = BitmapFactory.decodeStream(getAssets().open(targetDeck.getCoin()));
+            coinImg.setImageBitmap(bitmap);
+        } catch (IOException e) {
+            Log.e(TAG, "Error while getting bitmap image from assets: " + e);
+        }
+
+        TextView amount = menu.findViewById(R.id.confirmAmount);
+        Log.d(TAG, "card cost: "+c.getUnlock_cost());
+        amount.setText(String.valueOf(c.getUnlock_cost()));
+
+        // open pop up menu
+        builder.setView(menu);
+        AlertDialog dialog = builder.create();
+        dialog.getWindow().setBackgroundDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.battle_screen_menu_bg, null));
+        dialog.show();
+
+        ExtendedFloatingActionButton yes = menu.findViewById(R.id.yes);
+        yes.setOnClickListener(v -> {
+            // TODO: CHECK IF PLAYER HAS ENOUGH COINS TO BUY THAT CARD
+            if (player.getEmotion_coins().getCoin(searchedDeck) >= c.getUnlock_cost()) {
+                // update player unlocked cards
+                // add the card's ID to the player's collection
+                pucs.add(c.getId());
 //                        Integer[] pucs = player.getUnlocked_cards();
 //                        pucs = Arrays.copyOf(pucs, pucs.length+1);
 //                        pucs[pucs.length-1] = c.getId();
-                        player.setUnlocked_cards(pucs.toArray(new Integer[0]));
+                player.setUnlocked_cards(pucs.toArray(new Integer[0]));
 
-                        // update player emotion coins for that specific deck
-                        Player.EmotionCoins newEmotionCoins = player.getEmotion_coins();
-                        newEmotionCoins.setCoin(searchedDeck, newEmotionCoins.getCoin(searchedDeck)-c.getUnlock_cost());
-                        player.setEmotion_coins(newEmotionCoins);
+                // update player emotion coins for that specific deck
+                Player.EmotionCoins newEmotionCoins = player.getEmotion_coins();
+                newEmotionCoins.setCoin(searchedDeck, newEmotionCoins.getCoin(searchedDeck)-c.getUnlock_cost());
+                player.setEmotion_coins(newEmotionCoins);
 
-                        // update the non-unlocked cards list and remove
-                        playerNonUnlockedCards.remove(c);
+                // update the non-unlocked cards list and remove
+                playerNonUnlockedCards.remove(c);
 
-                        // TODO: AFTER ADDING NEW CARD, UPDATE SAVE.JSON FILE (MAKE METHOD IN UTILS CLASS)
-                        Log.d(TAG, "saving player data");
-                        PlayerManager.savePlayerData(v.getContext(), player);
+                // TODO: AFTER ADDING NEW CARD, UPDATE SAVE.JSON FILE (MAKE METHOD IN UTILS CLASS)
+                Log.d(TAG, "saving player data");
+                PlayerManager.savePlayerData(v.getContext(), player);
 //                            Utils.savePlayerData(context, player);
-                        Log.d(TAG, "successfully saved player data");
+                Log.d(TAG, "successfully saved player data");
 
-                        Log.d(TAG, "player unlocked cards: "+ Arrays.toString(pucs.toArray()));
+                Log.d(TAG, "player unlocked cards: "+ Arrays.toString(pucs.toArray()));
 
-                        // reset item selected
-                        prevItem = 0;
-                        // show card as no available for buying
-                        shopItemLayout.findViewById(R.id.hideCard).setVisibility(View.VISIBLE);
-                        shopItemLayout.findViewById(R.id.hidePrice).setVisibility(View.VISIBLE);
-                        v.setClickable(false);
-                    } else {
-                        // if not enough coins, show toast with message indicating so
-                        Toast.makeText(context, "Not enough coins", Toast.LENGTH_SHORT).show();
-                    }
-                }
+                // reset item selected
+                prevItem = 0;
+                // show card as no available for buying
+                shopItemLayout.findViewById(R.id.hideCard).setVisibility(View.VISIBLE);
+                shopItemLayout.findViewById(R.id.hidePrice).setVisibility(View.VISIBLE);
+                v.setClickable(false);
+
+                dialog.cancel();
             } else {
-                // the "previous" now is the actual one
-                prevItem = c.getId();
+                // if not enough coins, show toast with message indicating so
+                Toast.makeText(context, "Not enough coins", Toast.LENGTH_SHORT).show();
             }
+        });
+
+        ExtendedFloatingActionButton no = menu.findViewById(R.id.no);
+        no.setOnClickListener(v -> {
+            dialog.cancel();
         });
     }
 
@@ -310,7 +415,7 @@ public class Shop extends AppCompatActivity {
      * @param c
      * @param cardLayout
      */
-    public static void getCardLayout(Context context, String searchedDeck, Card c, ConstraintLayout cardLayout) {
+    public void getCardLayout(Context context, String searchedDeck, Card c, ConstraintLayout cardLayout) {
         final String TAG = "Shop-getCardLayout";
 
         Log.d(TAG, "Player card: "+c.getId());

@@ -4,10 +4,23 @@
     <selectionStates>
       <SelectionState runConfigName="app">
         <option name="selectionMode" value="DROPDOWN" />
+        <DropdownSelection timestamp="2025-02-17T12:26:43.044705Z">
+          <Target type="DEFAULT_BOOT">
+            <handle>
+              <DeviceId pluginId="PhysicalDevice" identifier="serial=cquodeyxwkaupvlz" />
+            </handle>
+          </Target>
+        </DropdownSelection>
+        <DialogSelection />
       </SelectionState>
       <SelectionState runConfigName="Settings">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
+      
+      <SelectionState runConfigName="Shop">
+        <option name="selectionMode" value="DROPDOWN" />
+      </SelectionState>
+      
     </selectionStates>
   </component>
 </project>

@@ -23,4 +23,13 @@
     <string name="settings">Ajustes</string>
     <string name="stage_cleared">ETAPA SUPERADA</string>
     <string name="you_lost">HAS PERDIDO</string>
+
+    <string name="play_again">JUGAR DE NUEVO</string>
+    <string name="no_more_cards">SIN CARTAS</string>
+    <string name="tower_not_unlocked">Torre no desbloqueada</string>
+    <string name="you_won">HAS GANADO</string>
+    <string name="buy_card">¿COMPRAR CARTA?</string>
+    <string name="price">"Precio: "</string>
+    <string name="no">NO</string>
+    <string name="yes">SI</string>
 </resources>

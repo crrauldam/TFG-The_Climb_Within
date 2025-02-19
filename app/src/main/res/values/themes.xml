@@ -15,4 +15,10 @@
     <style name="Theme.TFGThe_Climb_Within.Splash" parent="Theme.TFGThe_Climb_Within">
             <item name="android:background">@color/light_cyan</item>
     </style>
+    
+    <!-- FOR FULLSCREEN -->
+    <style name="FullscreenTheme" parent="Theme.TFGThe_Climb_Within">
+        <item name="android:windowFullscreen">true</item>
+        <item name="windowNoTitle">true</item>
+    </style>
 </resources>

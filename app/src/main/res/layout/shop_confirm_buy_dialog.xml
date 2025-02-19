@@ -19,15 +19,15 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_margin="40dp"
 
-        android:text="[MENU_TITLE]"
+        android:text="@string/buy_card"
         android:textColor="@color/white"
-        android:textSize="40sp"
+        android:textSize="35sp"
         android:fontFamily="@font/comfortaa_bold"
         />
 
     <LinearLayout
-        android:id="@+id/endGameData"
-        android:layout_width="wrap_content"
+        android:id="@+id/priceData"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center"
@@ -39,14 +39,13 @@
         >
 
         <TextView
-            android:id="@+id/towerProgress"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
 
             android:fontFamily="@font/comfortaa_bold"
-            android:text="Tower: hapinness\n Floor: 3\nStage: 1"
-            android:textAlignment="center"
+            android:text="@string/price"
+            android:textAlignment="textEnd"
             android:textColor="@color/white"
             android:textSize="14sp" />
 
@@ -68,23 +67,23 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
 
-                android:layout_marginStart="20dp"
+                android:layout_marginStart="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
                 />
 
             <TextView
-                android:id="@+id/amount"
+                android:id="@+id/confirmAmount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
 
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/coinImg"
                 android:layout_margin="10dp"
 
-                android:text="+500"
+                android:text="asdadadad"
+                android:textAlignment="viewStart"
                 android:textSize="14sp"
                 android:textColor="@color/white"
                 android:textStyle="bold"
@@ -95,42 +94,51 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>
 
-
-<!--     &lt;!&ndash;    RETRY BATTLE BUTTON &ndash;&gt;-->
-<!--    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton-->
-<!--        android:id="@+id/retryBattleButton"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-
-<!--        app:layout_constraintTop_toBottomOf="@id/dialogTitle"-->
-<!--        android:layout_margin="15dp"-->
-
-<!--        app:icon="@drawable/retry_icon"-->
-<!--        app:iconGravity="textStart"-->
-<!--        app:iconTint="@color/gunmetal"-->
-
-<!--        android:text="Retry battle"-->
-<!--        android:textSize="20sp"-->
-<!--        android:backgroundTint="@color/light_cyan"-->
-<!--        android:textColor="@color/gunmetal"-->
-<!--        />-->
-
-    <!--    LEAVE GAME BUTTON -->
-    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-        android:id="@+id/returnToMainMenuButton"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/priceData"
+        >
 
-        app:layout_constraintTop_toBottomOf="@id/endGameData"
-        android:layout_margin="15dp"
+        <!--    DONT BUY CARD-->
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:id="@+id/no"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
 
-        app:icon="@drawable/exit_icon"
-        app:iconGravity="textStart"
-        app:iconTint="@color/gunmetal"
+            app:layout_constraintTop_toBottomOf="@id/endGameData"
+            android:layout_margin="15dp"
 
-        android:text="@string/return_to_main_menu"
-        android:textSize="20sp"
-        android:backgroundTint="@color/light_cyan"
-        android:textColor="@color/gunmetal"
-        />
+            app:icon="@drawable/cross_icon"
+            app:iconGravity="textStart"
+            app:iconTint="@color/white"
+
+            android:text="@string/no"
+            android:textSize="20sp"
+            android:backgroundTint="@android:color/holo_red_light"
+            android:textColor="@color/white"
+            />
+
+        <!--    BUY CARD -->
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:id="@+id/yes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+
+            app:layout_constraintTop_toBottomOf="@id/endGameData"
+            android:layout_margin="15dp"
+
+            app:icon="@drawable/ok_icon"
+            app:iconGravity="textStart"
+            app:iconTint="@color/white"
+
+            android:text="@string/yes"
+            android:textSize="20sp"
+            android:backgroundTint="@android:color/holo_green_light"
+            android:textColor="@color/white"
+            />
+    </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

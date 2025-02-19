@@ -10,7 +10,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.TFGThe_Climb_Within"
+        android:theme="@style/FullscreenTheme"
         tools:targetApi="31">
         <activity
             android:name=".SplashScreen"
@@ -39,7 +39,7 @@
 
         <activity
             android:name=".YourCards"
-            android:exported="false"
+            android:exported="true"
             android:parentActivityName=".HomeScreen"
             />
 
@@ -58,6 +58,10 @@
             android:exported="true"
             android:parentActivityName=".HomeScreen"
             />
+      
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"/>
 
         <meta-data
             android:name="preloaded_fonts"

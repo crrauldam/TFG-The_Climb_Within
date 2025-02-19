@@ -52,6 +52,7 @@ dependencies {
     implementation("com.google.code.gson:gson:2.8.6")
 
     implementation("com.tbuonomo:dotsindicator:5.1.0")
+
     // Import the BoM for the Firebase platform
     implementation(platform("com.google.firebase:firebase-bom:33.8.0"))
 
@@ -61,5 +62,4 @@ dependencies {
 
     // Also add the dependency for the Google Play services library and specify its version
     implementation("com.google.android.gms:play-services-auth:21.3.0")
-
 }
