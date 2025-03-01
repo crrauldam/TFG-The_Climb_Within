@@ -9,6 +9,8 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 public class HomeScreen extends AppCompatActivity {
     private AppCompatButton continueButton;
     private AppCompatButton newGameButton;
@@ -35,19 +37,25 @@ public class HomeScreen extends AppCompatActivity {
         settingsButton = findViewById(R.id.settingsButton);
         faqButton = findViewById(R.id.faq);
 
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+
         continueButton.setOnClickListener(v -> {
+            PlayerManager.checkRemotePlayerData(this, mAuth.getCurrentUser());
             Utils.changeActivity(this, TowerSelection.class, R.anim.slide_out_left, R.anim.slide_in_right);
         });
 
         newGameButton.setOnClickListener(v -> {
+            PlayerManager.checkRemotePlayerData(this, mAuth.getCurrentUser());
             Utils.changeActivity(this, TowerSelection.class, R.anim.slide_out_left, R.anim.slide_in_right);
         });
 
         yourCardsButton.setOnClickListener(v -> {
+            PlayerManager.checkRemotePlayerData(this, mAuth.getCurrentUser());
             Utils.changeActivity(this, YourCards.class, R.anim.slide_out_top, R.anim.slide_in_bottom);
         });
 
         shopButton.setOnClickListener(v -> {
+            PlayerManager.checkRemotePlayerData(this, mAuth.getCurrentUser());
             Utils.changeActivity(this, Shop.class, R.anim.slide_out_right, R.anim.slide_in_left);
         });
 

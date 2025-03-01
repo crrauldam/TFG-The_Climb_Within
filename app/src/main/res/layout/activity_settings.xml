@@ -54,14 +54,14 @@
         app:layout_constraintBottom_toBottomOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout"
             android:layout_width="260dp"
             android:layout_height="62dp"
             android:layout_marginTop="45dp"
             android:background="@drawable/google_view_settings"
-            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            >
+            app:layout_constraintTop_toTopOf="parent">
 
             <com.google.android.gms.common.SignInButton
                 android:id="@+id/google_button"
@@ -78,12 +78,11 @@
                 android:id="@+id/userId"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:visibility="invisible"
+                android:fontFamily="@font/comfortaa_bold"
+                android:textAlignment="center"
                 android:textColor="@color/gunmetal"
                 android:textSize="20sp"
-                android:fontFamily="@font/comfortaa_bold"
-                android:textAlignment="center"/>
-
+                android:visibility="invisible" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -104,6 +103,24 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             />
+
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:id="@+id/signOutButton"
+            android:layout_width="200dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="15dp"
+            android:backgroundTint="@android:color/holo_red_light"
+
+            android:text="@string/signOut"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+
+            app:icon="@drawable/sign_out"
+            app:iconGravity="textStart"
+            app:iconTint="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

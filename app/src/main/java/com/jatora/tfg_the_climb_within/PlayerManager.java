@@ -72,6 +72,8 @@ public class PlayerManager {
     public static void savePlayerData(Context context, Player playerObject) {
         final String TAG = "PlayerManager-savePlayerData";
 
+        playerObject.setTimestamp(System.currentTimeMillis() / 1000L);
+
         Log.d(TAG, "parsing player object into string and adding to jsonobject.");
         JsonObject jo = new JsonObject();
         jo.add("player", gson.toJsonTree(playerObject));
@@ -90,28 +92,44 @@ public class PlayerManager {
     public static void checkRemotePlayerData(Context context, FirebaseUser user) {
         final String TAG = "PlayerManager-hasPlayerData";
 
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        if(user != null) {
+            FirebaseFirestore db = FirebaseFirestore.getInstance();
+            // Obtiene el documento usando el UID del usuario
+            db.collection("Saves").document(user.getUid())
+                    .get()
+                    .addOnSuccessListener(documentSnapshot -> {
+                        if (documentSnapshot.exists()) {
+                            // El documento ya existe
+                            Log.d("Firestore", "El documento ya existe para UID: " + user.getUid());
 
-        // Obtiene el documento usando el UID del usuario
-        db.collection("Saves").document(user.getUid())
-                .get()
-                .addOnSuccessListener(documentSnapshot -> {
-                    if (documentSnapshot.exists()) {
-                        // El documento ya existe
-                        Log.d("Firestore", "El documento ya existe para UID: " + user.getUid());
-                        loadFromRemoteToLocal(context, user, documentSnapshot);
-                    } else {
-                        // El documento no existe
-                        Log.d("Firestore", "El documento NO existe para UID: " + user.getUid());
-                        saveToRemoteFromLocal(context, user);
-                    }
-                })
-                .addOnFailureListener(e ->
-                        Log.w("Firestore", "Error al comprobar el documento", e));
+                            Player local = loadPlayerData(context);
+                            Player remote = gson.fromJson(documentSnapshot.getString("save"), Player.class);
+
+                            if (local.getTimestamp() < remote.getTimestamp()) {
+                                Log.d(TAG, "LOCAL < REMOTE");
+                                loadFromRemoteToLocal(context, user, documentSnapshot);
+                            }else {
+                                Log.d(TAG, "LOCAL > REMOTE");
+                                saveToRemoteFromLocal(context, user);
+                            }
+                        } else {
+                            // El documento no existe
+                            Log.d("Firestore", "El documento NO existe para UID: " + user.getUid());
+                            saveToRemoteFromLocal(context, user);
+                        }
+                    })
+                    .addOnFailureListener(e ->
+                            Log.w("Firestore", "Error al comprobar el documento", e));
+        }else {
+            Log.d(TAG, "El user es null (no ha iniciado sesion  )");
+        }
+
+
+
 
     }
 
-    private static void saveToRemoteFromLocal(Context context, FirebaseUser user) {
+    public static void saveToRemoteFromLocal(Context context, FirebaseUser user) {
         final String TAG = "PlayerManager-saveToRemoteFromLocal";
 
         Player player = loadPlayerData(context);
