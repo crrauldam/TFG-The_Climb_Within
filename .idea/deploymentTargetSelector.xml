@@ -4,23 +4,18 @@
     <selectionStates>
       <SelectionState runConfigName="app">
         <option name="selectionMode" value="DROPDOWN" />
-        <DropdownSelection timestamp="2025-02-17T12:26:43.044705Z">
+        <DropdownSelection timestamp="2025-02-27T11:16:34.693997600Z">
           <Target type="DEFAULT_BOOT">
             <handle>
-              <DeviceId pluginId="PhysicalDevice" identifier="serial=cquodeyxwkaupvlz" />
+              <DeviceId pluginId="LocalEmulator" identifier="path=C:\Users\rault\.android\avd\Medium_Phone_API_35.avd" />
             </handle>
           </Target>
         </DropdownSelection>
         <DialogSelection />
       </SelectionState>
-      <SelectionState runConfigName="Settings">
-        <option name="selectionMode" value="DROPDOWN" />
-      </SelectionState>
-      
       <SelectionState runConfigName="Shop">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      
     </selectionStates>
   </component>
 </project>

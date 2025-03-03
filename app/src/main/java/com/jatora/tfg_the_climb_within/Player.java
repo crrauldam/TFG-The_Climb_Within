@@ -19,6 +19,10 @@ public class Player extends Entity {
         this.deck = new Integer[0];
     }
 
+    public void restoreHP() {
+        this.hp = this.maxhp;
+    }
+
     static class EmotionCoins {
         private int anger;
         private int disgust;
@@ -116,30 +120,6 @@ public class Player extends Entity {
             this.damage_received = damage_received;
         }
     }
-
-//    public String getName() {
-//        return name;
-//    }
-
-//    public void setName(String name) {
-//        this.name = name;
-//    }
-
-//    public int getMaxhp() {
-//        return maxhp;
-//    }
-
-//    public void setMaxhp(int maxhp) {
-//        this.maxhp = maxhp;
-//    }
-
-//    public int getHp() {
-//        return hp;
-//    }
-
-//    public void setHp(int hp) {
-//        this.hp = hp;
-//    }
 
     public Integer[] getUnlocked_cards() {
         return unlocked_cards;

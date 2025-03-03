@@ -32,4 +32,6 @@
     <string name="price">"Precio: "</string>
     <string name="no">NO</string>
     <string name="yes">SI</string>
+    <string name="no_cards_to_be_bought">NO HAY CARTAS PARA COMPRAR</string>
+    <string name="next_stage">SIGUIENTE FASE</string>
 </resources>

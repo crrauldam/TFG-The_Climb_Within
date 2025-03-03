@@ -2,6 +2,7 @@ package com.jatora.tfg_the_climb_within;
 
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -12,6 +13,8 @@ import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.ImageButton;
@@ -21,6 +24,8 @@ import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.activity.OnBackPressedCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.content.res.AppCompatResources;
@@ -31,7 +36,10 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import org.w3c.dom.Text;
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.util.Assert;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -41,6 +49,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class BattleScreen extends AppCompatActivity {
+    // firebase things
+    FirebaseAuth mAuth;
+
+    // readonly data
     ArrayList<Deck> ALL_DECKS;
     ArrayList<Card> ALL_CARDS;
     ArrayList<Enemy> ALL_ENEMIES;
@@ -73,6 +85,7 @@ public class BattleScreen extends AppCompatActivity {
 
     // card-related UI
     GridLayout playableCards;
+    View blockCardClicking;
     View hoveredCard;
     TextView cardDescription;
 
@@ -84,6 +97,10 @@ public class BattleScreen extends AppCompatActivity {
 
     // shields
     TextView enemyShieldView;
+
+    // for waiting response from another activity to continue processing
+    private ActivityResultLauncher<Intent> activityResultLauncher;
+
 
     private final int[] enemyShield = new int[]{0};
     TextView playerShieldView;
@@ -102,6 +119,33 @@ public class BattleScreen extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        mAuth = FirebaseAuth.getInstance();
+
+        // set ActivityResultLauncher for resting after N stages
+        activityResultLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    // if callback says it was OK then proceed to next stage
+                    if (result.getResultCode() == Activity.RESULT_OK) {
+                        // update player object after rest
+                        player = PlayerManager.getInstance(this);
+                        // if rest, then means next floor
+                        floor++;
+                        stage++;
+                        // TODO: ERASE THE FOLLOWING LINE, ONLY FOR TEST PURPOSES!!
+                        // add "de estrangis" extra card of that tower for letting it complete the tower
+                        // since the basic deck isnt enough
+                        Integer[] deck = player.getDeck();
+                        deck = Arrays.copyOf(deck, deck.length + 1);
+                        deck[deck.length - 1] = 5000;
+                        player.setDeck(deck);
+
+                        // TODO: STOP PRECOCIOUS STAGE START
+                        playStage(player, tower, floor, stage);
+                    }
+                }
+        );
 
         // show game menu on system back button functionality to prevent the player from unintentionally leaving game
         getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
@@ -131,6 +175,7 @@ public class BattleScreen extends AppCompatActivity {
 
         cardDescription = findViewById(R.id.cardDescription);
         playableCards = findViewById(R.id.playableCards);
+        blockCardClicking = findViewById(R.id.blockCardClicking);
 
         enemyHPBar = findViewById(R.id.enemyHPBar);
         enemyHP = findViewById(R.id.enemyHP);
@@ -197,25 +242,6 @@ public class BattleScreen extends AppCompatActivity {
         });
 
         playStage(player, tower, floor, stage);
-
-//        for (floor = 1; floor <= TOTAL_FLOORS; floor++) {
-//            for (stage = 1; stage <= TOTAL_STAGES; stage++) {
-//                // check if this stage allows the game to continue
-//                if (!playStage(player, tower, floor, stage)) {
-//                    // TODO: if player looses show end game dialog with rewards and exit game
-//                }
-//
-//                // if the player can rest
-//                // (e.g. stage = 2 % STAGES_TO_REST == 0 so its time to rest,
-//                // same for stage = 4 but not for any other stage)
-//                if (stage%STAGES_TO_REST == 0) {
-//                    // save player
-//                    // send to in game shop
-////                    rest(player);
-//                    rests++;
-//                }
-//            }
-//        }
     }
 
     private void showMenu(Context context) {
@@ -267,17 +293,23 @@ public class BattleScreen extends AppCompatActivity {
         // set return to battle functionality
         Button backtoBattleButton = menu.findViewById(R.id.backtoBattleButton);
         backtoBattleButton.setOnClickListener(v1 -> {
+            Log.d(TAG, "Back to battle button clicked.");
             dialog.cancel();
         });
 
         // set exit battle functionality
         Button exitBattleButton = menu.findViewById(R.id.exitBattleButton);
         exitBattleButton.setOnClickListener(v1 -> {
+            Log.d(TAG, "Exit battle button clicked.");
+            player.restoreHP(); // heal player
             this.finish();
         });
 
         Button settingsButton = menu.findViewById(R.id.settingsButton);
         settingsButton.setOnClickListener(v1 -> {
+            Log.d(TAG, "Settings button clicked.");
+            settingsButton.setClickable(false);
+            settingsButton.postDelayed(() -> settingsButton.setClickable(true), 1000);
             Utils.changeActivity(this, Settings.class, R.anim.slide_out_bottom, R.anim.slide_in_top);
         });
     }
@@ -287,13 +319,14 @@ public class BattleScreen extends AppCompatActivity {
      *
      * @param player
      * @param tower
-     * @return true = continue game | false = player lost stage = stop game
      */
-    private boolean playStage(Player player, Tower tower, int floor, int stage) {
+    private void playStage(Player player, Tower tower, int floor, int stage) {
         final String TAG = "BattleScreen-playStage";
 
         Log.d(TAG, "Begins stage: " + stage + " for tower: " + tower.getName() + " floor: " + floor);
-        boolean stageState = true;
+
+        // by default set cards clickable
+        blockCardClicking.setVisibility(View.GONE);
 
         Enemy enemy = generateEnemy(tower, floor);
 
@@ -306,7 +339,6 @@ public class BattleScreen extends AppCompatActivity {
 
         // TODO: make battle loop
 
-        return stageState;
     }
 
     /**
@@ -416,8 +448,20 @@ public class BattleScreen extends AppCompatActivity {
 //                        playableCards.removeView(card);
 
                         // temporarily disable cards layout so they cannot be clicked while playing other card
-                        playableCards.setClickable(false);
-                        switch (playCard(c, card, player, enemy, playerShield, playerShieldView, enemyShield, enemyShieldView, playerHP, playerHPBar, enemyHP, enemyHPBar)) {
+                        Log.d(TAG, "locking player cards");
+                        blockCardClicking.setVisibility(View.VISIBLE);
+                        switch (playCard(c, card, player, enemy, playerShield, playerShieldView, enemyShield, enemyShieldView, playerHP, playerHPBar, enemyHP, enemyHPBar, new Callback_TCW() {
+                            @Override
+                            public void onSuccess() {
+                                Log.d(TAG, "unlocking cards to be played");
+                                blockCardClicking.setVisibility(View.GONE);
+                            }
+
+                            @Override
+                            public void onFailure(String errorMessage) {
+
+                            }
+                        })) {
                             case -1: // card has not been played
                                 card.animate().
                                         translationY(0)
@@ -431,7 +475,18 @@ public class BattleScreen extends AppCompatActivity {
                                 new Handler().postDelayed(() -> {
                                     if (!checkWinner(player, enemy)) { // check if in player's turn someone won
                                         // if there's no winner then the enemy attacks
-                                        attack(player, enemy.getAtk(), playerShield, playerShieldView, playerHP, playerHPBar);
+                                        attack(player, enemy.getAtk(), playerShield, playerShieldView, playerHP, playerHPBar, new Callback_TCW() {
+                                            @Override
+                                            public void onSuccess() {
+                                                Log.d(TAG, "unlocking cards to be played");
+                                                blockCardClicking.setVisibility(View.GONE);
+                                            }
+
+                                            @Override
+                                            public void onFailure(String errorMessage) {
+
+                                            }
+                                        });
                                         checkWinner(player, enemy); // check if in enemy's turn someone won
                                     }
 
@@ -443,8 +498,7 @@ public class BattleScreen extends AppCompatActivity {
                                 }
                                 break;
                         }
-                        // enable cards container to be able to be played again after turn ends
-                        playableCards.setClickable(true);
+
                     }
                     hoveredCard.animate().
                             translationY(0)
@@ -634,74 +688,28 @@ public class BattleScreen extends AppCompatActivity {
      * @param enemyHPBar
      * @return -1 = card not played | 0 = card played | 1 = card played and end battle
      */
-    private int playCard(Card c, View hoveredCard, Player player, Enemy enemy, int[] playerShield, TextView playerShieldView, int[] enemyShield, TextView enemyShieldView, TextView playerHP, HealthBarView playerHPBar, TextView enemyHP, HealthBarView enemyHPBar) {
+    private int playCard(Card c, View hoveredCard, Player player, Enemy enemy, int[] playerShield, TextView playerShieldView, int[] enemyShield, TextView enemyShieldView, TextView playerHP, HealthBarView playerHPBar, TextView enemyHP, HealthBarView enemyHPBar, Callback_TCW callback) {
         final String TAG = "BattleScreen-playCard";
         Log.d(TAG, "Card played: " + c.getName());
         int playResult = 0;
 
         switch (c.getType()) {
             case ATTACK:
-                attack(enemy, c.getEffect(), enemyShield, enemyShieldView, enemyHP, enemyHPBar);
+                attack(enemy, c.getEffect(), enemyShield, enemyShieldView, enemyHP, enemyHPBar, callback);
                 break;
             case HEAL:
                 if (player.getHp() == player.getMaxhp()) {
                     showBattleNarration("HP is full");
                     playResult = -1;
                 } else {
-                    heal(player, c.getEffect(), playerHP, playerHPBar);
+                    heal(player, c.getEffect(), playerHP, playerHPBar, callback);
                 }
                 break;
             case SHIELD:
                 increaseShield(playerShield, c.getEffect(), playerShieldView);
                 break;
-            case RANDOM:
-                boolean isEffectChosen = false;
-
-                while (!isEffectChosen) {
-                    // random between 0 and 2
-                    switch ((int) (Math.random() * 3)) {
-                        case 0: // heal
-                            if (!(player.getHp() == player.getMaxhp())) {
-                                heal(player, c.getEffect(), playerHP, playerHPBar);
-                                showBattleNarration("Player healed");
-                                isEffectChosen = true;
-                            }
-                            break;
-                        case 1: // attack
-                            attack(enemy, c.getEffect(), enemyShield, enemyShieldView, enemyHP, enemyHPBar);
-                            showBattleNarration("Attacking enemy");
-                            isEffectChosen = true;
-                            break;
-                        case 2: // shield
-                            increaseShield(playerShield, c.getEffect(), playerShieldView);
-                            showBattleNarration("Shield increased");
-                            isEffectChosen = true;
-                            break;
-                    }
-                }
-                break;
-            case HALF_PROB: // 50/50 to decide if attacks
-                // random between [0,2) (exclusive)
-                if ((int) (Math.random() * 2) == 1) {
-                    attack(enemy, c.getEffect(), enemyShield, enemyShieldView, enemyHP, enemyHPBar);
-                } else {
-                    showBattleNarration("Nothing happened");
-                }
-                break;
-            case SACRIFICE: // less hp but attacks
-                if (player.getHp() < c.getEffect()) {
-                    showBattleNarration("Not enough HP to use this card.");
-                    playResult = -1;
-                } else {
-                    sacrifice(c, player, enemy, enemyShield, enemyShieldView, playerHP, playerHPBar, enemyHP, enemyHPBar);
-                }
-                break;
             case ABSORB: // damage and heal same amount
-                absorb(c, player, enemy, enemyShield, enemyShieldView, playerHP, playerHPBar, enemyHP, enemyHPBar);
-                break;
-            case FINAL: // damage and end battle if didn't kill enemy
-                attack(enemy, c.getEffect(), enemyShield, enemyShieldView, enemyHP, enemyHPBar);
-                playResult = 1;
+                absorb(c, player, enemy, enemyShield, enemyShieldView, playerHP, playerHPBar, enemyHP, enemyHPBar, callback);
                 break;
         }
 
@@ -711,6 +719,11 @@ public class BattleScreen extends AppCompatActivity {
             cardDescription.setVisibility(View.INVISIBLE);
             cardDescription.setText("");
             playableCards.removeView(hoveredCard);
+
+            // TODO: remove played card after being played from player's deck, restore when rest
+//            ArrayList<Integer> playerDeck = new ArrayList<>(Arrays.asList(player.getDeck()));
+//            playerDeck.remove(c.getId());
+//            player.setDeck(playerDeck.toArray(new Integer[0]));
         }
 
         return playResult;
@@ -725,9 +738,15 @@ public class BattleScreen extends AppCompatActivity {
      * @param dmg
      * @param targetShield
      */
-    private void attack(Entity target, int dmg, int[] targetShield, TextView targetShieldView, TextView targetHP, HealthBarView targetHPBar) {
+    private void attack(Entity target, int dmg, int[] targetShield, TextView targetShieldView, TextView targetHP, HealthBarView targetHPBar, Callback_TCW callback) {
         final String TAG = "BattleScreen-attack";
         Log.d(TAG, "Attacking to target: " + target.getName());
+
+        // TODO: PLAY ENEMY ATTACK ANIMATION
+        if (target instanceof Player) {
+            playEnemyAttackAnimation();
+        }
+
         if (targetShield[0] > 0) {
             // control overflowing damage that the shield can't cover
             dmg -= targetShield[0];
@@ -749,13 +768,14 @@ public class BattleScreen extends AppCompatActivity {
 //                playSFX("reduce_shield");
             }
             updateShield(targetShield, targetShieldView);
+            callback.onSuccess();
 
         } else {
             target.setHp(target.getHp() - dmg);
 //            playSFX("take_damage");
         }
 
-        updateHP(target, targetHP, targetHPBar);
+        updateHP(target, targetHP, targetHPBar, callback);
 
         Log.d(TAG, "Attack to " + target.getName() + "\nNew HP: " + target.getHp() + "/" + target.getMaxhp() + " | Shield: " + targetShield[0]);
     }
@@ -768,7 +788,7 @@ public class BattleScreen extends AppCompatActivity {
      * @param target
      * @param amount
      */
-    private void heal(Entity target, int amount, TextView targetHP, HealthBarView targetHPBar) {
+    private void heal(Entity target, int amount, TextView targetHP, HealthBarView targetHPBar, Callback_TCW callback) {
         final String TAG = "BattleScreen-heal";
         Log.d(TAG, "Healing target: " + target.getName());
 
@@ -776,7 +796,7 @@ public class BattleScreen extends AppCompatActivity {
 
 //        playSFX("heal");
 
-        updateHP(target, targetHP, targetHPBar);
+        updateHP(target, targetHP, targetHPBar, callback);
 
         Log.d(TAG, "Heal to " + target.getName() + "\nNew HP: " + target.getHp() + "/" + target.getMaxhp());
     }
@@ -802,27 +822,6 @@ public class BattleScreen extends AppCompatActivity {
 
 
     /**
-     * Damages both the player and the enemy by the same amount.
-     *
-     * @param c
-     * @param player
-     * @param enemy
-     * @param enemyShield
-     */
-    private void sacrifice(Card c, Player player, Enemy enemy, int[] enemyShield, TextView enemyShieldView, TextView playerHP, HealthBarView playerHPBar, TextView enemyHP, HealthBarView enemyHPBar) {
-        final String TAG = "BattleScreen-sacrifice";
-        Log.d(TAG, "Sacrificing player HP: " + player.getName());
-        player.setHp(player.getHp() - c.getEffect());
-        updateHP(player, playerHP, playerHPBar);
-//        playSFX("take_damage");
-
-        Log.d(TAG, "Attacking to enemy: " + enemy.getName());
-        attack(enemy, c.getEffect(), enemyShield, enemyShieldView, enemyHP, enemyHPBar);
-        updateHP(enemy, enemyHP, enemyHPBar);
-    }
-
-
-    /**
      * Damages enemy by a certain amount. Also heals player by that amount.
      *
      * @param c
@@ -830,13 +829,13 @@ public class BattleScreen extends AppCompatActivity {
      * @param enemy
      * @param enemyShield
      */
-    private void absorb(Card c, Player player, Enemy enemy, int[] enemyShield, TextView enemyShieldView, TextView playerHP, HealthBarView playerHPBar, TextView enemyHP, HealthBarView enemyHPBar) {
+    private void absorb(Card c, Player player, Enemy enemy, int[] enemyShield, TextView enemyShieldView, TextView playerHP, HealthBarView playerHPBar, TextView enemyHP, HealthBarView enemyHPBar, Callback_TCW callback) {
         final String TAG = "BattleScreen-absorb";
         Log.d(TAG, "Healing player: " + player.getName());
-        heal(player, c.getEffect(), playerHP, playerHPBar);
+        heal(player, c.getEffect(), playerHP, playerHPBar, callback);
 
         Log.d(TAG, "Attacking to enemy: " + enemy.getName());
-        attack(enemy, c.getEffect(), enemyShield, enemyShieldView, enemyHP, enemyHPBar);
+        attack(enemy, c.getEffect(), enemyShield, enemyShieldView, enemyHP, enemyHPBar, callback);
     }
 
 
@@ -847,7 +846,7 @@ public class BattleScreen extends AppCompatActivity {
      * @param targetHP
      * @param targetHPBar
      */
-    private void updateHP(Entity target, TextView targetHP, HealthBarView targetHPBar) {
+    private void updateHP(Entity target, TextView targetHP, HealthBarView targetHPBar, Callback_TCW callback) {
         final String TAG = "BattleScreen-updateHP";
         Log.d(TAG, "Updating HP for: " + target.getName());
 
@@ -889,6 +888,15 @@ public class BattleScreen extends AppCompatActivity {
                         // schedule the next update
                         delayHandler.postDelayed(this, animationSpeedRate);
                     }
+
+                    // if player hp decreases (has been attacked) set the card container to be clickable
+                    if (target instanceof Player && HPchangeRate < 0) {
+                        Log.d(TAG, "player hp finished decreasing");
+                        // call to the callback on success method to notify activity that the
+                        // turn has ended and another card can be played from then on
+                        callback.onSuccess();
+                    }
+
                 }
             };
 
@@ -1005,27 +1013,45 @@ public class BattleScreen extends AppCompatActivity {
 
         new Handler().postDelayed(dialog::show, 700);
 
+
         dialog.setOnDismissListener(dialog1 -> {
-            if (titleText.equalsIgnoreCase(getResources().getString(R.string.you_won))) {
-                // show end tower narration with 1s delay
-                new Handler().postDelayed(() -> {
-                    Utils.playStoryNarration(this, storyNarrationBackground, storyNarrationView, tower.getName());
-                }, 1000);
-            }
+//            if (titleText.equalsIgnoreCase(getResources().getString(R.string.you_won))) {
+//                // show end tower narration with 1s delay
+//                new Handler().postDelayed(() -> {
+//                    Utils.playStoryNarration(this, storyNarrationBackground, storyNarrationView, tower.getName());
+//                }, 1000);
+//            }
         });
 
 
-//        // set return to battle functionality
-//        Button retryBattleButton = menu.findViewById(R.id.retryBattleButton);
-//        retryBattleButton.setOnClickListener(v1 -> {
-//            dialog.cancel();
-//            dialog.cancel();
-////            startBattle();
-//        });
-
+        // exit and return to main menu
         // set exit battle functionality
-        Button returnToMainMenuButton = menu.findViewById(R.id.returnToMainMenuButton);
+        ExtendedFloatingActionButton returnToMainMenuButton = menu.findViewById(R.id.returnToMainMenuButton);
         returnToMainMenuButton.setOnClickListener(v1 -> {
+            for (int i = 0; i < ALL_TOWERS.size(); i++) {
+                // check for actual tower
+                if (ALL_TOWERS.get(i).getId() == tower.getId()) {
+                    // unlock next tower
+                    int[] playerUnlockedTowers = player.getUnlocked_towers();
+                    playerUnlockedTowers = Arrays.copyOf(playerUnlockedTowers, playerUnlockedTowers.length + 1);
+                    // store next tower's id in player unlocked towers
+                    playerUnlockedTowers[playerUnlockedTowers.length - 1] = ALL_TOWERS.get(i+1).getId();
+                    // update player attribute
+                    player.setUnlocked_towers(playerUnlockedTowers);
+                    // restore player HP
+                    player.restoreHP();
+                    // update local instance
+                    PlayerManager.setInstance(player);
+                    // save to local json file
+                    PlayerManager.savePlayerData(this, player);
+                    // TODO: SAVE TO REMOTE FROM LOCAL
+                    if (mAuth.getCurrentUser() != null) {
+                        PlayerManager.saveToRemoteFromLocal(this, mAuth.getCurrentUser());
+                    }
+                    break;
+                }
+            }
+
             this.finish();
 
             Intent intent = new Intent(this, HomeScreen.class);
@@ -1075,26 +1101,32 @@ public class BattleScreen extends AppCompatActivity {
         dialog.setOnDismissListener(dialog1 -> {
             Log.d(TAG, "End stage dialog dismissed");
             // what to do when dismissing the STAGE END DIALOG (play next stage / rest (if applicable))
-            if ((stage % STAGES_TO_REST) == 0) {
+            if ((stage % STAGES_TO_REST) == 0) { // rest
                 Log.d(TAG, stage + " % " + STAGES_TO_REST + " = " + (stage % STAGES_TO_REST));
                 Log.d(TAG, "REST");
-                rest(player, tower);
-                // if rest, then means next floor
-                floor++;
-                stage++;
-                // TODO: ERASE THE FOLLOWING LINE ONLY FOR TEST PURPOSES!!
-                // add "de estrangis" extra card of that tower for letting it complete the tower
-                // since the basic deck isnt enough
-                Integer[] deck = player.getDeck();
-                deck = Arrays.copyOf(deck, deck.length + 1);
-                deck[deck.length - 1] = 5000;
-                player.setDeck(deck);
-                playStage(player, tower, floor, stage);
 
-            } else if (stage >= TOTAL_STAGES) {
+                rest(player, tower);
+
+            } else if (stage >= TOTAL_STAGES) { // end game
                 Log.d(TAG, "Tower ended, player won");
-                showEndGameDialog(getResources().getString(R.string.you_won));
-            } else {
+
+                new Handler().postDelayed(() -> {
+                    // add callback
+                    Utils.playStoryNarration(this, storyNarrationBackground, storyNarrationView, tower.getName(), new Callback_TCW() {
+                        @Override
+                        public void onSuccess() {
+                            showEndGameDialog(getResources().getString(R.string.you_won));
+                        }
+
+                        @Override
+                        public void onFailure(String errorMessage) {
+
+                        }
+                    });
+
+                }, 1000);
+
+            } else { // next stage
                 Log.d(TAG, "Play next stage");
                 stage++;
                 playStage(player, tower, floor, stage);
@@ -1103,9 +1135,33 @@ public class BattleScreen extends AppCompatActivity {
     }
 
     private void rest(Player player, Tower tower) {
-        // TODO: SEND TO IN-GAME SHOP
         // player recovers 1/4 of its max hp
         // player HP + 1/4 of maxHP
         player.setHp(player.getHp()+(player.getMaxhp()/4));
+
+        // TODO: SEND TO IN-GAME SHOP
+        Intent intent = new Intent(this, InGameShop.class);
+        intent.putExtra("currentTower", tower.getName());
+        // this launch wont have custom transition
+        activityResultLauncher.launch(intent);
+
+//        Utils.changeActivity(intent, this, R.anim.slide_out_left, R.anim.slide_in_right);
+    }
+
+    private void playEnemyAttackAnimation() {
+        // Move Down (fast attack hit)
+        ObjectAnimator moveDown = ObjectAnimator.ofFloat(enemyImg, "translationY", 0f, 200f);
+        moveDown.setDuration(80); // Fast attack impact
+        moveDown.setInterpolator(new AccelerateInterpolator(1.5f));
+
+        // Move Back (slightly slower return)
+        ObjectAnimator moveUp = ObjectAnimator.ofFloat(enemyImg, "translationY", 120f, 0f);
+        moveUp.setDuration(120); // Slightly slower return
+        moveUp.setInterpolator(new DecelerateInterpolator(1.5f));
+
+        // Combine animations
+        AnimatorSet attackAnimation = new AnimatorSet();
+        attackAnimation.playSequentially(moveDown, moveUp);
+        attackAnimation.start();
     }
 }

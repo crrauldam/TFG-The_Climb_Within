@@ -1,5 +1,7 @@
 {
     "player": {
+        "isFirstTime": true,
+        "timestamp": 0,
         "name": "",
         "maxhp": 100,
         "hp": 100,

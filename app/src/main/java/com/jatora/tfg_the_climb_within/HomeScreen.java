@@ -1,6 +1,13 @@
 package com.jatora.tfg_the_climb_within;
 
+import android.animation.Animator;
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.os.Bundle;
+import android.view.View;
+import android.view.animation.LinearInterpolator;
+import android.widget.ImageButton;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,12 +17,6 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 public class HomeScreen extends AppCompatActivity {
-    private AppCompatButton continueButton;
-    private AppCompatButton newGameButton;
-    private AppCompatButton shopButton;
-    private AppCompatButton yourCardsButton;
-    private AppCompatButton settingsButton;
-    private AppCompatButton faqButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,34 +29,82 @@ public class HomeScreen extends AppCompatActivity {
             return insets;
         });
 
-        continueButton = findViewById(R.id.Continue);
-        newGameButton = findViewById(R.id.newGame);
-        shopButton = findViewById(R.id.shop);
-        yourCardsButton = findViewById(R.id.yourCards);
-        settingsButton = findViewById(R.id.settingsButton);
-        faqButton = findViewById(R.id.faq);
+        View touchToStart = findViewById(R.id.touchToStart);
+        TextView touchToStartGuide = findViewById(R.id.touchToStartGuide);
+        ImageButton shopButton = findViewById(R.id.shop);
+        ImageButton yourCardsButton = findViewById(R.id.yourCards);
+        AppCompatButton settingsButton = findViewById(R.id.settingsButton);
+        AppCompatButton faqButton = findViewById(R.id.faq);
 
-        continueButton.setOnClickListener(v -> {
-            Utils.changeActivity(this, TowerSelection.class, R.anim.slide_out_left, R.anim.slide_in_right);
+        // Move up animation
+        ObjectAnimator moveUp = ObjectAnimator.ofFloat(touchToStartGuide, "translationY", 0f, -30f);
+        moveUp.setDuration(1000);
+        moveUp.setInterpolator(new LinearInterpolator());
+
+        // Move down animation
+        ObjectAnimator moveDown = ObjectAnimator.ofFloat(touchToStartGuide, "translationY", -30f, 0f);
+        moveDown.setDuration(1000);
+        moveDown.setInterpolator(new LinearInterpolator());
+
+        // Combine them in a sequence
+        AnimatorSet animatorSet = new AnimatorSet();
+        animatorSet.playSequentially(moveUp, moveDown);
+        animatorSet.setStartDelay(200);  // Optional: Pause between loops
+
+        // Loop the animation infinitely
+        animatorSet.addListener(new android.animation.Animator.AnimatorListener() {
+            @Override
+            public void onAnimationEnd(android.animation.Animator animation) {
+                animatorSet.start();  // Restart after end
+            }
+
+            @Override
+            public void onAnimationStart(android.animation.Animator animation) {
+            }
+
+            @Override
+            public void onAnimationCancel(android.animation.Animator animation) {
+            }
+
+            @Override
+            public void onAnimationRepeat(android.animation.Animator animation) {
+            }
         });
 
-        newGameButton.setOnClickListener(v -> {
+        animatorSet.start();
+
+        touchToStart.setOnClickListener(v -> {
+            touchToStart.setClickable(false);
+            touchToStart.postDelayed(() -> touchToStart.setClickable(true), 1000);
+
             Utils.changeActivity(this, TowerSelection.class, R.anim.slide_out_left, R.anim.slide_in_right);
         });
 
         yourCardsButton.setOnClickListener(v -> {
+            yourCardsButton.setClickable(false);
+            yourCardsButton.postDelayed(() -> yourCardsButton.setClickable(true), 1000);
+
             Utils.changeActivity(this, YourCards.class, R.anim.slide_out_top, R.anim.slide_in_bottom);
         });
 
         shopButton.setOnClickListener(v -> {
+            shopButton.setClickable(false);
+            shopButton.postDelayed(() -> shopButton.setClickable(true), 1000);
+
             Utils.changeActivity(this, Shop.class, R.anim.slide_out_right, R.anim.slide_in_left);
         });
 
         settingsButton.setOnClickListener(v -> {
+            settingsButton.setClickable(false);
+            settingsButton.postDelayed(() -> settingsButton.setClickable(true), 1000);
+
             Utils.changeActivity(this, Settings.class, R.anim.slide_out_bottom, R.anim.slide_in_top);
         });
 
         faqButton.setOnClickListener(v -> {
+            faqButton.setClickable(false);
+            faqButton.postDelayed(() -> faqButton.setClickable(true), 1000);
+
         });
     }
 }

@@ -4,9 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
-import android.view.View;
-import android.widget.FrameLayout;
-import android.widget.ImageButton;
+import android.view.Gravity;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -14,23 +12,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.tbuonomo.viewpagerdotsindicator.DotsIndicator;
 import com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.function.Consumer;
 
 public class TowerSelection extends AppCompatActivity {
     private Player player;
@@ -54,6 +39,8 @@ public class TowerSelection extends AppCompatActivity {
 
 //        leftArrow = findViewById(R.id.leftArrow);
 //        rightArrow = findViewById(R.id.rightArrow);
+
+        final String TAG = "TowerSelection-onCreate";
 
         playButton = findViewById(R.id.playButton);
 
@@ -107,6 +94,7 @@ public class TowerSelection extends AppCompatActivity {
         player = PlayerManager.getInstance(this);
 
         playButton.setOnClickListener(v -> {
+            Log.d(TAG, "Play button clicked");
             // unable play button to prevent multiple transitions on repeated clicking
             playButton.setClickable(false);
 
@@ -126,18 +114,32 @@ public class TowerSelection extends AppCompatActivity {
                 if (towerID == viewPager.getCurrentItem()) {
                     Intent intent = new Intent(this, BattleScreen.class);
                     intent.putExtra("towerID", viewPager.getCurrentItem());
-                    Utils.changeActivity(intent, this, BattleScreen.class, R.anim.slide_out_left, R.anim.slide_in_right);
+                    Utils.changeActivity(intent, this, R.anim.slide_out_left, R.anim.slide_in_right);
                     towerIsUnlocked = true;
                 }
             }
 
+            Runnable setPlayButtonClickableAgain = new Runnable() {
+                @Override
+                public void run() {
+                    playButton.setClickable(true);
+                }
+            };
+
             // show message if not unlocked
             if (!towerIsUnlocked) {
-                Toast.makeText(this, getResources().getString(R.string.tower_not_unlocked), Toast.LENGTH_SHORT).show();
+                Log.d(TAG, "Tower not unlocked, showing message.");
+                Toast t = Toast.makeText(this, getResources().getString(R.string.tower_not_unlocked), Toast.LENGTH_SHORT);
+                t.setGravity(Gravity.CENTER, 0, 0);
+                t.show();
+
+                // set the button clickable again after a 2s delay to prevent spam clicking while
+                // showing toast message
+                playButton.postDelayed(setPlayButtonClickableAgain, 2000);
             } else {
                 // set the button clickable again after a 1s delay (not important for the user
                 // since this will happen while changing activity) for future use of the button
-                new Handler().postDelayed(() -> playButton.setClickable(true), 1000);
+                playButton.postDelayed(setPlayButtonClickableAgain, 1000);
             }
         });
     }

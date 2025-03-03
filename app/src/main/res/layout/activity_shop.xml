@@ -190,7 +190,7 @@
 
 <!--    -->
     <TextView
-        android:id="@+id/youHaveAllCards"
+        android:id="@+id/noCardsToBeBought"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
 

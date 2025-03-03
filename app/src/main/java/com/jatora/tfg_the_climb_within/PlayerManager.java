@@ -40,6 +40,10 @@ public class PlayerManager {
         return instance;
     }
 
+    public static void setInstance(Player player) {
+        instance = player;
+    }
+
     private static Player loadPlayerData(Context context) {
         Player player = new Player(); // Create a new Player object
 
@@ -111,7 +115,7 @@ public class PlayerManager {
 
     }
 
-    private static void saveToRemoteFromLocal(Context context, FirebaseUser user) {
+    public static void saveToRemoteFromLocal(Context context, FirebaseUser user) {
         final String TAG = "PlayerManager-saveToRemoteFromLocal";
 
         Player player = loadPlayerData(context);
@@ -150,6 +154,5 @@ public class PlayerManager {
         } else {
             Log.d("Firestore", "El campo 'save' es null");
         }
-
     }
 }
