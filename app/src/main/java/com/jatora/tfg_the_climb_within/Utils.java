@@ -45,6 +45,8 @@ public class Utils {
     // TODO: CHANGE THIS DATA TO "DEFAULT_SAVE_DATA" AND CHANGE CONTENT TO **REAL** DEFAULT SAVE DATA
     private static final String DEFAULT_TEST_SAVE_DATA = "{\n" +
             "    \"player\": {\n" +
+            "        \"isfirstime\": True,\n" +
+            "        \"timestamp\": 0,\n" +
             "        \"name\": \"\",\n" +
             "        \"maxhp\": 100,\n" +
             "        \"hp\": 100,\n" +

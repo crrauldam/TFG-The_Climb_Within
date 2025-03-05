@@ -67,6 +67,11 @@ public class SplashScreen extends AppCompatActivity {
 
         PlayerManager.getInstance(this);
 
+        FirebaseUser user = mAuth.getCurrentUser();
+        if(user != null) {
+            PlayerManager.saveToRemoteFromLocal(getBaseContext(), user);
+        }
+
         handler.postDelayed(runnable, 3500);
 
     }
@@ -78,6 +83,8 @@ public class SplashScreen extends AppCompatActivity {
         FirebaseUser currentUser = mAuth.getCurrentUser();
         Log.d("MainActivity-onStart", "currentUser: " + currentUser);
         Utils.initiateFirebaseLoginSequence(this, currentUser);
+
+
     }
 
 

@@ -32,4 +32,5 @@
     <string name="price">"Precio: "</string>
     <string name="no">NO</string>
     <string name="yes">SI</string>
+    <string name="signOut">Cerrar Sesion</string>
 </resources>
