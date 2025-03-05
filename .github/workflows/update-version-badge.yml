@@ -3,7 +3,7 @@ name: Update Version Badge
 on:
   push:
     branches:
-      - master  # Change if using a different default branch
+      - main  # Change if using a different default branch
 
 jobs:
   update-badge:
@@ -13,16 +13,20 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Commit and Push Changes
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Extract Version from build.gradle
         run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git add README.md
-          git commit -m "Update version badge to ${FULL_VERSION}" || exit 0
-          git push https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}.git HEAD:main
+          VERSION_NAME=$(grep 'versionName ' app/build.gradle | sed -E 's/.*versionName[[:space:]]+"([^"]+)".*/\1/')
+          VERSION_SUFFIX=$(grep 'versionNameSuffix ' app/build.gradle | sed -E 's/.*versionNameSuffix[[:space:]]+"([^"]+)".*/\1/')
 
+          # Handle case where versionNameSuffix might be empty
+          if [ -z "$VERSION_SUFFIX" ]; then
+            FULL_VERSION="$VERSION_NAME"
+          else
+            FULL_VERSION="${VERSION_NAME}${VERSION_SUFFIX}"
+          fi
+
+          echo "Extracted version: $FULL_VERSION"
+          echo "FULL_VERSION=$FULL_VERSION" >> $GITHUB_ENV
 
       - name: Update README Badge
         run: |
@@ -30,9 +34,18 @@ jobs:
           sed -i "s|!\[Version\](.*)|![Version](${BADGE_URL})|" README.md
 
       - name: Commit and Push Changes
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+          # Check if README.md was modified
+          if git diff --quiet README.md; then
+            echo "No changes to commit."
+            exit 0
+          fi
+
           git add README.md
-          git commit -m "Update version badge to ${FULL_VERSION}" || exit 0
-          git push
+          git commit -m "Update version badge to ${FULL_VERSION}"
+          git push https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}.git HEAD:main
