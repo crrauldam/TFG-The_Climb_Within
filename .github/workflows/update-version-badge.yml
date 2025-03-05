@@ -3,7 +3,7 @@ name: Update Version Badge
 on:
   push:
     branches:
-      - main  # Change if using a different default branch
+      - master  # Change if using a different default branch
 
 jobs:
   update-badge:
