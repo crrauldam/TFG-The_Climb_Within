@@ -31,6 +31,8 @@ public class HomeScreen extends AppCompatActivity {
             return insets;
         });
 
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+
         View touchToStart = findViewById(R.id.touchToStart);
         TextView touchToStartGuide = findViewById(R.id.touchToStartGuide);
         ImageButton shopButton = findViewById(R.id.shop);
@@ -79,9 +81,6 @@ public class HomeScreen extends AppCompatActivity {
             touchToStart.setClickable(false);
             touchToStart.postDelayed(() -> touchToStart.setClickable(true), 1000);
 
-            FirebaseAuth mAuth = FirebaseAuth.getInstance();
-
-        
             PlayerManager.checkRemotePlayerData(this, mAuth.getCurrentUser());
             Utils.changeActivity(this, TowerSelection.class, R.anim.slide_out_left, R.anim.slide_in_right);
         });
