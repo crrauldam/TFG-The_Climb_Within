@@ -4,7 +4,7 @@
     <string name="hello_blank_fragment">Hola fragment vacío</string>
     <string name="menu">MENÚ</string>
     <string name="back_to_battle">Volver a la batalla</string>
-    <string name="exit_battle">Salir de la batalla</string>
+    <string name="exit_battle">Salir</string>
     <string name="return_to_main_menu">Volver al menú principal</string>
     <string name="you_don_t_have_cards_for_this_deck_yet">¡NO TIENES CARTAS PARA ESTE MAZO AÚN!</string>
     <string name="surprise">Sorpresa</string>
@@ -32,5 +32,12 @@
     <string name="price">"Precio: "</string>
     <string name="no">NO</string>
     <string name="yes">SI</string>
-    <string name="signOut">Cerrar Sesion</string>
+    <string name="no_cards_to_be_bought">NO HAY CARTAS PARA COMPRAR</string>
+    <string name="next_stage">SIGUIENTE FASE</string>
+    <string name="touch_to_start">Toca para empezar...</string>
+    <string name="sign_up_with_google">Inicia sesión con Google</string>
+    <string name="floor">"Planta: "</string>
+    <string name="stage">"Etapa: "</string>
+    <string name="hp_is_full">PS  llenos</string>
+    <string name="signOut">Cerrar Sesión</string>
 </resources>

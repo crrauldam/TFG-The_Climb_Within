@@ -83,6 +83,7 @@ public class FragmentTowerSelectionItem extends Fragment {
 
         ImageView towerImg = view.findViewById(R.id.towerImg);
         View isLocked = view.findViewById(R.id.isLocked);
+        ImageView lockImg = view.findViewById(R.id.lockImg);
 
         unlocked_towers = PlayerManager.getInstance(requireContext()).getUnlocked_towers();
         boolean unlocked = false;
@@ -105,6 +106,7 @@ public class FragmentTowerSelectionItem extends Fragment {
 
             if (!unlocked) {
                 isLocked.setVisibility(View.VISIBLE);
+                lockImg.setVisibility(View.VISIBLE);
             }
         } catch (IOException e) {
             Log.e(TAG, "Error while getting bitmap image from assets: " + e);

@@ -40,6 +40,10 @@ public class PlayerManager {
         return instance;
     }
 
+    public static void setInstance(Player player) {
+        instance = player;
+    }
+
     private static Player loadPlayerData(Context context) {
         Player player = new Player(); // Create a new Player object
 
@@ -168,6 +172,5 @@ public class PlayerManager {
         } else {
             Log.d("Firestore", "El campo 'save' es null");
         }
-
     }
 }

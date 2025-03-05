@@ -50,8 +50,10 @@ dependencies {
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
 
+    // JSON parsing
     implementation("com.google.code.gson:gson:2.8.6")
 
+    // Breadcrumb indicator for tower selection screen (dots on the top)
     implementation("com.tbuonomo:dotsindicator:5.1.0")
 
     // Import the BoM for the Firebase platform

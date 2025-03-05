@@ -16,7 +16,6 @@ import android.widget.TextView;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 
-import com.google.android.gms.common.SignInButton;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.ktx.Firebase;
 import com.google.gson.Gson;
@@ -26,14 +25,10 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -50,7 +45,7 @@ public class Utils {
             "        \"name\": \"\",\n" +
             "        \"maxhp\": 100,\n" +
             "        \"hp\": 100,\n" +
-            "        \"unlocked_cards\": [1000, 1001, 1002, 1003, 1004, 1005, 1006, 1007, 1008, 1009,  6003],\n" +
+            "        \"unlocked_cards\": [1000, 1001, 1002, 1003, 1004, 1005, 1006, 1007, 1008, 1009,  6003,5004,7000],\n" +
             "        \"tower_coins\": 0,\n" +
             "        \"unlocked_towers\": [0, 1],\n" +
             "        \"emotion_coins\": {\n" +
@@ -95,7 +90,7 @@ public class Utils {
         from.overridePendingTransition(toAnim, fromAnim);
     }
 
-    public static void changeActivity(Intent intent, Activity from, Class to, int fromAnim, int toAnim) {
+    public static void changeActivity(Intent intent, Activity from, int fromAnim, int toAnim) {
         from.startActivity(intent);
         from.overridePendingTransition(toAnim, fromAnim);
     }
@@ -146,10 +141,11 @@ public class Utils {
      * @param context
      * @return 0 = English | 1 = Spanish
      */
-    public static int getLang(Context context) {
+    public static int getLang() {
         final String TAG = "Utils-getLang()";
         int lang = 0;
 
+        Log.d(TAG, "Retrieving language from system properties.");
         // if spanish, change language to spanish, if not it stays in english
         if (Locale.getDefault().getLanguage().equalsIgnoreCase("es")) {
             lang = 1;
@@ -160,15 +156,14 @@ public class Utils {
 
     /**
      * Get the properties of the game, returns data in device's language.
-     * See {@link #getLang(Context)} for language retrieving.
+     * See {@link #getLang()} for language retrieving.
      *
      * @return A JsonObject containing the properties info in the specified language
      */
-
     public static JsonObject getProperties(Context context) {
         final String TAG = "Utils-getProperties()";
 
-        String file = (getLang(context) == 1) ? PROPERTIES_ES_FILE : PROPERTIES_EN_FILE;
+        String file = (getLang() == 1) ? PROPERTIES_ES_FILE : PROPERTIES_EN_FILE;
 
         String fileData = Utils.readFile(context, file);
 
@@ -445,7 +440,7 @@ public class Utils {
      * @param storyNarrationView
      * @param target
      */
-    public static void playStoryNarration(Context context, ConstraintLayout storyNarrationBackground, TextView storyNarrationView, String target) {
+    public static void playStoryNarration(Context context, ConstraintLayout storyNarrationBackground, TextView storyNarrationView, String target, Callback_TCW callback) {
         final String TAG = "BattleScreen-playStoryNarration";
 
         ((Activity) context).getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -464,11 +459,11 @@ public class Utils {
         fadeIn.start();
 
         new Handler().postDelayed(() -> {
-            playDialogueSequence(storyNarrationBackground, storyNarrationView, narration.getDialogues(), 0);
+            playDialogueSequence(storyNarrationBackground, storyNarrationView, narration.getDialogues(), 0, callback);
         }, 700);
     }
 
-    private static void playDialogueSequence(ConstraintLayout storyNarrationBackground, TextView storyNarrationView, List<String> dialogues, int index) {
+    private static void playDialogueSequence(ConstraintLayout storyNarrationBackground, TextView storyNarrationView, List<String> dialogues, int index, Callback_TCW callback) {
         long fadeDuration = 700;
         long waitDuration = 3000;
 
@@ -483,7 +478,10 @@ public class Utils {
                 }
             });
             fadeOutBackground.start();
+            // since all dialogues have been shown, call the onSuccess() method on callback
+            callback.onSuccess();
             return; // exit when all dialogues are shown
+
         }
 
 
@@ -503,7 +501,7 @@ public class Utils {
         set.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
-                playDialogueSequence(storyNarrationBackground, storyNarrationView, dialogues, index + 1); // Call next dialogue
+                playDialogueSequence(storyNarrationBackground, storyNarrationView, dialogues, index + 1, callback); // Call next dialogue
             }
         });
 

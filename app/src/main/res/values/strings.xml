@@ -8,7 +8,7 @@
     <string name="back_to_battle">Back to battle</string>
     <string name="exit_battle">Exit battle</string>
     <string name="return_to_main_menu">Return to main menu</string>
-    <string name="default_web_client_id">1007165425921-669l4v5a8sg9siresi1jn31r7f7th7b1.apps.googleusercontent.com</string>
+    <string name="default_web_client_id" translatable="false">1007165425921-669l4v5a8sg9siresi1jn31r7f7th7b1.apps.googleusercontent.com</string>
 
     <string name="you_don_t_have_cards_for_this_deck_yet">YOU DON\'T HAVE CARDS FOR THIS DECK YET!</string>
     <string name="surprise">Surprise</string>
@@ -36,5 +36,12 @@
     <string name="price">Price:</string>
     <string name="no">NO</string>
     <string name="yes">YES</string>
+    <string name="no_cards_to_be_bought">NO CARDS TO BE BOUGHT</string>
+    <string name="next_stage">NEXT STAGE</string>
+    <string name="touch_to_start">Touch to start…</string>
+    <string name="sign_up_with_google">Sign Up with Google</string>
+    <string name="floor">"Floor: "</string>
+    <string name="stage">"Stage: "</string>
+    <string name="hp_is_full">HP is full</string>
     <string name="signOut">Sign Out</string>
 </resources>
