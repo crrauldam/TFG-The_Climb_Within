@@ -16,8 +16,8 @@ jobs:
 
       - name: Extract Version from build.gradle
         run: |
-          VERSION_NAME=$(grep 'versionName ' app/build.gradle.kts | sed -E 's/.*versionName[[:space:]]+"([^"]+)".*/\1/')
-          VERSION_SUFFIX=$(grep 'versionNameSuffix ' app/build.gradle.kts | sed -E 's/.*versionNameSuffix[[:space:]]+"([^"]+)".*/\1/')
+          VERSION_NAME=$(grep 'versionName =' app/build.gradle.kts | sed -E 's/.*versionName[[:space:]]*=[[:space:]]*"([^"]+)".*/\1/')
+          VERSION_SUFFIX=$(grep 'versionNameSuffix =' app/build.gradle.kts | sed -E 's/.*versionNameSuffix[[:space:]]*=[[:space:]]*"([^"]+)".*/\1/')
 
           # Handle case where versionNameSuffix might be empty
           if [ -z "$VERSION_SUFFIX" ]; then
@@ -49,4 +49,4 @@ jobs:
 
           git add README.md
           git commit -m "Update version badge to ${FULL_VERSION}"
-          git push https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}.git HEAD:main
+          git push https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}.git HEAD:master
