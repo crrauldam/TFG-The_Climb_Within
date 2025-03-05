@@ -6,10 +6,13 @@ import android.content.IntentSender;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.activity.OnBackPressedCallback;
+import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -36,9 +39,11 @@ import com.google.firebase.auth.GoogleAuthProvider;
 
 public class Settings extends AppCompatActivity {
 
+    private ActivityResultLauncher<Intent> googleSignInLauncher;
+
     // The actual button itself
     private SignInButton signInButton;
-
+    private Button signOutButton;
     // Needed to connect to FirebaseAuth services
     private FirebaseAuth mAuth;
 
@@ -59,6 +64,15 @@ public class Settings extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_settings);
 
+        signOutButton = findViewById(R.id.signOutButton);
+
+        signOutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                signnOut();
+            }
+        });
+
 
         googleBtnUi();
 
@@ -69,7 +83,7 @@ public class Settings extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
 
         // Update UI depending if the user is logged in or not
-        updateUI(this, mAuth.getCurrentUser());
+        updateUI(this, mAuth.getCurrentUser(), 0);
 
         // Build the One Tap sign-in request
         signInRequest = BeginSignInRequest.builder()
@@ -95,7 +109,10 @@ public class Settings extends AppCompatActivity {
 //        BeginSignInRequest signInRequest = BeginSignInRequest.builder()
 //                .setGoogleIdTokenRequestOptions(BeginSignInRequest.GoogleIdTokenRequestOptions.builder()
 //                        .setSupported(true)
-//                        // Your server's client ID, not your Android client ID.
+//                        // Your server's clFirebaseUser user = mAuth.getCurrentUser();
+////                if(user != null) {
+////                    PlayerManager.saveToRemoteFromLocal(getBaseContext(), user);
+////                }ient ID, not your Android client ID.
 //                        .setServerClientId(getString(R.string.default_web_client_id))
 //                        // Only show accounts previously used to sign in.
 //                        .setFilterByAuthorizedAccounts(true)
@@ -111,10 +128,22 @@ public class Settings extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+//        getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
+//            @Override
+//            public void handleOnBackPressed() {
+//                FirebaseUser user = mAuth.getCurrentUser();
+//                if(user != null) {
+//                    PlayerManager.saveToRemoteFromLocal(getBaseContext(), user);
+//                }
+//                finish();
+//            }
+//        });
+
     }
     private void signUp() {
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
-        startActivityForResult(signInIntent, REQ_ONE_TAP);
+        googleSignInLauncher.launch(signInIntent);
     }
 
     private void signIn() {
@@ -210,32 +239,58 @@ public class Settings extends AppCompatActivity {
                                 // Sign in success, update UI with the signed-in user's information
                                 Log.d("Login-firebaseAuthenticate", "signInWithCredential:success");
                                 FirebaseUser user = mAuth.getCurrentUser();
-                                updateUI(Settings.this, user);
+                                updateUI(Settings.this, user, 0);
                             } else {
                                 // If sign in fails, display a message to the user.
                                 Log.w("Login-firebaseAuthenticate", "signInWithCredential:failure > ", task.getException());
-                                updateUI(Settings.this, null);
+                                updateUI(Settings.this, null, 0);
                             }
                         }
                     });
         }
     }
 
-    private void updateUI(Context context, FirebaseUser user) {
-        if(user != null) {
-            Log.d("Login-updateUI", "updateUI() called");
-            SignInButton googleButton = (SignInButton) findViewById(R.id.google_button);
-            googleButton.setVisibility(View.INVISIBLE);
-            Toast.makeText(this, "Login successful.", Toast.LENGTH_SHORT).show();
-            TextView userId = findViewById(R.id.userId);
-            userId.setText(user.getEmail());
-            userId.setVisibility(View.VISIBLE);
+    private void signnOut() {
+        mAuth.signOut();
+        mGoogleSignInClient.signOut().addOnCompleteListener(this, task -> {
+            updateUI(this, mAuth.getCurrentUser(), 1);
+        });
 
-            PlayerManager.checkRemotePlayerData(context, user);
-
-        } else {
-            Toast.makeText(this, "Login failed", Toast.LENGTH_SHORT).show();
-        }
     }
+
+    private void updateUI(Context context, FirebaseUser user, int state) {
+        final String TAG = "Settings-updateUI()";
+        if(state == 0) {
+            if (user != null) {
+                Log.d(TAG, "updateUI() called on signIn");
+                SignInButton googleButton = (SignInButton) findViewById(R.id.google_button);
+                googleButton.setVisibility(View.INVISIBLE);
+                Toast.makeText(this, "Login successful.", Toast.LENGTH_SHORT).show();
+                TextView userId = findViewById(R.id.userId);
+                userId.setText(user.getEmail());
+                userId.setVisibility(View.VISIBLE);
+                signOutButton.setVisibility(View.VISIBLE);
+                PlayerManager.checkRemotePlayerData(context, user);
+            } else {
+                Toast.makeText(this, "Login failed", Toast.LENGTH_SHORT).show();
+                signOutButton.setVisibility(View.INVISIBLE);
+            }
+        }else if (state == 1) {
+            if (user == null) {
+                Log.d(TAG, "updateUI() called on signOut");
+                SignInButton googleButton = (SignInButton) findViewById(R.id.google_button);
+                googleButton.setVisibility(View.VISIBLE);
+                Toast.makeText(this, "SignOut successful.", Toast.LENGTH_SHORT).show();
+                TextView userId = findViewById(R.id.userId);
+                userId.setVisibility(View.INVISIBLE);
+                signOutButton.setVisibility(View.INVISIBLE);
+            } else {
+                Toast.makeText(this, "SignOut failed", Toast.LENGTH_SHORT).show();
+            }
+
+        }
+
+    }
+
 
 }

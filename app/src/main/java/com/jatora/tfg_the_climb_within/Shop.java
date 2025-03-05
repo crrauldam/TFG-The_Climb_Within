@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.content.res.AppCompatResources;
@@ -28,6 +29,8 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -47,6 +50,8 @@ public class Shop extends AppCompatActivity {
     Button happinessTab;
     Button surpriseTab;
     static TextView noCardsToBeBought;
+    static TextView youHaveAllCards;
+    private FirebaseAuth mAuth;
 
     // stores the last shop item selected
     static int prevItem = 0;
@@ -62,6 +67,22 @@ public class Shop extends AppCompatActivity {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
+        });
+
+        mAuth = FirebaseAuth.getInstance();
+
+
+
+
+        getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                FirebaseUser user = mAuth.getCurrentUser();
+                if(user != null) {
+                    PlayerManager.saveToRemoteFromLocal(getBaseContext(), user);
+                }
+                finish();
+            }
         });
 
         linearLayout = findViewById(R.id.linearLayout);
@@ -81,6 +102,8 @@ public class Shop extends AppCompatActivity {
         ArrayList<Deck> decks = Utils.getDecksData(this);
 
         Player player = PlayerManager.getInstance(this);
+
+
 
         // player unlocked cards (ONLY IDs)
         ArrayList<Integer> pucs = new ArrayList<>(Arrays.asList(player.getUnlocked_cards()));

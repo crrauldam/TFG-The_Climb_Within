@@ -6,6 +6,8 @@ public class Player extends Entity {
 //    private String name;
 //    private int maxhp;
 //    private int hp;
+    private long timestamp;
+    private boolean isfirstime;
     private Integer[] unlocked_cards;
     private int tower_coins;
     private int[] unlocked_towers;
@@ -119,6 +121,48 @@ public class Player extends Entity {
         public void setDamage_received(int damage_received) {
             this.damage_received = damage_received;
         }
+    }
+
+
+//    public String getName() {
+//        return name;
+//    }
+
+//    public void setName(String name) {
+//        this.name = name;
+//    }
+
+//    public int getMaxhp() {
+//        return maxhp;
+//    }
+
+//    public void setMaxhp(int maxhp) {
+//        this.maxhp = maxhp;
+//    }
+
+//    public int getHp() {
+//        return hp;
+//    }
+
+//    public void setHp(int hp) {
+//        this.hp = hp;
+//    }
+
+
+    public boolean isIsfirstime() {
+        return isfirstime;
+    }
+
+    public void setIsfirstime(boolean isfirstime) {
+        this.isfirstime = isfirstime;
+    }
+
+    public long getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(long timestamp) {
+        this.timestamp = timestamp;
     }
 
     public Integer[] getUnlocked_cards() {

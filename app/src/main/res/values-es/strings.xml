@@ -39,4 +39,5 @@
     <string name="floor">"Planta: "</string>
     <string name="stage">"Etapa: "</string>
     <string name="hp_is_full">PS  llenos</string>
+    <string name="signOut">Cerrar Sesión</string>
 </resources>
