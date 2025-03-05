@@ -65,11 +65,12 @@ The primary color pallette for this application is the following:
 
 | Color Name | Hex  |
 | --- | --- |
-| Light Cyan | ![#E0FBFC](https://via.placeholder.com/16/E0FBFC?text=+) #E0FBFC |
-| Light blue | ![#C2DFE3](https://via.placeholder.com/16/C2DFE3?text=+) #C2DFE3 |
-| Cadet gray | ![#9DB4C0](https://via.placeholder.com/16/9DB4C0?text=+) #9DB4C0 |
-| Payne's gray | ![#5C6B73](https://via.placeholder.com/16/5C6B73?text=+) #5C6B73 |
-| Gunmetal | ![#253237](https://via.placeholder.com/16/253237?text=+) #253237 |
+| Light Cyan | ![#E0FBFC](https://placehold.co/16x16/E0FBFC/E0FBFC) #E0FBFC |
+| Light blue | ![#C2DFE3](https://placehold.co/16x16/C2DFE3/C2DFE3) #C2DFE3 |
+| Cadet gray | ![#9DB4C0](https://placehold.co/16x16/9DB4C0/9DB4C0) #9DB4C0 |
+| Payne's gray | ![#5C6B73](https://placehold.co/16x16/5C6B73/5C6B73) #5C6B73 |
+| Gunmetal | ![#253237](https://placehold.co/16x16/253237/253237) #253237 |
+
 
 <br><br>
 
