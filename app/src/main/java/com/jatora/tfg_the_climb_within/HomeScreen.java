@@ -104,7 +104,6 @@ public class HomeScreen extends AppCompatActivity {
         faqButton.setOnClickListener(v -> {
             faqButton.setClickable(false);
             faqButton.postDelayed(() -> faqButton.setClickable(true), 1000);
-
         });
     }
 }

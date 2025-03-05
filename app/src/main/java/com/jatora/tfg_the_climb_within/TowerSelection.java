@@ -130,7 +130,6 @@ public class TowerSelection extends AppCompatActivity {
             if (!towerIsUnlocked) {
                 Log.d(TAG, "Tower not unlocked, showing message.");
                 Toast t = Toast.makeText(this, getResources().getString(R.string.tower_not_unlocked), Toast.LENGTH_SHORT);
-                t.setGravity(Gravity.CENTER, 0, 0);
                 t.show();
 
                 // set the button clickable again after a 2s delay to prevent spam clicking while

@@ -158,7 +158,7 @@ public class Settings extends AppCompatActivity {
                 TextView tv = (TextView) v;
                 tv.setTextSize(14);
                 //tv.setTypeface(null, Typeface.NORMAL);
-                tv.setText("Sign Up with Google");
+                tv.setText(R.string.sign_up_with_google);
                 //tv.setTextColor(Color.parseColor("#FFFFFF"));
                 //tv.setBackgroundDrawable(getResources().getDrawable(R.drawable.ic_launcher));
                 //tv.setSingleLine(true);

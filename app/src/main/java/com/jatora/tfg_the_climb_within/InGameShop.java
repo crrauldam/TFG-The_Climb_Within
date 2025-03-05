@@ -217,7 +217,7 @@ public class InGameShop extends AppCompatActivity {
                 ImageView cardCoinImg = shopItemLayout.findViewById(R.id.cardCoinImg);
                 // set coin image
                 try {
-                    Bitmap bitmap = BitmapFactory.decodeStream(context.getAssets().open(targetDeck.getCoin()));
+                    Bitmap bitmap = BitmapFactory.decodeStream(context.getAssets().open(towerCoinsImgPath));
 
                     Log.d(TAG, "bitmap state: " + bitmap);
                     Log.d(TAG, "image container state: " + cardCoinImg);
@@ -279,7 +279,7 @@ public class InGameShop extends AppCompatActivity {
         // set tower coin image
         ImageView coinImg = menu.findViewById(R.id.coinImg);
         try {
-            Bitmap bitmap = BitmapFactory.decodeStream(getAssets().open(targetDeck.getCoin()));
+            Bitmap bitmap = BitmapFactory.decodeStream(getAssets().open("img/coins/tower.png"));
             coinImg.setImageBitmap(bitmap);
         } catch (IOException e) {
             Log.e(TAG, "Error while getting bitmap image from assets: " + e);

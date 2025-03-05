@@ -38,4 +38,9 @@
     <string name="yes">YES</string>
     <string name="no_cards_to_be_bought">NO CARDS TO BE BOUGHT</string>
     <string name="next_stage">NEXT STAGE</string>
+    <string name="touch_to_start">Touch to start…</string>
+    <string name="sign_up_with_google">Sign Up with Google</string>
+    <string name="floor">"Floor: "</string>
+    <string name="stage">"Stage: "</string>
+    <string name="hp_is_full">HP is full</string>
 </resources>

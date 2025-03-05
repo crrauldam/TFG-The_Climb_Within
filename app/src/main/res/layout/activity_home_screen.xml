@@ -131,7 +131,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
 
-        android:text="Touch to start..."
+        android:text="@string/touch_to_start"
         android:textColor="@color/white"
         android:textSize="30sp"
         android:fontFamily="@font/comfortaa_bold"

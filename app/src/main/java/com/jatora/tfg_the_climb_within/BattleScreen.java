@@ -159,8 +159,7 @@ public class BattleScreen extends AppCompatActivity {
         ALL_CARDS = Utils.getCardsData(this);
         ALL_ENEMIES = Utils.getEnemiesData(this);
         ALL_TOWERS = Utils.getTowersData(this);
-
-
+        
         int towerID = getIntent().getIntExtra("towerID", 0);
         tower = getTowerInfo(towerID);
 
@@ -215,6 +214,7 @@ public class BattleScreen extends AppCompatActivity {
     private void startGame() {
         final String TAG = "BattleScreen-startGame";
 
+        Log.d(TAG, "Starting game...");
 //        // TODO: DELETE WHEN NOT TESTING
 //        new Handler().postDelayed(() -> {
 //            Utils.playStoryNarration(this, storyNarrationBackground, storyNarrationView, tower.getName());
@@ -244,6 +244,10 @@ public class BattleScreen extends AppCompatActivity {
         playStage(player, tower, floor, stage);
     }
 
+    /**
+     * Shows the pop up menu with game info and options.
+     * @param context
+     */
     private void showMenu(Context context) {
         final String TAG = "BattleScreen-showMenu";
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -265,11 +269,11 @@ public class BattleScreen extends AppCompatActivity {
 
         // set floor
         TextView floorView = menu.findViewById(R.id.floor);
-        floorView.setText("Floor: " + floor);
+        floorView.setText(getString(R.string.floor) + floor);
 
         // set stage
         TextView stageView = menu.findViewById(R.id.stage);
-        stageView.setText("Stage: " + (stage - (STAGES_TO_REST * (floor - 1))));
+        stageView.setText(getString(R.string.stage) + (stage - (STAGES_TO_REST * (floor - 1))));
 
         // set total amount of tower coins
         TextView totalTowerCoins = menu.findViewById(R.id.amount);
@@ -343,12 +347,10 @@ public class BattleScreen extends AppCompatActivity {
 
     /**
      * <ul>
-     *     <li>- shuffles the deck and displays the cards</li>
-     *     <li>- sets player and enemy stats on screen</li>
-     *     <li>- update stage and floor displayed</li>
-     *     <li></li>
+     *     <li>shuffles the deck and displays the cards</li>
+     *     <li>sets player and enemy stats on screen</li>
+     *     <li>update stage and floor displayed</li>
      * </ul>
-     *
      * @param player
      * @param enemy
      */
@@ -358,13 +360,14 @@ public class BattleScreen extends AppCompatActivity {
         // get color for enemy hp bar based on tower's name match with deck
         String color = "";
         // since calm deck does not exist, we have to check for it in order to set it manually
-        if (tower.getName().equalsIgnoreCase("calm")) {
+        if (tower.getDialogues().equalsIgnoreCase("calm")) {
             int colorResId = R.color.calm;
             int colorInt = ContextCompat.getColor(this, colorResId); // get int color value
             color = String.format("#%08X", (colorInt)); // extract hex string from it
         } else {
             for (Deck d : ALL_DECKS) {
-                if (d.getName().equalsIgnoreCase(tower.getName())) {
+                Log.d(TAG, d.getName());
+                if (d.getName().equalsIgnoreCase(tower.getDialogues())) {
                     color = d.getColor();
                 }
             }
@@ -599,7 +602,6 @@ public class BattleScreen extends AppCompatActivity {
         return tower;
     }
 
-
     /**
      * Generates a random enemy for the player to face based on the tower and floor its in.
      *
@@ -647,7 +649,6 @@ public class BattleScreen extends AppCompatActivity {
         return enemy;
     }
 
-
     /**
      * @return An array with the initial deck for the player when starting a new game.
      */
@@ -669,7 +670,6 @@ public class BattleScreen extends AppCompatActivity {
 
         return initialDeck;
     }
-
 
     /**
      * Realizes the action described on the selected card.
@@ -699,7 +699,7 @@ public class BattleScreen extends AppCompatActivity {
                 break;
             case HEAL:
                 if (player.getHp() == player.getMaxhp()) {
-                    showBattleNarration("HP is full");
+                    showBattleNarration(getString(R.string.hp_is_full));
                     playResult = -1;
                 } else {
                     heal(player, c.getEffect(), playerHP, playerHPBar, callback);
@@ -724,11 +724,13 @@ public class BattleScreen extends AppCompatActivity {
 //            ArrayList<Integer> playerDeck = new ArrayList<>(Arrays.asList(player.getDeck()));
 //            playerDeck.remove(c.getId());
 //            player.setDeck(playerDeck.toArray(new Integer[0]));
+        } else {
+            // if card not played, set cards clickable again by calling the callback onSucc ess() method
+            callback.onSuccess();
         }
 
         return playResult;
     }
-
 
     /**
      * A certain entity gets damaged by an incoming attack.
@@ -780,7 +782,6 @@ public class BattleScreen extends AppCompatActivity {
         Log.d(TAG, "Attack to " + target.getName() + "\nNew HP: " + target.getHp() + "/" + target.getMaxhp() + " | Shield: " + targetShield[0]);
     }
 
-
     /**
      * Recovers HP for the specified entity.
      * Uses a literal value for the effect 'cause it can be used too for the enemy.
@@ -801,7 +802,6 @@ public class BattleScreen extends AppCompatActivity {
         Log.d(TAG, "Heal to " + target.getName() + "\nNew HP: " + target.getHp() + "/" + target.getMaxhp());
     }
 
-
     /**
      * Increase target shield by given amount.
      * Uses a literal value for the effect 'cause it can be used too for the enemy.
@@ -820,7 +820,6 @@ public class BattleScreen extends AppCompatActivity {
         updateShield(shield, targetShield);
     }
 
-
     /**
      * Damages enemy by a certain amount. Also heals player by that amount.
      *
@@ -838,10 +837,8 @@ public class BattleScreen extends AppCompatActivity {
         attack(enemy, c.getEffect(), enemyShield, enemyShieldView, enemyHP, enemyHPBar, callback);
     }
 
-
     /**
      * Update UI for target's HP.
-     *
      * @param target
      * @param targetHP
      * @param targetHPBar
@@ -862,9 +859,11 @@ public class BattleScreen extends AppCompatActivity {
         // only perform update if the HP actually changes
         if (HPdifference != 0) {
             long animationSpeedRate = ANIMATION_DURATION / HPdifference;
+            Log.d(TAG, "Animation speed rate: "+animationSpeedRate);
 
             // if the target hp is lower, it'll decrease, if not, it'll increase
             int HPchangeRate = (target.getHp() < targetHPBar.getHP()) ? -1 : 1;
+            Log.d(TAG, "HP change rate: "+HPchangeRate);
 
             // handler for delay changes
             Handler delayHandler = new Handler();
@@ -896,14 +895,11 @@ public class BattleScreen extends AppCompatActivity {
                         // turn has ended and another card can be played from then on
                         callback.onSuccess();
                     }
-
                 }
             };
-
             delayHandler.post(updateHPRunnable);
         }
     }
-
 
     /**
      * Update UI for target's shield.
@@ -920,7 +916,6 @@ public class BattleScreen extends AppCompatActivity {
 
         targetShield.setText(String.valueOf(shield[0]));
     }
-
 
     /**
      * Change text of the narration view and play animation.
@@ -1013,65 +1008,85 @@ public class BattleScreen extends AppCompatActivity {
 
         new Handler().postDelayed(dialog::show, 700);
 
-
         dialog.setOnDismissListener(dialog1 -> {
-//            if (titleText.equalsIgnoreCase(getResources().getString(R.string.you_won))) {
-//                // show end tower narration with 1s delay
-//                new Handler().postDelayed(() -> {
-//                    Utils.playStoryNarration(this, storyNarrationBackground, storyNarrationView, tower.getName());
-//                }, 1000);
-//            }
+            Log.d(TAG, "End game dialog dismissed.");
+            endGame();
         });
-
 
         // exit and return to main menu
         // set exit battle functionality
         ExtendedFloatingActionButton returnToMainMenuButton = menu.findViewById(R.id.returnToMainMenuButton);
         returnToMainMenuButton.setOnClickListener(v1 -> {
-            for (int i = 0; i < ALL_TOWERS.size(); i++) {
-                // check for actual tower
-                if (ALL_TOWERS.get(i).getId() == tower.getId()) {
+            Log.d(TAG, "Return to main menu button pressed.");
+            endGame();
+        });
+    }
+
+    /**
+     * Ends the game: unlocks the next tower and returns the player to the main menu.
+     */
+    private void endGame() {
+        final String TAG = "BattleScreen-endGame";
+        Log.d(TAG, "Ending game...");
+
+        for (int i = 0; i < ALL_TOWERS.size(); i++) {
+            // check for actual tower
+            if (ALL_TOWERS.get(i).getId() == tower.getId()) {
+                // try to get the next tower
+                Tower nextTower = null;
+                try {
+                    nextTower = ALL_TOWERS.get(i+1);
+                } catch (IndexOutOfBoundsException e) {
+                    // if process fails then no more towers to unlock
+                    Log.e(TAG, "No more towers to unlock.");
+                }
+
+                // only if there is a next tower
+                if (nextTower != null) {
                     // unlock next tower
                     int[] playerUnlockedTowers = player.getUnlocked_towers();
                     playerUnlockedTowers = Arrays.copyOf(playerUnlockedTowers, playerUnlockedTowers.length + 1);
                     // store next tower's id in player unlocked towers
-                    playerUnlockedTowers[playerUnlockedTowers.length - 1] = ALL_TOWERS.get(i+1).getId();
+                    playerUnlockedTowers[playerUnlockedTowers.length - 1] = nextTower.getId();
                     // update player attribute
                     player.setUnlocked_towers(playerUnlockedTowers);
                     // restore player HP
                     player.restoreHP();
+                    Log.d(TAG, "Unlocking new tower: "+nextTower.getName() + "\nSaving player data...");
                     // update local instance
                     PlayerManager.setInstance(player);
                     // save to local json file
                     PlayerManager.savePlayerData(this, player);
                     // TODO: SAVE TO REMOTE FROM LOCAL
                     if (mAuth.getCurrentUser() != null) {
+                        Log.d(TAG, "Attempting to save local data to remote...");
                         PlayerManager.saveToRemoteFromLocal(this, mAuth.getCurrentUser());
                     }
                     break;
                 }
             }
+        }
 
-            this.finish();
+        this.finish();
 
-            Intent intent = new Intent(this, HomeScreen.class);
-            startActivity(intent);
-        });
+        Log.d(TAG, "Sending to home screen...");
+        Intent intent = new Intent(this, HomeScreen.class);
+        startActivity(intent);
     }
 
     /**
-     * Shows end game dialog with given text as title
-     *
+     * Shows end stage dialog with given text as title
      * @param titleText
      * @param delay
      * @param enemy
      */
     private void showEndStageDialog(String titleText, long delay, Enemy enemy) {
         final String TAG = "BattleScreen-showEndStageDialog";
-        Log.d(TAG, "Showing end stage dialog");
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         View menu = getLayoutInflater().inflate(R.layout.battle_screen_end_stage_dialog, null);
+
+        Log.d(TAG, "Setting up menu elements...");
 
         // set end battle menu title
         TextView title = menu.findViewById(R.id.menuTitle);
@@ -1089,6 +1104,7 @@ public class BattleScreen extends AppCompatActivity {
         TextView amount = menu.findViewById(R.id.amount);
         amount.setText("+"+(stage*TOWER_COINS_PER_STAGE));
 
+        Log.d(TAG, "Showing end stage dialog...");
         // open pop up menu
         builder.setView(menu);
         AlertDialog dialog = builder.create();
@@ -1099,7 +1115,7 @@ public class BattleScreen extends AppCompatActivity {
         player.setTower_coins(player.getTower_coins()+TOWER_COINS_PER_STAGE);
 
         dialog.setOnDismissListener(dialog1 -> {
-            Log.d(TAG, "End stage dialog dismissed");
+            Log.d(TAG, "End stage dialog dismissed.");
             // what to do when dismissing the STAGE END DIALOG (play next stage / rest (if applicable))
             if ((stage % STAGES_TO_REST) == 0) { // rest
                 Log.d(TAG, stage + " % " + STAGES_TO_REST + " = " + (stage % STAGES_TO_REST));
@@ -1108,11 +1124,11 @@ public class BattleScreen extends AppCompatActivity {
                 rest(player, tower);
 
             } else if (stage >= TOTAL_STAGES) { // end game
-                Log.d(TAG, "Tower ended, player won");
+                Log.d(TAG, "Tower ended, player won.");
 
                 new Handler().postDelayed(() -> {
                     // add callback
-                    Utils.playStoryNarration(this, storyNarrationBackground, storyNarrationView, tower.getName(), new Callback_TCW() {
+                    Utils.playStoryNarration(this, storyNarrationBackground, storyNarrationView, tower.getDialogues(), new Callback_TCW() {
                         @Override
                         public void onSuccess() {
                             showEndGameDialog(getResources().getString(R.string.you_won));
@@ -1127,28 +1143,43 @@ public class BattleScreen extends AppCompatActivity {
                 }, 1000);
 
             } else { // next stage
-                Log.d(TAG, "Play next stage");
+                Log.d(TAG, "Play next stage.");
                 stage++;
                 playStage(player, tower, floor, stage);
             }
         });
     }
 
+    /**
+     * Player rests: restore 1/4 of HP and is sent to in-game shop to buy cards with tower coins.
+     * @param player
+     * @param tower
+     */
     private void rest(Player player, Tower tower) {
+        final String TAG = "BattleScreen-rest";
+        Log.d(TAG, "Player resting...");
+
+        Log.d(TAG, "Restoring 1/4 of player's HP...");
         // player recovers 1/4 of its max hp
         // player HP + 1/4 of maxHP
         player.setHp(player.getHp()+(player.getMaxhp()/4));
 
+        Log.d(TAG, "Sending player to in-game shop...");
         // TODO: SEND TO IN-GAME SHOP
         Intent intent = new Intent(this, InGameShop.class);
-        intent.putExtra("currentTower", tower.getName());
+        intent.putExtra("currentTower", tower.getDialogues());
         // this launch wont have custom transition
         activityResultLauncher.launch(intent);
 
 //        Utils.changeActivity(intent, this, R.anim.slide_out_left, R.anim.slide_in_right);
     }
 
+    /**
+     * Plays an enemy attack animation: Move Down (fast attack hit) -> Move Back (slightly slower return)
+     */
     private void playEnemyAttackAnimation() {
+        final String TAG = "BattleScreen-playEnemyAttackAnimation";
+        Log.d(TAG, "Playing enemy attack animation...");
         // Move Down (fast attack hit)
         ObjectAnimator moveDown = ObjectAnimator.ofFloat(enemyImg, "translationY", 0f, 200f);
         moveDown.setDuration(80); // Fast attack impact
