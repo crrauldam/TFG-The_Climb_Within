@@ -213,7 +213,6 @@
         android:rowCount="1"
         android:columnCount="3"
 
-
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toTopOf="@id/playerHPContainer"
@@ -223,6 +222,26 @@
         android:clipToPadding="false"
         >
     </GridLayout>
+
+<!--    TRANSPARENT VIEW FOR BLOCKING CLICKING -->
+    <View
+        android:id="@+id/blockCardClicking"
+        android:layout_width="wrap_content"
+        android:layout_height="210dp"
+        android:visibility="gone"
+        android:focusable="true"
+        android:clickable="true"
+        android:background="@android:color/transparent"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/playerHPContainer"
+        android:layout_marginBottom="20dp"
+        android:paddingBottom="0dp"
+        android:paddingTop="55dp"
+        android:clipToPadding="false"
+        />
+
 
     <!--    PLAYER HP AND SHIELD -->
     <LinearLayout

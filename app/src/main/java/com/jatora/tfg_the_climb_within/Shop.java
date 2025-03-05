@@ -2,11 +2,9 @@ package com.jatora.tfg_the_climb_within;
 
 import android.content.Context;
 
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.os.Handler;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -51,6 +49,7 @@ public class Shop extends AppCompatActivity {
     Button sadnessTab;
     Button happinessTab;
     Button surpriseTab;
+    static TextView noCardsToBeBought;
     static TextView youHaveAllCards;
     private FirebaseAuth mAuth;
 
@@ -97,7 +96,7 @@ public class Shop extends AppCompatActivity {
         sadnessTab = findViewById(R.id.sadnessTab);
         happinessTab = findViewById(R.id.happinessTab);
         surpriseTab = findViewById(R.id.surpriseTab);
-        youHaveAllCards = findViewById(R.id.youHaveAllCards);
+        noCardsToBeBought = findViewById(R.id.noCardsToBeBought);
 
         ArrayList<Card> cards = Utils.getCardsData(this);
         ArrayList<Deck> decks = Utils.getDecksData(this);
@@ -156,14 +155,13 @@ public class Shop extends AppCompatActivity {
      * @param playerNonUnlockedCards
      * @param targetLayout
      */
-
     public void drawCards(Context context, Player player, String searchedDeck, ArrayList<Deck> decks, List<Card> playerNonUnlockedCards, LinearLayout targetLayout, ImageView coinImg, TextView totalEmotionCoins, ArrayList<Integer> pucs) {
         final String TAG = "Shop-drawCards";
 
         // clear layout so that there are no accumulated cards from previous tab selections
         targetLayout.removeAllViews();
         // set the "you dont have cards for this deck yet!" message invisible by default
-        youHaveAllCards.setVisibility(View.INVISIBLE);
+        noCardsToBeBought.setVisibility(View.INVISIBLE);
 
         // gets the deck according to the tab we're in right now
         Deck targetDeck = new Deck();
@@ -264,7 +262,7 @@ public class Shop extends AppCompatActivity {
         // if no cards was shown (= no cards for that deck)
         if (drawedCards == 0) {
             // show message
-            youHaveAllCards.setVisibility(View.VISIBLE);
+            noCardsToBeBought.setVisibility(View.VISIBLE);
         }
     }
 
