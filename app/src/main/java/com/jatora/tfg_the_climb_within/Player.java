@@ -7,7 +7,7 @@ public class Player extends Entity {
 //    private int maxhp;
 //    private int hp;
     private long timestamp;
-    private boolean isfirstime;
+    private boolean isFirstTime;
     private Integer[] unlocked_cards;
     private int tower_coins;
     private int[] unlocked_towers;
@@ -149,12 +149,12 @@ public class Player extends Entity {
 //    }
 
 
-    public boolean isIsfirstime() {
-        return isfirstime;
+    public boolean isFirstTime() {
+        return isFirstTime;
     }
 
-    public void setIsfirstime(boolean isfirstime) {
-        this.isfirstime = isfirstime;
+    public void setFirstTime(boolean firstTime) {
+        this.isFirstTime = firstTime;
     }
 
     public long getTimestamp() {

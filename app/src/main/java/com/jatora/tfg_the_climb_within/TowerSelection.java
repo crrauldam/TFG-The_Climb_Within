@@ -1,30 +1,37 @@
 package com.jatora.tfg_the_climb_within;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.Gravity;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
 import com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator;
 
 public class TowerSelection extends AppCompatActivity {
-    private Player player;
+    FirebaseAuth mAuth;
 
-    private int actualFragment = 0;
+    private Player player;
 
 //    ImageButton leftArrow, rightArrow;
 
     ExtendedFloatingActionButton playButton;
+
+    TextView storyNarrationView;
+    ConstraintLayout storyNarrationBackground;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +50,44 @@ public class TowerSelection extends AppCompatActivity {
         final String TAG = "TowerSelection-onCreate";
 
         playButton = findViewById(R.id.playButton);
+        player = PlayerManager.getInstance(this);
+
+        storyNarrationView = findViewById(R.id.storyNarrationView);
+        storyNarrationBackground = findViewById(R.id.storyNarrationBackground);
+
+        mAuth = FirebaseAuth.getInstance();
+
+        // play story narration for first time player, intro for the game
+        if (player.isFirstTime()) {
+            Log.d(TAG, "First time player, playing story narration...");
+
+            // play narration
+            new Handler().postDelayed(() -> {
+                Utils.playStoryNarration(this, storyNarrationBackground, storyNarrationView,"intro", new Callback_TCW() {
+                    @Override
+                    public void onSuccess() {
+
+                    }
+
+                    @Override
+                    public void onSuccess(Context context) {
+                        // when first time narration is done playing then set first time to false
+                        player.setFirstTime(false);
+                        PlayerManager.setInstance(player); // save player instance
+                        PlayerManager.savePlayerData(context, player); // save into local file
+                        // if there is a google session stored then save to remote
+                        if (mAuth.getCurrentUser() != null) {
+                            PlayerManager.saveToRemoteFromLocal(context, mAuth.getCurrentUser());
+                        }
+                    }
+
+                    @Override
+                    public void onFailure (String errorMessage){
+
+                    }
+                });
+            }, 1000);
+        }
 
         // VIEWPAGER FUNCTIONALITY (CARROUSEL-LIKE FRAGMENT DISPLAY)
         ViewPager2 viewPager = findViewById(R.id.viewPager);
@@ -51,7 +96,6 @@ public class TowerSelection extends AppCompatActivity {
         // creation of adapter
         SelectionAdapter selectionAdapter = new SelectionAdapter(this);
         viewPager.setAdapter(selectionAdapter);
-
 
         viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
@@ -91,7 +135,6 @@ public class TowerSelection extends AppCompatActivity {
 //            }
 //        });
 
-        player = PlayerManager.getInstance(this);
 
         playButton.setOnClickListener(v -> {
             Log.d(TAG, "Play button clicked");

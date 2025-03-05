@@ -40,7 +40,7 @@ public class Utils {
     // TODO: CHANGE THIS DATA TO "DEFAULT_SAVE_DATA" AND CHANGE CONTENT TO **REAL** DEFAULT SAVE DATA
     private static final String DEFAULT_TEST_SAVE_DATA = "{\n" +
             "    \"player\": {\n" +
-            "        \"isfirstime\": True,\n" +
+            "        \"isFirstTime\": true,\n" +
             "        \"timestamp\": 0,\n" +
             "        \"name\": \"\",\n" +
             "        \"maxhp\": 100,\n" +
@@ -138,7 +138,6 @@ public class Utils {
     /**
      * Retrieve language of device. If language is not set, it defaults to English.
      *
-     * @param context
      * @return 0 = English | 1 = Spanish
      */
     public static int getLang() {
@@ -459,11 +458,11 @@ public class Utils {
         fadeIn.start();
 
         new Handler().postDelayed(() -> {
-            playDialogueSequence(storyNarrationBackground, storyNarrationView, narration.getDialogues(), 0, callback);
+            playDialogueSequence(context, storyNarrationBackground, storyNarrationView, narration.getDialogues(), 0, callback);
         }, 700);
     }
 
-    private static void playDialogueSequence(ConstraintLayout storyNarrationBackground, TextView storyNarrationView, List<String> dialogues, int index, Callback_TCW callback) {
+    private static void playDialogueSequence(Context context, ConstraintLayout storyNarrationBackground, TextView storyNarrationView, List<String> dialogues, int index, Callback_TCW callback) {
         long fadeDuration = 700;
         long waitDuration = 3000;
 
@@ -479,7 +478,7 @@ public class Utils {
             });
             fadeOutBackground.start();
             // since all dialogues have been shown, call the onSuccess() method on callback
-            callback.onSuccess();
+            callback.onSuccess(context);
             return; // exit when all dialogues are shown
 
         }
@@ -501,7 +500,7 @@ public class Utils {
         set.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
-                playDialogueSequence(storyNarrationBackground, storyNarrationView, dialogues, index + 1, callback); // Call next dialogue
+                playDialogueSequence(context, storyNarrationBackground, storyNarrationView, dialogues, index + 1, callback); // Call next dialogue
             }
         });
 
