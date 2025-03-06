@@ -1146,7 +1146,7 @@ public class BattleScreen extends AppCompatActivity {
 
                         @Override
                         public void onSuccess(Context context) {
-
+                            showEndGameDialog(getResources().getString(R.string.you_won));
                         }
 
                         @Override

@@ -46,6 +46,14 @@
           }
         },
         {
+          "client_id": "1007165425921-9p5hr48277f43b1ueig8t4ablmr6c5nc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.jatora.tfg_the_climb_within",
+            "certificate_hash": "d03800f29d44e767c839605f9fb6c231f761180e"
+          }
+        },
+        {
           "client_id": "1007165425921-669l4v5a8sg9siresi1jn31r7f7th7b1.apps.googleusercontent.com",
           "client_type": 3
         }
