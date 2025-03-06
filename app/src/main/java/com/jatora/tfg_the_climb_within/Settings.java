@@ -80,8 +80,8 @@ public class Settings extends AppCompatActivity {
                 result -> {
                     // Handle the result here
                     if (result.getResultCode() == Settings.RESULT_OK) {
-                        Intent data = result.getData();
-                        // Process the data
+                        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+                        googleSignInLauncher.launch(signInIntent);
                     }
                 }
         );

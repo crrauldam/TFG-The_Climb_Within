@@ -14,11 +14,11 @@
       },
       "oauth_client": [
         {
-          "client_id": "1007165425921-btaiocn51cpujgi1ue5vho4dooht5cgp.apps.googleusercontent.com",
+          "client_id": "1007165425921-8ci01mo9q7okqu2ts7h0f8dpcafgdev6.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.jatora.tfg_the_climb_within",
-            "certificate_hash": "495a82877281a3f917570c1dd7f58717fa354ebe"
+            "certificate_hash": "e498de0a437ac028f6712978c5c38bba8c85b641"
           }
         },
         {
