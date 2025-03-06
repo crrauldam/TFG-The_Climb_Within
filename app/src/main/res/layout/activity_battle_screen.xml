@@ -159,7 +159,7 @@
 
     </LinearLayout>
 
-    <!--    NARRATION VIEW -->
+    <!--    NARRATION VIEW (NOT STORY, JUST HINTS) -->
     <TextView
         android:id="@+id/narrationView"
         android:layout_width="match_parent"

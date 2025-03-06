@@ -461,6 +461,11 @@ public class BattleScreen extends AppCompatActivity {
                             }
 
                             @Override
+                            public void onSuccess(Context context) {
+
+                            }
+
+                            @Override
                             public void onFailure(String errorMessage) {
 
                             }
@@ -483,6 +488,11 @@ public class BattleScreen extends AppCompatActivity {
                                             public void onSuccess() {
                                                 Log.d(TAG, "unlocking cards to be played");
                                                 blockCardClicking.setVisibility(View.GONE);
+                                            }
+
+                                            @Override
+                                            public void onSuccess(Context context) {
+
                                             }
 
                                             @Override
@@ -1132,6 +1142,11 @@ public class BattleScreen extends AppCompatActivity {
                         @Override
                         public void onSuccess() {
                             showEndGameDialog(getResources().getString(R.string.you_won));
+                        }
+
+                        @Override
+                        public void onSuccess(Context context) {
+
                         }
 
                         @Override
