@@ -14,11 +14,35 @@
       },
       "oauth_client": [
         {
+          "client_id": "1007165425921-27ko630t4eblgcnc0t5bqv3ojlfkbre5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.jatora.tfg_the_climb_within",
+            "certificate_hash": "a0880a2ae38d4f321d6d12862e7025b1ce07ecb9"
+          }
+        },
+        {
           "client_id": "1007165425921-8ci01mo9q7okqu2ts7h0f8dpcafgdev6.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.jatora.tfg_the_climb_within",
             "certificate_hash": "e498de0a437ac028f6712978c5c38bba8c85b641"
+          }
+        },
+        {
+          "client_id": "1007165425921-9p5hr48277f43b1ueig8t4ablmr6c5nc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.jatora.tfg_the_climb_within",
+            "certificate_hash": "d03800f29d44e767c839605f9fb6c231f761180e"
+          }
+        },
+        {
+          "client_id": "1007165425921-btaiocn51cpujgi1ue5vho4dooht5cgp.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.jatora.tfg_the_climb_within",
+            "certificate_hash": "495a82877281a3f917570c1dd7f58717fa354ebe"
           }
         },
         {
