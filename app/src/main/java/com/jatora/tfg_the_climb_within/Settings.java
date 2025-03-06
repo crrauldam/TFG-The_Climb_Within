@@ -13,6 +13,7 @@ import android.widget.Toast;
 import androidx.activity.EdgeToEdge;
 import androidx.activity.OnBackPressedCallback;
 import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -73,6 +74,17 @@ public class Settings extends AppCompatActivity {
             }
         });
 
+        // Register the launcher here, before it's used
+        googleSignInLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    // Handle the result here
+                    if (result.getResultCode() == Settings.RESULT_OK) {
+                        Intent data = result.getData();
+                        // Process the data
+                    }
+                }
+        );
 
         googleBtnUi();
 
@@ -142,8 +154,12 @@ public class Settings extends AppCompatActivity {
 
     }
     private void signUp() {
-        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
-        googleSignInLauncher.launch(signInIntent);
+        try {
+            Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+            googleSignInLauncher.launch(signInIntent);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private void signIn() {
