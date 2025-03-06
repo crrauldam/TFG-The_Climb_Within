@@ -14,6 +14,7 @@ public class Player extends Entity {
     private EmotionCoins emotion_coins;
     private Integer[] deck;
     private Stats stats;
+    private Settings settings;
 
     public Player() {
         this.unlocked_cards = new Integer[0];
@@ -148,6 +149,17 @@ public class Player extends Entity {
 //        this.hp = hp;
 //    }
 
+    static class Settings {
+        private String language;
+
+        public String getLanguage() {
+            return language;
+        }
+
+        public void setLanguage(String language) {
+            this.language = language;
+        }
+    }
 
     public boolean isFirstTime() {
         return isFirstTime;
@@ -211,6 +223,14 @@ public class Player extends Entity {
 
     public void setStats(Stats stats) {
         this.stats = stats;
+    }
+
+    public Settings getSettings() {
+        return settings;
+    }
+
+    public void setSettings(Settings settings) {
+        this.settings = settings;
     }
 
     @Override

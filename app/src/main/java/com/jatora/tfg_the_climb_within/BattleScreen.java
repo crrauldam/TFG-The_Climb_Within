@@ -66,8 +66,6 @@ public class BattleScreen extends AppCompatActivity {
     final int TOWER_COINS_PER_STAGE = 0;
     final int EMOTION_COINS_PER_STAGE = 0;
 
-    // flag for game state [true = game still in progress | false = game over]
-    boolean game = true;
     int floor = 1;
     int stage = 1;
 

@@ -13,6 +13,7 @@ import android.widget.Toast;
 import androidx.activity.EdgeToEdge;
 import androidx.activity.OnBackPressedCallback;
 import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -63,6 +64,23 @@ public class Settings extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_settings);
+
+        googleSignInLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if (result.getResultCode() == RESULT_OK) {
+                        Intent data = result.getData();
+                        try {
+                            firebaseAuthenticate(data);
+                        } catch (ApiException e) {
+                            Log.d("Login-signUp", "Authentication failed: " + e.getMessage());
+                        }
+                    } else {
+                        Log.d("Login-signUp", "Sign-in failed or canceled.");
+                    }
+                }
+        );
+
 
         signOutButton = findViewById(R.id.signOutButton);
 
@@ -141,8 +159,12 @@ public class Settings extends AppCompatActivity {
 //        });
 
     }
+
     private void signUp() {
+        final String TAG = "Settings-signUp()";
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+        Log.d(TAG, String.valueOf(signInIntent));
+        Log.d(TAG, String.valueOf(googleSignInLauncher));
         googleSignInLauncher.launch(signInIntent);
     }
 

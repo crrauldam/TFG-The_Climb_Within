@@ -44,4 +44,7 @@
     <string name="stage">"Stage: "</string>
     <string name="hp_is_full">HP is full</string>
     <string name="signOut">Sign Out</string>
+    <string name="language">Language</string>
+    <string name="spanish_language_flag">Spanish language flag</string>
+    <string name="english_language_flag">English language flag</string>
 </resources>

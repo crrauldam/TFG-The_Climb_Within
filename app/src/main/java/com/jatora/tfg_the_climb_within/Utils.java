@@ -62,6 +62,9 @@ public class Utils {
             "            \"cards_played\": 0,\n" +
             "            \"damage_dealt\": 0,\n" +
             "            \"damage_received\": 0\n" +
+            "        },\n" +
+            "        \"settings\": {\n" +
+            "            \"language\": \"en\"\n" +
             "        }\n" +
             "    }\n" +
             "}";
@@ -144,6 +147,7 @@ public class Utils {
         final String TAG = "Utils-getLang()";
         int lang = 0;
 
+
         Log.d(TAG, "Retrieving language from system properties.");
         // if spanish, change language to spanish, if not it stays in english
         if (Locale.getDefault().getLanguage().equalsIgnoreCase("es")) {
@@ -161,6 +165,8 @@ public class Utils {
      */
     public static JsonObject getProperties(Context context) {
         final String TAG = "Utils-getProperties()";
+
+        Log.d(TAG, "Player language: " + PlayerManager.getInstance(context).getSettings().getLanguage());
 
         String file = (getLang() == 1) ? PROPERTIES_ES_FILE : PROPERTIES_EN_FILE;
 

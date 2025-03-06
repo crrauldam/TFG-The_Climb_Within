@@ -40,4 +40,7 @@
     <string name="stage">"Etapa: "</string>
     <string name="hp_is_full">PS  llenos</string>
     <string name="signOut">Cerrar Sesión</string>
+    <string name="language">Idioma</string>
+    <string name="spanish_language_flag">Bandera de idioma castellano</string>
+    <string name="english_language_flag">Bandera de idioma inglés</string>
 </resources>
