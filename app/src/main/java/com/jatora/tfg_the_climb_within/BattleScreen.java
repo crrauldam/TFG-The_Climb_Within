@@ -1,6 +1,7 @@
 package com.jatora.tfg_the_climb_within;
 
 import android.animation.AnimatorSet;
+import android.animation.ArgbEvaluator;
 import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.content.Context;
@@ -38,8 +39,6 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.util.Assert;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -105,7 +104,6 @@ public class BattleScreen extends AppCompatActivity {
 
     // for waiting response from another activity to continue processing
     private ActivityResultLauncher<Intent> activityResultLauncher;
-
 
     private final int[] enemyShield = new int[]{0};
     TextView playerShieldView;
@@ -769,6 +767,8 @@ public class BattleScreen extends AppCompatActivity {
         // TODO: PLAY ENEMY ATTACK ANIMATION
         if (target instanceof Player) {
             playEnemyAttackAnimation();
+        } else {
+            playEnemyGetDamageAnimation();
         }
 
         if (targetShield[0] > 0) {
@@ -1199,6 +1199,28 @@ public class BattleScreen extends AppCompatActivity {
         activityResultLauncher.launch(intent);
 
 //        Utils.changeActivity(intent, this, R.anim.slide_out_left, R.anim.slide_in_right);
+    }
+
+    /**
+     * Plays a shake animation on the enemy, also adds a red tint to it.
+     */
+    private void playEnemyGetDamageAnimation() {
+        // Create horizontal shake animation
+        ObjectAnimator shakeAnimator = ObjectAnimator.ofFloat(enemyImg, "translationX", -20f, 20f, -15f, 15f, -10f, 10f, 0f);
+        shakeAnimator.setDuration(500);  // Duration of the shake animation
+
+        // Create red tint animation
+        ObjectAnimator tintAnimator = ObjectAnimator.ofArgb(enemyImg, "colorFilter",
+                Color.TRANSPARENT,  // Original state (no tint)
+                Color.argb(100, 255, 0, 0),  // Semi-transparent red tint
+                Color.TRANSPARENT);  // Back to original state
+        tintAnimator.setDuration(500);  // Match duration with shake animation
+        tintAnimator.setEvaluator(new ArgbEvaluator());
+
+        // Combine animations using AnimatorSet
+        AnimatorSet animatorSet = new AnimatorSet();
+        animatorSet.playTogether(shakeAnimator, tintAnimator);
+        animatorSet.start();
     }
 
     /**
