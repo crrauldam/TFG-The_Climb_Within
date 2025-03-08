@@ -3,6 +3,7 @@ package com.jatora.tfg_the_climb_within;
 import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
@@ -19,10 +20,18 @@ import androidx.core.view.WindowInsetsCompat;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class HomeScreen extends AppCompatActivity {
+    private LanguagePreference languagePreference;
+    private String currentLanguage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        languagePreference = new LanguagePreference(this);
+        currentLanguage = languagePreference.getLanguage();  // Save the initial language
+
+        applyLanguage();  // Apply saved language
+
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_home_screen);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
@@ -112,5 +121,28 @@ public class HomeScreen extends AppCompatActivity {
             faqButton.setClickable(false);
             faqButton.postDelayed(() -> faqButton.setClickable(true), 1000);
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        // Check if language preference has changed
+        String newLanguage = languagePreference.getLanguage();
+        if (!newLanguage.equals(currentLanguage)) {
+            currentLanguage = newLanguage;  // Update the current language
+            recreate();  // Reload the activity to apply language change
+        }
+    }
+
+    private void applyLanguage() {
+        String languageCode = languagePreference.getLanguage();
+        LocaleHelper.updateLocale(this, languageCode);
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        LanguagePreference pref = new LanguagePreference(newBase);
+        super.attachBaseContext(LocaleHelper.updateLocale(newBase, pref.getLanguage()));
     }
 }

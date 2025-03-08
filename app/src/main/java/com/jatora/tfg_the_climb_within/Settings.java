@@ -3,10 +3,15 @@ package com.jatora.tfg_the_climb_within;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender;
+import android.content.res.ColorStateList;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,6 +22,7 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.content.res.AppCompatResources;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -38,7 +44,10 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
+import java.util.Locale;
+
 public class Settings extends AppCompatActivity {
+    private LanguagePreference languagePreference;
 
     private ActivityResultLauncher<Intent> googleSignInLauncher;
 
@@ -59,9 +68,22 @@ public class Settings extends AppCompatActivity {
 
     // private boolean showOneTapUI = true;
 
+    private ImageButton setLangENButton;
+    private ImageButton setLangESButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        final String TAG = "Settings-onCreate()";
+
         super.onCreate(savedInstanceState);
+
+        languagePreference = new LanguagePreference(this);
+
+        applyLanguage();
+
+        Log.d(TAG, "Saved language: "+languagePreference.getLanguage());
+        Log.d(TAG, "Actual locale: "+ Locale.getDefault().getLanguage());
+
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_settings);
 
@@ -84,13 +106,7 @@ public class Settings extends AppCompatActivity {
 
         signOutButton = findViewById(R.id.signOutButton);
 
-        signOutButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                signnOut();
-            }
-        });
-
+        signOutButton.setOnClickListener(view -> signnOut());
 
         googleBtnUi();
 
@@ -123,7 +139,6 @@ public class Settings extends AppCompatActivity {
                 .build();
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
-
 //        BeginSignInRequest signInRequest = BeginSignInRequest.builder()
 //                .setGoogleIdTokenRequestOptions(BeginSignInRequest.GoogleIdTokenRequestOptions.builder()
 //                        .setSupported(true)
@@ -138,8 +153,6 @@ public class Settings extends AppCompatActivity {
 //                .build();
 //
 //        mGoogleSignInClient = GoogleSignIn.getClient(this, signInRequest);
-
-
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
@@ -158,6 +171,59 @@ public class Settings extends AppCompatActivity {
 //            }
 //        });
 
+        setLangENButton = findViewById(R.id.setLangENButton);
+        setLangESButton = findViewById(R.id.setLangESButton);
+
+        boolean isLanguageEN = languagePreference.getLanguage().equalsIgnoreCase("en");
+
+        Log.d(TAG, "isLanguageEN: "+isLanguageEN);
+
+        setLangButtonsColors(isLanguageEN);
+
+        setLangENButton.setOnClickListener(v -> {
+            // only change language to EN if it is not already set to EN (save processing)
+//            if (!isLanguageEN) {
+                languagePreference.setLanguage("en");
+                setLangButtonsColors(isLanguageEN);
+                recreate();
+//            }
+        });
+
+        setLangESButton.setOnClickListener(v -> {
+            // only change language to ES if it is not already set to ES (save processing)
+//            if (isLanguageEN) {
+                languagePreference.setLanguage("es");
+                setLangButtonsColors(isLanguageEN);
+                recreate();
+//            }
+        });
+    }
+
+    private void setLangButtonsColors(boolean isLanguageEN) {
+        if (isLanguageEN) {
+            // set EN button as SELECTED
+            setLangENButton.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.light_cyan)));
+            // set ES button as UNSELECTED
+            setLangESButton.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.payne_gray)));
+        } else {
+            // set ES button as SELECTED
+            setLangESButton.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.light_cyan)));
+            // set EN button as UNSELECTED
+            setLangENButton.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.payne_gray)));
+        }
+    }
+
+    // Apply language preference
+    private void applyLanguage() {
+        String languageCode = languagePreference.getLanguage();
+        LocaleHelper.updateLocale(this, languageCode);
+    }
+
+    // Ensure locale is applied before attaching the base context
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        LanguagePreference pref = new LanguagePreference(newBase);
+        super.attachBaseContext(LocaleHelper.updateLocale(newBase, pref.getLanguage()));
     }
 
     private void signUp() {
@@ -224,7 +290,6 @@ public class Settings extends AppCompatActivity {
             }
         }
     }
-
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -311,8 +376,5 @@ public class Settings extends AppCompatActivity {
             }
 
         }
-
     }
-
-
 }

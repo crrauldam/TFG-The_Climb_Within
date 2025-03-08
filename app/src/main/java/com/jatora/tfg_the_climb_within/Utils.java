@@ -143,14 +143,15 @@ public class Utils {
      *
      * @return 0 = English | 1 = Spanish
      */
-    public static int getLang() {
+    public static int getLang(Context context) {
         final String TAG = "Utils-getLang()";
         int lang = 0;
 
+        LanguagePreference languagePreference = new LanguagePreference(context);
 
         Log.d(TAG, "Retrieving language from system properties.");
         // if spanish, change language to spanish, if not it stays in english
-        if (Locale.getDefault().getLanguage().equalsIgnoreCase("es")) {
+        if (languagePreference.getLanguage().equalsIgnoreCase("es")) {
             lang = 1;
         }
 
@@ -159,7 +160,7 @@ public class Utils {
 
     /**
      * Get the properties of the game, returns data in device's language.
-     * See {@link #getLang()} for language retrieving.
+     * See {@link #getLang(Context context)} for language retrieving.
      *
      * @return A JsonObject containing the properties info in the specified language
      */
@@ -168,7 +169,7 @@ public class Utils {
 
         Log.d(TAG, "Player language: " + PlayerManager.getInstance(context).getSettings().getLanguage());
 
-        String file = (getLang() == 1) ? PROPERTIES_ES_FILE : PROPERTIES_EN_FILE;
+        String file = (getLang(context) == 1) ? PROPERTIES_ES_FILE : PROPERTIES_EN_FILE;
 
         String fileData = Utils.readFile(context, file);
 

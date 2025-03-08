@@ -149,6 +149,7 @@
                     android:src="@drawable/en_flag"
                     android:scaleType="fitCenter"
                     android:backgroundTint="@color/light_cyan"
+                    android:layout_margin="5dp"
                     />
                 <ImageButton
                     android:id="@+id/setLangESButton"
@@ -157,7 +158,8 @@
                     android:contentDescription="@string/spanish_language_flag"
                     android:src="@drawable/es_flag"
                     android:scaleType="fitCenter"
-                    android:backgroundTint="@color/light_cyan"
+                    android:backgroundTint="@color/payne_gray"
+                    android:layout_margin="5dp"
                     />
             </LinearLayout>
 

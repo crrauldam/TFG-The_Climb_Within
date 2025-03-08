@@ -52,6 +52,10 @@ public class BattleScreen extends AppCompatActivity {
     // firebase things
     FirebaseAuth mAuth;
 
+    // language settings
+    private LanguagePreference languagePreference;
+    private String currentLanguage;
+
     // readonly data
     ArrayList<Deck> ALL_DECKS;
     ArrayList<Card> ALL_CARDS;
@@ -65,6 +69,9 @@ public class BattleScreen extends AppCompatActivity {
     // TODO: DEFINE GAME ECONOMY
     final int TOWER_COINS_PER_STAGE = 0;
     final int EMOTION_COINS_PER_STAGE = 0;
+
+    // path to the corresponding emotion coin based on the tower
+    String emotionCoin;
 
     int floor = 1;
     int stage = 1;
@@ -110,6 +117,12 @@ public class BattleScreen extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        languagePreference = new LanguagePreference(this);
+        currentLanguage = languagePreference.getLanguage();  // Save the initial language
+
+        applyLanguage();  // Apply saved language
+
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_battle_screen);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
@@ -367,6 +380,7 @@ public class BattleScreen extends AppCompatActivity {
                 Log.d(TAG, d.getName());
                 if (d.getName().equalsIgnoreCase(tower.getDialogues())) {
                     color = d.getColor();
+                    emotionCoin = d.getCoin();
                 }
             }
         }
@@ -954,7 +968,7 @@ public class BattleScreen extends AppCompatActivity {
 
             if (enemy.getHp() == 0) {
                 Log.d(TAG, "STAGE CLEARED");
-                showEndStageDialog(getResources().getString(R.string.stage_cleared), 1000, enemy);
+                showEndStageDialog(getResources().getString(R.string.stage_cleared), 1000);
 
 //                playSFX("plankton_aaa_meme");
 
@@ -1000,14 +1014,15 @@ public class BattleScreen extends AppCompatActivity {
         // set tower coin image
         ImageView coinImg = menu.findViewById(R.id.coinImg);
         try {
-            Bitmap bitmap = BitmapFactory.decodeStream(getAssets().open("img/coins/tower.png"));
+            Bitmap bitmap = BitmapFactory.decodeStream(getAssets().open(emotionCoin));
             coinImg.setImageBitmap(bitmap);
         } catch (IOException e) {
             Log.e(TAG, "Error while getting bitmap image from assets: " + e);
         }
 
         TextView amount = menu.findViewById(R.id.amount);
-        amount.setText("+"+(stage*EMOTION_COINS_PER_STAGE));
+        int gainedEmotionCoins = (stage*EMOTION_COINS_PER_STAGE);
+        amount.setText("+"+gainedEmotionCoins);
 
         // open pop up menu
         builder.setView(menu);
@@ -1086,9 +1101,8 @@ public class BattleScreen extends AppCompatActivity {
      * Shows end stage dialog with given text as title
      * @param titleText
      * @param delay
-     * @param enemy
      */
-    private void showEndStageDialog(String titleText, long delay, Enemy enemy) {
+    private void showEndStageDialog(String titleText, long delay) {
         final String TAG = "BattleScreen-showEndStageDialog";
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -1207,5 +1221,28 @@ public class BattleScreen extends AppCompatActivity {
         AnimatorSet attackAnimation = new AnimatorSet();
         attackAnimation.playSequentially(moveDown, moveUp);
         attackAnimation.start();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        // Check if language preference has changed
+        String newLanguage = languagePreference.getLanguage();
+        if (!newLanguage.equals(currentLanguage)) {
+            currentLanguage = newLanguage;  // Update the current language
+            recreate();  // Reload the activity to apply language change
+        }
+    }
+
+    private void applyLanguage() {
+        String languageCode = languagePreference.getLanguage();
+        LocaleHelper.updateLocale(this, languageCode);
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        LanguagePreference pref = new LanguagePreference(newBase);
+        super.attachBaseContext(LocaleHelper.updateLocale(newBase, pref.getLanguage()));
     }
 }
