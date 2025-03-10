@@ -3,26 +3,29 @@ package com.jatora.tfg_the_climb_within;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
-import android.content.res.Configuration;
-import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
-import androidx.activity.OnBackPressedCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.content.res.AppCompatResources;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -38,12 +41,15 @@ import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
+import com.google.firebase.BuildConfig;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
+import java.io.IOException;
 import java.util.Locale;
 
 public class Settings extends AppCompatActivity {
@@ -70,6 +76,8 @@ public class Settings extends AppCompatActivity {
 
     private ImageButton setLangENButton;
     private ImageButton setLangESButton;
+
+    private ExtendedFloatingActionButton aboutButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -182,6 +190,7 @@ public class Settings extends AppCompatActivity {
 
         Player p = PlayerManager.getInstance(this);
 
+        // change language to english
         setLangENButton.setOnClickListener(v -> {
             // only change language to EN if it is not already set to EN (save processing)
             if (!isLanguageEN) {
@@ -194,6 +203,7 @@ public class Settings extends AppCompatActivity {
             }
         });
 
+        // change language to spanish
         setLangESButton.setOnClickListener(v -> {
             // only change language to ES if it is not already set to ES (save processing)
             if (isLanguageEN) {
@@ -205,8 +215,55 @@ public class Settings extends AppCompatActivity {
                 recreate();
             }
         });
+
+        aboutButton = findViewById(R.id.aboutButton);
+
+        aboutButton.setOnClickListener(v -> {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            View menu = getLayoutInflater().inflate(R.layout.about_dialog, null);
+
+            TextView version = menu.findViewById(R.id.version);
+            try {
+                PackageInfo packageInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
+                String versionName = packageInfo.versionName;
+                version.setText(getString(R.string.version)+versionName);
+            } catch (PackageManager.NameNotFoundException e) {
+                throw new RuntimeException(e);
+            }
+
+
+            // open pop up menu
+            builder.setView(menu);
+            AlertDialog dialog = builder.create();
+            dialog.getWindow().setBackgroundDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.battle_screen_menu_bg, null));
+            dialog.show();
+
+            // set return to battle functionality
+            Button sourceButton = menu.findViewById(R.id.sourceButton);
+            sourceButton.setOnClickListener(v1 -> {
+                // send user to github repo
+                final String githubRepoURL = "https://github.com/crrauldam/TFG-The_Climb_Within";
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setData(Uri.parse(githubRepoURL));
+                startActivity(intent);
+            });
+
+            // set return to battle functionality
+            Button institutionButton = menu.findViewById(R.id.institutionButton);
+            institutionButton.setOnClickListener(v1 -> {
+                // send user to github repo
+                final String institutionURL = "https://site.educa.madrid.org/ies.juandelacierva.madrid/";
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setData(Uri.parse(institutionURL));
+                startActivity(intent);
+            });
+        });
     }
 
+    /**
+     * Set button colors depending on the language.
+     * @param isLanguageEN
+     */
     private void setLangButtonsColors(boolean isLanguageEN) {
         if (isLanguageEN) {
             // set EN button as SELECTED
@@ -221,7 +278,9 @@ public class Settings extends AppCompatActivity {
         }
     }
 
-    // Apply language preference
+    /**
+     * Apply language preference
+     */
     private void applyLanguage() {
         String languageCode = languagePreference.getLanguage();
         LocaleHelper.updateLocale(this, languageCode);

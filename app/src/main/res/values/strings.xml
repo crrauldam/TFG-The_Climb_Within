@@ -47,4 +47,12 @@
     <string name="language">Language</string>
     <string name="spanish_language_flag">Spanish language flag</string>
     <string name="english_language_flag">English language flag</string>
+    <string name="brought_to_you_by">Brought to you by:</string>
+    <string name="tom_s" translatable="false">TOmás</string>
+    <string name="alejandro" translatable="false">AleJAndro</string>
+    <string name="ra_l" translatable="false">RAúl</string>
+    <string name="you_can_find_the_source_code_in_our_github_repo">Source code and institution info available below:</string>
+    <string name="source_code">Source</string>
+    <string name="version">"Version "</string>
+    <string name="institution_name" translatable="false">IES</string>
 </resources>

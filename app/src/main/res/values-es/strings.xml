@@ -43,4 +43,8 @@
     <string name="language">Idioma</string>
     <string name="spanish_language_flag">Bandera de idioma castellano</string>
     <string name="english_language_flag">Bandera de idioma inglés</string>
+    <string name="brought_to_you_by">De la mano de:</string>
+    <string name="you_can_find_the_source_code_in_our_github_repo">Código fuente e información de la institución disponible debajo:</string>
+    <string name="source_code">Código fuente</string>
+    <string name="version">"Versión "</string>
 </resources>
