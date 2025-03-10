@@ -131,13 +131,25 @@ public class InGameShop extends AppCompatActivity {
         // set the "NO CARDS TO BE BOUGHT" message invisible by default
         noCardsToBeBought.setVisibility(View.INVISIBLE);
 
-        // gets the deck according to the tab we're in right now
-        Deck targetDeck = new Deck();
+        // gets the deck according to the tower we're in right now
+        Deck targetDeck = null;
         for (Deck d : decks) {
             if (d.getName().equalsIgnoreCase(searchedDeck)) {
                 targetDeck = d;
             }
         }
+
+
+        // if the deck is not null means there is a deck named as the tower
+        if (targetDeck == null) {
+            Log.d(TAG, "Tower is \"CALM\", selecting random deck for the shop...");
+            // if not, means the tower is "calm", so we retrieve a random deck from the list
+            int randomIndex = (int) (Math.random() * decks.size());
+            targetDeck = decks.get(randomIndex);
+        }
+
+        Log.d(TAG, "Retrieving cards from deck: "+targetDeck.getName());
+        int[] targetCards = targetDeck.getCards();
 
         // set tower coins
         int coins = player.getTower_coins();
@@ -171,12 +183,12 @@ public class InGameShop extends AppCompatActivity {
             // loop cards so they are added 3 by 3 in the layout (also control out of bounds)
             while (tempBatch.size() != 3 && i < playerUnlockedCards.size()) {
                 // loop through the cards of the deck's selected tab
-                for (int j = 0; j < targetDeck.getCards().length; j++) {
+                for (int j = 0; j < targetCards.length; j++) {
                     // check if the actual card (i) is stored in the target deck
                     // if out of bounds then stop checking so the while loop ends too
                     try {
                         boolean cardIsOnDeck = false;
-                        if (playerUnlockedCards.get(i).getId() == targetDeck.getCards()[j]) {
+                        if (playerUnlockedCards.get(i).getId() == targetCards[j]) {
                             // check if card is already in player's deck
                             for (Integer playerCardInDeck : player.getDeck()) {
                                 // if this unlocked card is in the players deck

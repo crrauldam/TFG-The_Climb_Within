@@ -240,7 +240,9 @@ public class BattleScreen extends AppCompatActivity {
         int rests = 0;
 
         floor = 1;
-        stage = 1;
+        // TODO: UNCOMMENT WHEN FINAL VERSION
+//        stage = 1;
+        stage = 2; // this is for testing calm tower to speed up the game
 
         // show pop up menu with enemy info and options
         int[] finalFloor = {floor};
@@ -1013,16 +1015,27 @@ public class BattleScreen extends AppCompatActivity {
 
         // set tower coin image
         ImageView coinImg = menu.findViewById(R.id.coinImg);
-        try {
-            Bitmap bitmap = BitmapFactory.decodeStream(getAssets().open(emotionCoin));
-            coinImg.setImageBitmap(bitmap);
-        } catch (IOException e) {
-            Log.e(TAG, "Error while getting bitmap image from assets: " + e);
+        TextView amount = menu.findViewById(R.id.amount);
+
+        // if the tower is calm, the player doesn't gain any emotion coins
+        if (tower.getDialogues().equalsIgnoreCase("calm")) {
+            coinImg.setVisibility(View.INVISIBLE);
+            amount.setVisibility(View.INVISIBLE);
+        } else {
+            // if any other tower, the player earns emotion coins for that tower
+            try {
+                Bitmap bitmap = BitmapFactory.decodeStream(getAssets().open(emotionCoin));
+                coinImg.setImageBitmap(bitmap);
+            } catch (IOException e) {
+                Log.e(TAG, "Error while getting bitmap image from assets: " + e);
+            }
+
+            int gainedEmotionCoins = (stage*EMOTION_COINS_PER_STAGE);
+            amount.setText("+"+gainedEmotionCoins);
+            // update player emotion coins for that tower
+            player.getEmotion_coins().setCoin(tower.getName().toLowerCase(), gainedEmotionCoins);
         }
 
-        TextView amount = menu.findViewById(R.id.amount);
-        int gainedEmotionCoins = (stage*EMOTION_COINS_PER_STAGE);
-        amount.setText("+"+gainedEmotionCoins);
 
         // open pop up menu
         builder.setView(menu);

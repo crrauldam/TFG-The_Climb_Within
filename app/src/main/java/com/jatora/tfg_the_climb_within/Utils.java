@@ -47,7 +47,7 @@ public class Utils {
             "        \"hp\": 100,\n" +
             "        \"unlocked_cards\": [1000, 1001, 1002, 1003, 1004, 1005, 1006, 1007, 1008, 1009,  6003,5004,7000],\n" +
             "        \"tower_coins\": 0,\n" +
-            "        \"unlocked_towers\": [0, 1],\n" +
+            "        \"unlocked_towers\": [0, 1, 6],\n" +
             "        \"emotion_coins\": {\n" +
             "            \"anger\": 100,\n" +
             "            \"disgust\": 110,\n" +

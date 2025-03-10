@@ -180,22 +180,30 @@ public class Settings extends AppCompatActivity {
 
         setLangButtonsColors(isLanguageEN);
 
+        Player p = PlayerManager.getInstance(this);
+
         setLangENButton.setOnClickListener(v -> {
             // only change language to EN if it is not already set to EN (save processing)
-//            if (!isLanguageEN) {
+            if (!isLanguageEN) {
+                p.getSettings().setLanguage("en");
+                PlayerManager.setInstance(p);
+
                 languagePreference.setLanguage("en");
-                setLangButtonsColors(isLanguageEN);
+                setLangButtonsColors(false);
                 recreate();
-//            }
+            }
         });
 
         setLangESButton.setOnClickListener(v -> {
             // only change language to ES if it is not already set to ES (save processing)
-//            if (isLanguageEN) {
+            if (isLanguageEN) {
+                p.getSettings().setLanguage("es");
+                PlayerManager.setInstance(p);
+
                 languagePreference.setLanguage("es");
-                setLangButtonsColors(isLanguageEN);
+                setLangButtonsColors(true);
                 recreate();
-//            }
+            }
         });
     }
 
