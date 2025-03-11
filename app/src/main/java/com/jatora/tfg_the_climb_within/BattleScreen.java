@@ -63,8 +63,8 @@ public class BattleScreen extends AppCompatActivity {
     final int STAGES_TO_REST = 2; // how many stages the player will have to fight to go to shop and rest
 
     // TODO: DEFINE GAME ECONOMY
-    final int TOWER_COINS_PER_STAGE = 0;
-    final int EMOTION_COINS_PER_STAGE = 0;
+    final int TOWER_COINS_PER_STAGE = 2;
+    final int EMOTION_COINS_PER_STAGE = 5;
 
     // flag for game state [true = game still in progress | false = game over]
     boolean game = true;
