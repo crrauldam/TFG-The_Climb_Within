@@ -397,7 +397,7 @@ public class BattleScreen extends AppCompatActivity {
         } catch (IOException e) {
             Log.e(TAG, "Error while getting bitmap image from assets: " + e);
             Log.e(TAG, "Trying again with default image");
-            bitmap = BitmapFactory.decodeStream(this.getAssets().open("img/enemies/enemie.png"));
+            bitmap = BitmapFactory.decodeStream(this.getAssets().open("img/enemies/unknown_enemy.png"));
         }
         enemyImg.setImageBitmap(bitmap);
 
