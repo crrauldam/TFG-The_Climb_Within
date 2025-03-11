@@ -40,6 +40,7 @@
     <string name="stage">"Etapa: "</string>
     <string name="hp_is_full">PS  llenos</string>
     <string name="signOut">Cerrar Sesión</string>
+
     <string name="language">Idioma</string>
     <string name="spanish_language_flag">Bandera de idioma castellano</string>
     <string name="english_language_flag">Bandera de idioma inglés</string>
@@ -54,4 +55,6 @@
     <string name="tutorial_igs_str">¿Recuerdas esas monedas? Tras un par de etapas no solo podrás descansar y recuperar 1/4 de tus PS, ¡sino que también podrás comprar tus cartas desbloqueadas y usarlas en batalla!</string>
     <string name="tutorial_lt_str">¿Quieres jugar en una torre bloqueada? ¡No pasa nada, escala la torre anterior al menos una vez y podrás jugar en ella!</string>
     <string name="tutorial_shop_str">¡Para desbloquear cartas cómpralas en la tienda global!</string>
+
+    <string name="contentDescription_app_title">Titulo de la aplicación</string>
 </resources>

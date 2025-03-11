@@ -44,6 +44,7 @@
     <string name="stage">"Stage: "</string>
     <string name="hp_is_full">HP is full</string>
     <string name="signOut">Sign Out</string>
+
     <string name="language">Language</string>
     <string name="spanish_language_flag">Spanish language flag</string>
     <string name="english_language_flag">English language flag</string>
@@ -62,4 +63,6 @@
     <string name="tutorial_igs_str">Remember those coins? \nAfter a few stages not only you will rest and heal 1/4 of your HP, also be able to buy (with ~TOWER COINS~) your unlocked cards and use them in battle!</string>
     <string name="tutorial_lt_str">Want to play a locked tower? No problem! Climb the previous tower at least once and you will be able to play it!</string>
     <string name="tutorial_shop_str">To unlock cards buy them in the global shop!</string>
+
+  <string name="contentDescription_app_title">Title of the app</string>
 </resources>

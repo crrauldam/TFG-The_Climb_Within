@@ -9,19 +9,48 @@
     >
 
 
-    <com.airbnb.lottie.LottieAnimationView
-        android:id="@+id/animated_loading"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <LinearLayout
+        android:id="@+id/linear_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
 
-        app:lottie_autoPlay="true"
-        app:lottie_loop="false"
+        android:orientation="vertical"
 
-        app:layout_constraintTop_toTopOf="@id/main"
-        app:layout_constraintBottom_toBottomOf="@id/main"
-        app:layout_constraintStart_toStartOf="@id/main"
-        app:layout_constraintEnd_toEndOf="@id/main"
-    />
+        >
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/animated_loading"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            app:lottie_autoPlay="true"
+            app:lottie_loop="false"
+
+            android:src="@drawable/loading_anim_placeholder"
+
+            android:adjustViewBounds="true"
+            android:maxHeight="400dp"
+            android:scaleType="fitCenter"
+
+            android:layout_marginBottom="25dp"
+            android:layout_marginTop="150dp"
+        />
+
+        <ImageView
+            android:id="@+id/logo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:src="@drawable/title"
+
+            android:adjustViewBounds="true"
+            android:maxHeight="300dp"
+            android:scaleType="fitCenter"
+            android:contentDescription="@string/contentDescription_app_title"
+        />
+
+    </LinearLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 
