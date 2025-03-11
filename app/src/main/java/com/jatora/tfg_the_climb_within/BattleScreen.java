@@ -144,15 +144,15 @@ public class BattleScreen extends AppCompatActivity {
                         // if rest, then means next floor
                         floor++;
                         stage++;
-                        // TODO: ERASE THE FOLLOWING LINE, ONLY FOR TEST PURPOSES!!
-                        // add "de estrangis" extra card of that tower for letting it complete the tower
-                        // since the basic deck isnt enough
-                        Integer[] deck = player.getDeck();
-                        deck = Arrays.copyOf(deck, deck.length + 1);
-                        deck[deck.length - 1] = 5000;
-                        player.setDeck(deck);
+//                        // TODO: ERASE THE FOLLOWING LINE, ONLY FOR TEST PURPOSES!!
+//                        // add "de estrangis" extra card of that tower for letting it complete the tower
+//                        // since the basic deck isnt enough
+//                        Integer[] deck = player.getDeck();
+//                        deck = Arrays.copyOf(deck, deck.length + 1);
+//                        deck[deck.length - 1] = 5000;
+//                        player.setDeck(deck);
 
-                        // TODO: STOP PRECOCIOUS STAGE START
+                        // DONE: STOP PRECOCIOUS STAGE START
                         playStage(player, tower, floor, stage);
                     }
                 }

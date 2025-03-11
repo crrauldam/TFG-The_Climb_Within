@@ -31,30 +31,29 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 public class Utils {
     // constants for game files
     private static final String SAVE_FILE = "save.json";
 
     // TODO: CHANGE THIS DATA TO "DEFAULT_SAVE_DATA" AND CHANGE CONTENT TO **REAL** DEFAULT SAVE DATA
-    private static final String DEFAULT_TEST_SAVE_DATA = "{\n" +
+    private static final String DEFAULT_SAVE_DATA = "{\n" +
             "    \"player\": {\n" +
             "        \"isFirstTime\": true,\n" +
             "        \"timestamp\": 0,\n" +
-            "        \"name\": \"\",\n" +
+            "        \"name\": \"PlayerName\",\n" +
             "        \"maxhp\": 100,\n" +
             "        \"hp\": 100,\n" +
-            "        \"unlocked_cards\": [1000, 1001, 1002, 1003, 1004, 1005, 1006, 1007, 1008, 1009,  6003,5004,7000],\n" +
+            "        \"unlocked_cards\": [1000, 1001, 1002, 1003, 1004, 1005, 1006, 1007, 1008, 1009],\n" +
             "        \"tower_coins\": 0,\n" +
-            "        \"unlocked_towers\": [0, 1, 6],\n" +
+            "        \"unlocked_towers\": [0],\n" +
             "        \"emotion_coins\": {\n" +
-            "            \"anger\": 100,\n" +
-            "            \"disgust\": 110,\n" +
-            "            \"fear\": 120,\n" +
-            "            \"happiness\": 130,\n" +
-            "            \"sadness\": 140,\n" +
-            "            \"surprise\": 150\n" +
+            "            \"anger\": 0,\n" +
+            "            \"disgust\": 0,\n" +
+            "            \"fear\": 0,\n" +
+            "            \"happiness\": 0,\n" +
+            "            \"sadness\": 0,\n" +
+            "            \"surprise\": 0\n" +
             "        },\n" +
             "        \"deck\": [],\n" +
             "        \"stats\": {\n" +
@@ -273,7 +272,7 @@ public class Utils {
         if (!file.exists()) {
             Log.d(TAG, "creating and inserting default data into save.json in internal storage");
             try (FileOutputStream fos = context.openFileOutput(SAVE_FILE, Context.MODE_PRIVATE)) {
-                fos.write(DEFAULT_TEST_SAVE_DATA.getBytes());
+                fos.write(DEFAULT_SAVE_DATA.getBytes());
             } catch (IOException e) {
                 Log.e(TAG, "Failed to create save.json");
                 throw new RuntimeException(e);
@@ -299,7 +298,7 @@ public class Utils {
 
         Log.d(TAG, "resetting data into save.json in internal storage");
         try (FileOutputStream fos = context.openFileOutput(SAVE_FILE, Context.MODE_PRIVATE)) {
-            fos.write(DEFAULT_TEST_SAVE_DATA.getBytes());
+            fos.write(DEFAULT_SAVE_DATA.getBytes());
         } catch (IOException e) {
             Log.e(TAG, "Failed to reset save.json");
             throw new RuntimeException(e);
