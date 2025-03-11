@@ -1,27 +1,28 @@
 package com.jatora.tfg_the_climb_within;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 
-import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+@SuppressLint("CustomSplashScreen")
 public class SplashScreen extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
-    private Handler handler= new Handler();
+    private final Handler handler= new Handler();
     private Runnable runnable;
 
     @Override
@@ -35,6 +36,11 @@ public class SplashScreen extends AppCompatActivity {
 
         // Get reference to the Lottie view
         LottieAnimationView lottieView = findViewById(R.id.animated_loading);
+
+        // Add fade in animation to logo
+        ImageView logo = findViewById(R.id.logo);
+        Animation fadeInAnimation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fade_in);
+        logo.setAnimation(fadeInAnimation);
 
         // Check if dark mode is enabled
         boolean isDarkTheme = (getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK)
@@ -50,20 +56,17 @@ public class SplashScreen extends AppCompatActivity {
         // Play the animation
         lottieView.playAnimation();
 
-        runnable = new Runnable() {
-            @Override
-            public void run() {
-                Intent intent = new Intent(SplashScreen.this, HomeScreen.class);
-                startActivity(intent);
-                finish();
-            }
+        runnable = () -> {
+            Intent intent = new Intent(SplashScreen.this, HomeScreen.class);
+            startActivity(intent);
+            finish();
         };
 
         // CHECK IF PLAYER SAVE FILE EXISTS, IF NOT, IT CREATES IT
         Utils.checkSaveFileExistence(this);
 
         // TODO: COMMENT THIS LINE WHEN NOT IN TESTING PHASES
-//        Utils.resetSaveFileContent(this);
+        // Utils.resetSaveFileContent(this);
 
         PlayerManager.getInstance(this);
 
@@ -72,7 +75,9 @@ public class SplashScreen extends AppCompatActivity {
             PlayerManager.saveToRemoteFromLocal(getBaseContext(), user);
         }
 
-        handler.postDelayed(runnable, 3500);
+        // Delay the transition to the home screen
+        int delay = getResources().getInteger(R.integer.splashScreen_CardsAnimationDuration) - 500;
+        handler.postDelayed(runnable, delay);
 
     }
 
@@ -83,10 +88,7 @@ public class SplashScreen extends AppCompatActivity {
         FirebaseUser currentUser = mAuth.getCurrentUser();
         Log.d("MainActivity-onStart", "currentUser: " + currentUser);
         Utils.initiateFirebaseLoginSequence(this, currentUser);
-
-
     }
-
 
     @Override
     protected void onDestroy() {
