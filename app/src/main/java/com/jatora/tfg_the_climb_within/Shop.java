@@ -175,6 +175,7 @@ public class Shop extends AppCompatActivity {
         int coins = player.getEmotion_coins().getCoin(targetDeck.getName());
 
         totalEmotionCoins.setText(String.valueOf(coins));
+        Log.d(TAG, "Player emotion coins for " + targetDeck.getName() + ": " + coins + " coins");
 
         // set top label coin icon
         try {

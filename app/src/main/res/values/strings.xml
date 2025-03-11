@@ -60,9 +60,15 @@
     <string name="tutorial_yc_str">Here you can see which cards you\'ve unlocked.</string>
     <string name="tutorial_battle1_str">Now the battle:\nSee those cards? Press once to see effect, press again to play it.</string>
     <string name="tutorial_battle2_str">When does this end? You have to defeat the tower\'s boss. \nAfter a cleared stage you will win ~TOWER COINS~!\nAnd after finishing a run in a tower you will win ~EMOTION COINS~ for that emotion!</string>
-    <string name="tutorial_igs_str">Remember those coins? \nAfter a few stages not only you will rest and heal 1/4 of your HP, also be able to buy (with ~TOWER COINS~) your unlocked cards and use them in battle!</string>
+    <string name="tutorial_igs_str">Remember those coins? \nAfter a few stages not only you will rest and heal ¼ of your HP, also be able to buy (with ~TOWER COINS~) your unlocked cards and use them in battle!</string>
     <string name="tutorial_lt_str">Want to play a locked tower? No problem! Climb the previous tower at least once and you will be able to play it!</string>
     <string name="tutorial_shop_str">To unlock cards buy them in the global shop!</string>
 
   <string name="contentDescription_app_title">Title of the app</string>
+    <string name="hi_mom">Hi mom!</string>
+    <string name="you_never_see_it_coming" translatable="false">YOU NEVER SEE IT COMING! 🎵🃏</string>
+    <string name="ja_quote1" translatable="false">♥️️♠️♦️♣️</string>
+    <string name="ra_quote1">If I just had a coin for every line of code here…</string>
+    <string name="ra_quote2">…I\'d have +5000 coins.</string>
+    <string name="to_quote1">Hope Ernesto finds this easter egg.</string>
 </resources>

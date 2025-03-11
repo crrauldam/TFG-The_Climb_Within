@@ -278,7 +278,7 @@
         <!--            HP BAR -->
         <com.jatora.tfg_the_climb_within.HealthBarView
             android:id="@+id/playerHPBar"
-            android:layout_width="200dp"
+            android:layout_width="170dp"
             android:layout_height="20dp"
 
             app:healthBarColor="@color/black"

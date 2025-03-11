@@ -490,31 +490,31 @@ public class BattleScreen extends AppCompatActivity {
                             case 0: // card has been played
                                 cardDescription.setVisibility(View.GONE);
 
-                                // after player's action, enemy attacks with a certain delay
-                                new Handler().postDelayed(() -> {
-                                    if (!checkWinner(player, enemy)) { // check if in player's turn someone won
-                                        // if there's no winner then the enemy attacks
-                                        attack(player, enemy.getAtk(), playerShield, playerShieldView, playerHP, playerHPBar, new Callback_TCW() {
-                                            @Override
-                                            public void onSuccess() {
-                                                Log.d(TAG, "unlocking cards to be played");
-                                                blockCardClicking.setVisibility(View.GONE);
-                                            }
+                                if (!checkWinner(player, enemy)) { // check if in player's turn someone won
+                                    // after player's action, enemy attacks with a certain delay
+                                    new Handler().postDelayed(() -> {
+                                            // if there's no winner then the enemy attacks
+                                            attack(player, enemy.getAtk(), playerShield, playerShieldView, playerHP, playerHPBar, new Callback_TCW() {
+                                                @Override
+                                                public void onSuccess() {
+                                                    Log.d(TAG, "unlocking cards to be played");
+                                                    blockCardClicking.setVisibility(View.GONE);
+                                                }
 
-                                            @Override
-                                            public void onSuccess(Context context) {
+                                                @Override
+                                                public void onSuccess(Context context) {
 
-                                            }
+                                                }
 
-                                            @Override
-                                            public void onFailure(String errorMessage) {
+                                                @Override
+                                                public void onFailure(String errorMessage) {
 
-                                            }
-                                        });
-                                        checkWinner(player, enemy); // check if in enemy's turn someone won
-                                    }
+                                                }
+                                            });
+                                            checkWinner(player, enemy); // check if in enemy's turn someone won
 
-                                }, 1100);
+                                    }, 1100);
+                                }
                                 break;
                             case 1: // card with FINAL state has been played
                                 if (!checkWinner(player, enemy)) { // check if in player's turn someone won
@@ -961,19 +961,19 @@ public class BattleScreen extends AppCompatActivity {
         final String TAG = "BattleScreen-checkWinner";
         boolean isThereAWinner = false;
 
-        if (!hasEndDialogBeenShown && (player.getHp() <= 0 || enemy.getHp() <= 0)) {
+        if (!hasEndDialogBeenShown && (player.getHp() == 0 || enemy.getHp() == 0)) {
             Log.d(TAG, "-------------------------------- ENDED BATTLE --------------------------------");
 
             isThereAWinner = true;
 
-            if (enemy.getHp() <= 0) {
+            if (enemy.getHp() == 0) {
                 Log.d(TAG, "STAGE CLEARED");
                 showEndStageDialog(getResources().getString(R.string.stage_cleared), 1000);
 
                 ObjectAnimator fadeOut = ObjectAnimator.ofFloat(enemyImg, "alpha", 1f, 0f);
                 fadeOut.setDuration(700);
                 fadeOut.start();
-            } else if (player.getHp() <= 0) {
+            } else if (player.getHp() == 0) {
                 Log.d(TAG, "GAME OVER");
                 showEndGameDialog(getResources().getString(R.string.you_lost), false);
                 hasEndDialogBeenShown = true;
@@ -984,6 +984,7 @@ public class BattleScreen extends AppCompatActivity {
         // ( this is so that it doesnt coincide with another end game dialog )
         if (!isThereAWinner && playableCards.getChildCount() == 0 && !hasEndDialogBeenShown) {
             Log.d(TAG, "NO MORE CARDS");
+            isThereAWinner = true;
             showEndGameDialog(getResources().getString(R.string.no_more_cards), false);
         }
 
@@ -1033,9 +1034,11 @@ public class BattleScreen extends AppCompatActivity {
             int gainedEmotionCoins = (int) ((stage*EMOTION_COINS_PER_STAGE)*tower.getMultiplier());
             amount.setText("+"+gainedEmotionCoins);
             // update player emotion coins for that tower
-            int playerCoins = player.getEmotion_coins().getCoin(tower.getName().toLowerCase());
-            player.getEmotion_coins().setCoin(tower.getName().toLowerCase(), playerCoins+gainedEmotionCoins);
+            int playerCoins = player.getEmotion_coins().getCoin(tower.getDialogues().toLowerCase());
+            Log.d(TAG, "playercoins = "+playerCoins);
+            player.getEmotion_coins().setCoin(tower.getDialogues().toLowerCase(), playerCoins+gainedEmotionCoins);
             Log.d(TAG, "Player gained emotion coins: "+gainedEmotionCoins+"\nCalculation: stage="+stage+" * emotionCoinsPerStage="+EMOTION_COINS_PER_STAGE+" * mult="+tower.getMultiplier());
+            Log.d(TAG, "Player emotion coins: "+player.getEmotion_coins().getCoin(tower.getDialogues().toLowerCase()));
         }
 
 

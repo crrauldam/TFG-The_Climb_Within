@@ -454,7 +454,7 @@ public class Utils {
 
         ArrayList<DialogueSet> storyData = getStoryData(context);
         DialogueSet narration = storyData.stream().filter(ds -> ds.getId().equalsIgnoreCase(target)).findFirst().orElse(new DialogueSet());
-//        // TEST: REMOVE WHEN NOT IN TESTING, LINE ABOVE IS FOR REAL GAME
+//        // TESTp: REMOVE WHEN NOT IN TESTING, LINE ABOVE IS FOR REAL GAME
 //        DialogueSet narration = storyData.stream().filter(ds -> ds.getId().equalsIgnoreCase("intro")).findFirst().orElse(new DialogueSet());
 
         // change from gone to visible (though alpha is 0 for appearing effect)

@@ -34,7 +34,7 @@
     <string name="yes">SI</string>
     <string name="no_cards_to_be_bought">NO HAY CARTAS PARA COMPRAR</string>
     <string name="next_stage">SIGUIENTE FASE</string>
-    <string name="touch_to_start">Toca para empezar...</string>
+    <string name="touch_to_start">Toca para empezar…</string>
     <string name="sign_up_with_google">Inicia sesión con Google</string>
     <string name="floor">"Planta: "</string>
     <string name="stage">"Etapa: "</string>
@@ -52,9 +52,13 @@
     <string name="tutorial_yc_str">Aquí puedes ver qué cartas tienes desbloqueadas.</string>
     <string name="tutorial_battle1_str">Ahora con la batalla: \n¿Ves esas cartas? Presiona una vez para ver su efecto, presiona de nuevo para jugarla.</string>
     <string name="tutorial_battle2_str">¿Cuándo acaba esto? Tienes que vencer al jefe de la torre. \n¡Tras completar una etapa ganarás ~MONEDAS DE TORRE~!\n¡Y tras terminar una partida en una torre ganarás ~MONEDAS DE EMOCIÓN~ para esa emoción!</string>
-    <string name="tutorial_igs_str">¿Recuerdas esas monedas? Tras un par de etapas no solo podrás descansar y recuperar 1/4 de tus PS, ¡sino que también podrás comprar tus cartas desbloqueadas y usarlas en batalla!</string>
+    <string name="tutorial_igs_str">¿Recuerdas esas monedas? Tras un par de etapas no solo podrás descansar y recuperar ¼ de tus PS, ¡sino que también podrás comprar tus cartas desbloqueadas y usarlas en batalla!</string>
     <string name="tutorial_lt_str">¿Quieres jugar en una torre bloqueada? ¡No pasa nada, escala la torre anterior al menos una vez y podrás jugar en ella!</string>
     <string name="tutorial_shop_str">¡Para desbloquear cartas cómpralas en la tienda global!</string>
 
     <string name="contentDescription_app_title">Titulo de la aplicación</string>
+    <string name="hi_mom">¡Hola mamá!</string>
+    <string name="ra_quote1">Si tuviera una moneda por cada línea de código aquí…</string>
+    <string name="ra_quote2">…tendría más de 5000 monedas.</string>
+    <string name="to_quote1">Ojalá Ernesto encuentre este easter egg.</string>
 </resources>

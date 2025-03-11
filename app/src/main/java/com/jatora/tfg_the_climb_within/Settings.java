@@ -258,6 +258,26 @@ public class Settings extends AppCompatActivity {
                 intent.setData(Uri.parse(institutionURL));
                 startActivity(intent);
             });
+
+            TextView ja = menu.findViewById(R.id.ja);
+            ja.setOnLongClickListener(vja -> {
+                Toast.makeText(this, getResources().getString(R.string.ja_quote1), Toast.LENGTH_SHORT).show();
+                return true;
+            });
+
+            TextView to = menu.findViewById(R.id.to);
+            to.setOnLongClickListener(vja -> {
+                Toast.makeText(this, getResources().getString(R.string.to_quote1), Toast.LENGTH_SHORT).show();
+                return true;
+            });
+
+            TextView ra = menu.findViewById(R.id.ra);
+            ra.setOnLongClickListener(vja -> {
+                Toast.makeText(this, getResources().getString(R.string.ra_quote1), Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getResources().getString(R.string.ra_quote2), Toast.LENGTH_SHORT).show();
+                return true;
+            });
+
         });
     }
 
@@ -323,7 +343,7 @@ public class Settings extends AppCompatActivity {
                 .addOnFailureListener(this, e -> {
                     // Handle failure (e.g., no saved credentials)
                     Log.e("Login-signIn", "One Tap sign-in failed: " + e.getLocalizedMessage());
-                    Toast.makeText(this, "No account found! Signing up...", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(this, "No account found! Signing up...", Toast.LENGTH_SHORT).show();
                     signUp();
                 });
     }
@@ -426,14 +446,14 @@ public class Settings extends AppCompatActivity {
                 Log.d(TAG, "updateUI() called on signIn");
                 SignInButton googleButton = (SignInButton) findViewById(R.id.google_button);
                 googleButton.setVisibility(View.INVISIBLE);
-                Toast.makeText(this, "Login successful.", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(this, "Login successful.", Toast.LENGTH_SHORT).show();
                 TextView userId = findViewById(R.id.userId);
                 userId.setText(user.getEmail());
                 userId.setVisibility(View.VISIBLE);
                 signOutButton.setVisibility(View.VISIBLE);
                 PlayerManager.checkRemotePlayerData(context, user);
             } else {
-                Toast.makeText(this, "Login failed", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(this, "Login failed", Toast.LENGTH_SHORT).show();
                 signOutButton.setVisibility(View.INVISIBLE);
             }
         }else if (state == 1) {
@@ -441,12 +461,12 @@ public class Settings extends AppCompatActivity {
                 Log.d(TAG, "updateUI() called on signOut");
                 SignInButton googleButton = (SignInButton) findViewById(R.id.google_button);
                 googleButton.setVisibility(View.VISIBLE);
-                Toast.makeText(this, "SignOut successful.", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(this, "SignOut successful.", Toast.LENGTH_SHORT).show();
                 TextView userId = findViewById(R.id.userId);
                 userId.setVisibility(View.INVISIBLE);
                 signOutButton.setVisibility(View.INVISIBLE);
             } else {
-                Toast.makeText(this, "SignOut failed", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(this, "SignOut failed", Toast.LENGTH_SHORT).show();
             }
 
         }
