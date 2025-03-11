@@ -40,4 +40,5 @@
     <string name="stage">"Etapa: "</string>
     <string name="hp_is_full">PS  llenos</string>
     <string name="signOut">Cerrar Sesión</string>
+    <string name="contentDescription_app_title">Titulo de la aplicación</string>
 </resources>
