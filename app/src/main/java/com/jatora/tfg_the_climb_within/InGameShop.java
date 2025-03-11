@@ -121,7 +121,7 @@ public class InGameShop extends AppCompatActivity {
      * @param playerUnlockedCards
      * @param targetLayout
      */
-    public void drawCards(Context context, Player player, String actualTower, ArrayList<Deck> decks, List<Card> playerUnlockedCards, LinearLayout targetLayout, ImageView coinImg, TextView totalEmotionCoins, ArrayList<Integer> pucs) {
+    public void drawCards(Context context, Player player, String actualTower, ArrayList<Deck> decks, List<Card> playerUnlockedCards, LinearLayout targetLayout, ImageView coinImg, TextView totalTowerCoins, ArrayList<Integer> pucs) {
         final String TAG = "InGameShop-drawCards";
 
         // clear layout so that there are no accumulated cards from previous tab selections
@@ -158,8 +158,7 @@ public class InGameShop extends AppCompatActivity {
 
         // set tower coins
         int coins = player.getTower_coins();
-
-        totalEmotionCoins.setText(String.valueOf(coins));
+        totalTowerCoins.setText(String.valueOf(coins));
 
         // set top label coin icon
         try {
@@ -316,7 +315,7 @@ public class InGameShop extends AppCompatActivity {
 
         ExtendedFloatingActionButton yes = menu.findViewById(R.id.yes);
         yes.setOnClickListener(v -> {
-            // TODO: CHECK IF PLAYER HAS ENOUGH COINS TO BUY THAT CARD
+            // DONE: CHECK IF PLAYER HAS ENOUGH COINS TO BUY THAT CARD
             if (player.getTower_coins() >= cardPriceInt) {
                 // update player unlocked cards
                 // add the card's ID to the player's collection
@@ -341,6 +340,10 @@ public class InGameShop extends AppCompatActivity {
 //                Log.d(TAG, "successfully saved player data");
 //
 //                Log.d(TAG, "player deck: "+ Arrays.toString(newDeck));
+
+                // set tower coins
+                int coins = player.getTower_coins();
+                totalTowerCoins.setText(String.valueOf(coins));
 
                 // show card as no available for buying
                 shopItemLayout.findViewById(R.id.hideCard).setVisibility(View.VISIBLE);

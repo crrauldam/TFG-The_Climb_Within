@@ -47,4 +47,11 @@
     <string name="you_can_find_the_source_code_in_our_github_repo">Código fuente e información de la institución disponible debajo:</string>
     <string name="source_code">Código fuente</string>
     <string name="version">"Versión "</string>
+    <string name="not_enough_coins">Monedas insuficientes</string>
+    <string name="tutorial_yc_str">Aquí puedes ver qué cartas tienes desbloqueadas.</string>
+    <string name="tutorial_battle1_str">Ahora con la batalla: \n¿Ves esas cartas? Presiona una vez para ver su efecto, presiona de nuevo para jugarla.</string>
+    <string name="tutorial_battle2_str">¿Cuándo acaba esto? Tienes que vencer al jefe de la torre. \n¡Tras completar una etapa ganarás ~MONEDAS DE TORRE~!\n¡Y tras terminar una partida en una torre ganarás ~MONEDAS DE EMOCIÓN~ para esa emoción!</string>
+    <string name="tutorial_igs_str">¿Recuerdas esas monedas? Tras un par de etapas no solo podrás descansar y recuperar 1/4 de tus PS, ¡sino que también podrás comprar tus cartas desbloqueadas y usarlas en batalla!</string>
+    <string name="tutorial_lt_str">¿Quieres jugar en una torre bloqueada? ¡No pasa nada, escala la torre anterior al menos una vez y podrás jugar en ella!</string>
+    <string name="tutorial_shop_str">¡Para desbloquear cartas cómpralas en la tienda global!</string>
 </resources>

@@ -25,13 +25,11 @@ import java.util.Arrays;
  */
 public class FragmentTowerSelectionItem extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "tower";
     private static final String ARG_PARAM2 = "id";
 //    private static final String ARG_PARAM3 = "unlocked_towers";
 
-    // TODO: Rename and change types of parameters
     String img;
     int id;
     int[] unlocked_towers = new int[1];
@@ -47,7 +45,6 @@ public class FragmentTowerSelectionItem extends Fragment {
      * @param img Parameter 1.
      * @return A new instance of fragment FragmentTowerSelectionItem.
      */
-    // TODO: Rename and change types and number of parameters
     public static FragmentTowerSelectionItem newInstance(String img, int id) {
         FragmentTowerSelectionItem fragment = new FragmentTowerSelectionItem();
         Bundle args = new Bundle();

@@ -120,9 +120,17 @@ public class HomeScreen extends AppCompatActivity {
         faqButton.setOnClickListener(v -> {
             faqButton.setClickable(false);
             faqButton.postDelayed(() -> faqButton.setClickable(true), 1000);
+
+            openTutorialDialog();
         });
     }
 
+    private void openTutorialDialog() {
+        TutorialDialogFragment tutorialDialog = new TutorialDialogFragment();
+        tutorialDialog.show(getSupportFragmentManager(), "TutorialDialog");
+    }
+
+    // for dynamic language change
     @Override
     protected void onResume() {
         super.onResume();

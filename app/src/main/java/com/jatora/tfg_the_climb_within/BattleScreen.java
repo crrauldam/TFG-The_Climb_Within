@@ -67,7 +67,7 @@ public class BattleScreen extends AppCompatActivity {
     final int TOTAL_FLOORS = 3; // 3 floors
     final int STAGES_TO_REST = 2; // how many stages the player will have to fight to go to shop and rest
 
-    // TODO: DEFINE GAME ECONOMY
+    // DONE: DEFINE GAME ECONOMY
     final int TOWER_COINS_PER_STAGE = 2;
     final int EMOTION_COINS_PER_STAGE = 5;
 
@@ -144,7 +144,7 @@ public class BattleScreen extends AppCompatActivity {
                         // if rest, then means next floor
                         floor++;
                         stage++;
-//                        // TODO: ERASE THE FOLLOWING LINE, ONLY FOR TEST PURPOSES!!
+//                        // TEST: ERASE THE FOLLOWING LINE, ONLY FOR TEST PURPOSES!!
 //                        // add "de estrangis" extra card of that tower for letting it complete the tower
 //                        // since the basic deck isnt enough
 //                        Integer[] deck = player.getDeck();
@@ -226,7 +226,7 @@ public class BattleScreen extends AppCompatActivity {
         final String TAG = "BattleScreen-startGame";
 
         Log.d(TAG, "Starting game...");
-//        // TODO: DELETE WHEN NOT TESTING
+//        // TEST: DELETE WHEN NOT TESTING
 //        new Handler().postDelayed(() -> {
 //            Utils.playStoryNarration(this, storyNarrationBackground, storyNarrationView, tower.getName());
 //        }, 3000);
@@ -242,7 +242,7 @@ public class BattleScreen extends AppCompatActivity {
         int rests = 0;
 
         floor = 1;
-        // TODO: UNCOMMENT WHEN FINAL VERSION
+        // TEST: UNCOMMENT WHEN FINAL VERSION
         stage = 1;
 //        stage = 2; // this is for testing calm tower to speed up the game
 
@@ -353,9 +353,6 @@ public class BattleScreen extends AppCompatActivity {
             Log.e(TAG, "Error while drawing screen elements");
             throw new RuntimeException(e);
         }
-
-        // TODO: make battle loop
-
     }
 
     /**
@@ -419,7 +416,7 @@ public class BattleScreen extends AppCompatActivity {
         enemyImg.setAlpha(1f);
     }
 
-    // TODO: ADD FUNCTIONALITY TO CARDS FOR THEM TO BE PLAYED
+    // DONE: ADD FUNCTIONALITY TO CARDS FOR THEM TO BE PLAYED
     public void displayPlayerDeck(Player player, Enemy enemy) {
         final String TAG = "BattleScreen-displayPlayerDeck";
 
@@ -458,7 +455,7 @@ public class BattleScreen extends AppCompatActivity {
                 // initial position to let the player focus only on one card at a time
                 if (hoveredCard != null) {
                     if (hoveredCard == card) {
-                        Toast.makeText(this, "You played: " + c.getId(), Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(this, "You played: " + c.getId(), Toast.LENGTH_SHORT).show();
 //                        hoveredCard.setVisibility(View.GONE);
 //                        cardDescription.setVisibility(View.INVISIBLE);
 //                        cardDescription.setText("");
@@ -768,7 +765,7 @@ public class BattleScreen extends AppCompatActivity {
         final String TAG = "BattleScreen-attack";
         Log.d(TAG, "Attacking to target: " + target.getName());
 
-        // TODO: PLAY ENEMY ATTACK ANIMATION
+        // DONE: PLAY ENEMY ATTACK ANIMATION
         if (target instanceof Player) {
             playEnemyAttackAnimation();
         } else {
@@ -1036,7 +1033,8 @@ public class BattleScreen extends AppCompatActivity {
             int gainedEmotionCoins = (int) ((stage*EMOTION_COINS_PER_STAGE)*tower.getMultiplier());
             amount.setText("+"+gainedEmotionCoins);
             // update player emotion coins for that tower
-            player.getEmotion_coins().setCoin(tower.getName().toLowerCase(), gainedEmotionCoins);
+            int playerCoins = player.getEmotion_coins().getCoin(tower.getName().toLowerCase());
+            player.getEmotion_coins().setCoin(tower.getName().toLowerCase(), playerCoins+gainedEmotionCoins);
             Log.d(TAG, "Player gained emotion coins: "+gainedEmotionCoins+"\nCalculation: stage="+stage+" * emotionCoinsPerStage="+EMOTION_COINS_PER_STAGE+" * mult="+tower.getMultiplier());
         }
 
@@ -1221,7 +1219,7 @@ public class BattleScreen extends AppCompatActivity {
         player.setHp(player.getHp()+(player.getMaxhp()/4));
 
         Log.d(TAG, "Sending player to in-game shop...");
-        // TODO: SEND TO IN-GAME SHOP
+        // DONE: SEND TO IN-GAME SHOP
         Intent intent = new Intent(this, InGameShop.class);
         intent.putExtra("currentTower", tower.getDialogues());
         // this launch wont have custom transition

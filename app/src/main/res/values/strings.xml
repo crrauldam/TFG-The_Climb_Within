@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name" translatable="false">TFG-The_Climb_Within</string>
     <string name="play">PLAY</string>
-    <!-- TODO: Remove or change this placeholder text -->
+
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="_0" translatable="false">0</string>
     <string name="menu">MENU</string>
@@ -55,4 +55,11 @@
     <string name="source_code">Source</string>
     <string name="version">"Version "</string>
     <string name="institution_name" translatable="false">IES</string>
+    <string name="not_enough_coins">Not enough coins</string>
+    <string name="tutorial_yc_str">Here you can see which cards you\'ve unlocked.</string>
+    <string name="tutorial_battle1_str">Now the battle:\nSee those cards? Press once to see effect, press again to play it.</string>
+    <string name="tutorial_battle2_str">When does this end? You have to defeat the tower\'s boss. \nAfter a cleared stage you will win ~TOWER COINS~!\nAnd after finishing a run in a tower you will win ~EMOTION COINS~ for that emotion!</string>
+    <string name="tutorial_igs_str">Remember those coins? \nAfter a few stages not only you will rest and heal 1/4 of your HP, also be able to buy (with ~TOWER COINS~) your unlocked cards and use them in battle!</string>
+    <string name="tutorial_lt_str">Want to play a locked tower? No problem! Climb the previous tower at least once and you will be able to play it!</string>
+    <string name="tutorial_shop_str">To unlock cards buy them in the global shop!</string>
 </resources>

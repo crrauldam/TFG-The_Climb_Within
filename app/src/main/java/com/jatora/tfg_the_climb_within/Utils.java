@@ -36,7 +36,7 @@ public class Utils {
     // constants for game files
     private static final String SAVE_FILE = "save.json";
 
-    // TODO: CHANGE THIS DATA TO "DEFAULT_SAVE_DATA" AND CHANGE CONTENT TO **REAL** DEFAULT SAVE DATA
+    // DONE: CHANGE THIS DATA TO "DEFAULT_SAVE_DATA" AND CHANGE CONTENT TO **REAL** DEFAULT SAVE DATA
     private static final String DEFAULT_SAVE_DATA = "{\n" +
             "    \"player\": {\n" +
             "        \"isFirstTime\": true,\n" +
@@ -44,6 +44,8 @@ public class Utils {
             "        \"name\": \"PlayerName\",\n" +
             "        \"maxhp\": 100,\n" +
             "        \"hp\": 100,\n" +
+//            this is for tests
+//            "        \"unlocked_cards\": [1000, 1001, 1002, 1003, 1004, 1005, 1006, 1007, 1008, 1009,  2000, 3000, 4000, 5000, 6000],\n" +
             "        \"unlocked_cards\": [1000, 1001, 1002, 1003, 1004, 1005, 1006, 1007, 1008, 1009],\n" +
             "        \"tower_coins\": 0,\n" +
             "        \"unlocked_towers\": [0],\n" +
@@ -452,7 +454,7 @@ public class Utils {
 
         ArrayList<DialogueSet> storyData = getStoryData(context);
         DialogueSet narration = storyData.stream().filter(ds -> ds.getId().equalsIgnoreCase(target)).findFirst().orElse(new DialogueSet());
-//        // TODO: REMOVE WHEN NOT IN TESTING, LINE ABOVE IS FOR REAL GAME
+//        // TEST: REMOVE WHEN NOT IN TESTING, LINE ABOVE IS FOR REAL GAME
 //        DialogueSet narration = storyData.stream().filter(ds -> ds.getId().equalsIgnoreCase("intro")).findFirst().orElse(new DialogueSet());
 
         // change from gone to visible (though alpha is 0 for appearing effect)
