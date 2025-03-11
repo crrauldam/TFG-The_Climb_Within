@@ -19,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.activity.OnBackPressedCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
@@ -294,6 +295,12 @@ public class Settings extends AppCompatActivity {
     }
 
     private void signUp() {
+        try {
+            Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+            googleSignInLauncher.launch(signInIntent);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
         final String TAG = "Settings-signUp()";
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         Log.d(TAG, String.valueOf(signInIntent));

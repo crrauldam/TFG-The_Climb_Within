@@ -39,6 +39,8 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.util.Assert;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -66,8 +68,8 @@ public class BattleScreen extends AppCompatActivity {
     final int STAGES_TO_REST = 2; // how many stages the player will have to fight to go to shop and rest
 
     // TODO: DEFINE GAME ECONOMY
-    final int TOWER_COINS_PER_STAGE = 0;
-    final int EMOTION_COINS_PER_STAGE = 0;
+    final int TOWER_COINS_PER_STAGE = 2;
+    final int EMOTION_COINS_PER_STAGE = 5;
 
     // path to the corresponding emotion coin based on the tower
     String emotionCoin;
@@ -1178,6 +1180,8 @@ public class BattleScreen extends AppCompatActivity {
                     Utils.playStoryNarration(this, storyNarrationBackground, storyNarrationView, tower.getDialogues(), new Callback_TCW() {
                         @Override
                         public void onSuccess() {
+                            showEndGameDialog(getResources().getString(R.string.you_won), true);
+                            hasEndDialogBeenShown = true;
                         }
 
                         @Override

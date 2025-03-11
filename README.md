@@ -12,7 +12,7 @@ With every climb, you will evolve, reflecting your choices and progress, culmina
 
 
 [![GPLv3 License](https://img.shields.io/badge/License-GPL%20v3-yellow.svg)](https://www.gnu.org/licenses/gpl-3.0.en.html)
-![Version](https://img.shields.io/badge/version-0.3a-green)
+![Version](https://img.shields.io/badge/version-0.3.1a-green)
 ![Written in](https://img.shields.io/badge/Written_In-Java-red)
 ![GitHub Repo stars](https://img.shields.io/github/stars/crrauldam/TFG-The_Climb_Within?style=social)
 
