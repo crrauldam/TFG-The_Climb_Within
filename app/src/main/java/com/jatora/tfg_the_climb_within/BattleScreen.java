@@ -241,8 +241,8 @@ public class BattleScreen extends AppCompatActivity {
 
         floor = 1;
         // TODO: UNCOMMENT WHEN FINAL VERSION
-//        stage = 1;
-        stage = 2; // this is for testing calm tower to speed up the game
+        stage = 1;
+//        stage = 2; // this is for testing calm tower to speed up the game
 
         // show pop up menu with enemy info and options
         int[] finalFloor = {floor};
@@ -320,13 +320,13 @@ public class BattleScreen extends AppCompatActivity {
             this.finish();
         });
 
-        Button settingsButton = menu.findViewById(R.id.settingsButton);
-        settingsButton.setOnClickListener(v1 -> {
-            Log.d(TAG, "Settings button clicked.");
-            settingsButton.setClickable(false);
-            settingsButton.postDelayed(() -> settingsButton.setClickable(true), 1000);
-            Utils.changeActivity(this, Settings.class, R.anim.slide_out_bottom, R.anim.slide_in_top);
-        });
+//        Button settingsButton = menu.findViewById(R.id.settingsButton);
+//        settingsButton.setOnClickListener(v1 -> {
+//            Log.d(TAG, "Settings button clicked.");
+//            settingsButton.setClickable(false);
+//            settingsButton.postDelayed(() -> settingsButton.setClickable(true), 1000);
+//            Utils.changeActivity(this, Settings.class, R.anim.slide_out_bottom, R.anim.slide_in_top);
+//        });
     }
 
     /**
@@ -519,7 +519,7 @@ public class BattleScreen extends AppCompatActivity {
                                 break;
                             case 1: // card with FINAL state has been played
                                 if (!checkWinner(player, enemy)) { // check if in player's turn someone won
-                                    showEndGameDialog("YOU LOST");
+                                    showEndGameDialog(getResources().getString(R.string.you_lost), false);
                                 }
                                 break;
                         }
@@ -960,38 +960,35 @@ public class BattleScreen extends AppCompatActivity {
      */
     private boolean checkWinner(Player player, Enemy enemy) {
         final String TAG = "BattleScreen-checkWinner";
-        boolean isThereWinner = false;
+        boolean isThereAWinner = false;
 
-        if (!hasEndDialogBeenShown && (player.getHp() == 0 || enemy.getHp() == 0)) {
+        if (!hasEndDialogBeenShown && (player.getHp() <= 0 || enemy.getHp() <= 0)) {
             Log.d(TAG, "-------------------------------- ENDED BATTLE --------------------------------");
 
-            isThereWinner = true;
-//            hasEndDialogBeenShown = true;
+            isThereAWinner = true;
 
-            if (enemy.getHp() == 0) {
+            if (enemy.getHp() <= 0) {
                 Log.d(TAG, "STAGE CLEARED");
                 showEndStageDialog(getResources().getString(R.string.stage_cleared), 1000);
-
-//                playSFX("plankton_aaa_meme");
 
                 ObjectAnimator fadeOut = ObjectAnimator.ofFloat(enemyImg, "alpha", 1f, 0f);
                 fadeOut.setDuration(700);
                 fadeOut.start();
-            } else if (player.getHp() == 0) {
+            } else if (player.getHp() <= 0) {
                 Log.d(TAG, "GAME OVER");
-                showEndGameDialog(getResources().getString(R.string.you_lost));
-
-//                playSFX("loose");
+                showEndGameDialog(getResources().getString(R.string.you_lost), false);
+                hasEndDialogBeenShown = true;
             }
-        // if there is no winner, but the player ran out of cards
         }
 
-        if (!isThereWinner && playableCards.getChildCount() == 0) {
+        // if no winner, no more cards, and end dialog has not been shown then show end dialog for no more cards
+        // ( this is so that it doesnt coincide with another end game dialog )
+        if (!isThereAWinner && playableCards.getChildCount() == 0 && !hasEndDialogBeenShown) {
             Log.d(TAG, "NO MORE CARDS");
-            showEndGameDialog(getResources().getString(R.string.no_more_cards));
+            showEndGameDialog(getResources().getString(R.string.no_more_cards), false);
         }
 
-        return isThereWinner;
+        return isThereAWinner;
     }
 
     /**
@@ -999,7 +996,7 @@ public class BattleScreen extends AppCompatActivity {
      *
      * @param titleText
      */
-    private void showEndGameDialog(String titleText) {
+    private void showEndGameDialog(String titleText, boolean hasPlayerWon) {
         final String TAG = "BattleScreen-showEndGameDialog";
         Log.d(TAG, "Showing end game dialog");
 
@@ -1011,7 +1008,11 @@ public class BattleScreen extends AppCompatActivity {
         title.setText(titleText);
 
         TextView towerProgress = menu.findViewById(R.id.towerProgress);
-        towerProgress.setText("Tower: " + tower.getName() + "\nFloor: " + floor + "\nStage: " + (stage - (STAGES_TO_REST * (floor - 1))));
+        if (currentLanguage.equalsIgnoreCase("es")) {
+            towerProgress.setText("Torre: " + tower.getName() + "\nPlanta: " + floor + "\nEtapa: " + (stage - (STAGES_TO_REST * (floor - 1))));
+        } else {
+            towerProgress.setText("Tower: " + tower.getName() + "\nFloor: " + floor + "\nStage: " + (stage - (STAGES_TO_REST * (floor - 1))));
+        }
 
         // set tower coin image
         ImageView coinImg = menu.findViewById(R.id.coinImg);
@@ -1030,10 +1031,11 @@ public class BattleScreen extends AppCompatActivity {
                 Log.e(TAG, "Error while getting bitmap image from assets: " + e);
             }
 
-            int gainedEmotionCoins = (stage*EMOTION_COINS_PER_STAGE);
+            int gainedEmotionCoins = (int) ((stage*EMOTION_COINS_PER_STAGE)*tower.getMultiplier());
             amount.setText("+"+gainedEmotionCoins);
             // update player emotion coins for that tower
             player.getEmotion_coins().setCoin(tower.getName().toLowerCase(), gainedEmotionCoins);
+            Log.d(TAG, "Player gained emotion coins: "+gainedEmotionCoins+"\nCalculation: stage="+stage+" * emotionCoinsPerStage="+EMOTION_COINS_PER_STAGE+" * mult="+tower.getMultiplier());
         }
 
 
@@ -1046,7 +1048,7 @@ public class BattleScreen extends AppCompatActivity {
 
         dialog.setOnDismissListener(dialog1 -> {
             Log.d(TAG, "End game dialog dismissed.");
-            endGame();
+            endGame(hasPlayerWon);
         });
 
         // exit and return to main menu
@@ -1054,55 +1056,63 @@ public class BattleScreen extends AppCompatActivity {
         ExtendedFloatingActionButton returnToMainMenuButton = menu.findViewById(R.id.returnToMainMenuButton);
         returnToMainMenuButton.setOnClickListener(v1 -> {
             Log.d(TAG, "Return to main menu button pressed.");
-            endGame();
+            endGame(hasPlayerWon);
         });
     }
 
     /**
      * Ends the game: unlocks the next tower and returns the player to the main menu.
      */
-    private void endGame() {
+    private void endGame(boolean hasPlayerWon) {
         final String TAG = "BattleScreen-endGame";
         Log.d(TAG, "Ending game...");
 
-        for (int i = 0; i < ALL_TOWERS.size(); i++) {
-            // check for actual tower
-            if (ALL_TOWERS.get(i).getId() == tower.getId()) {
-                // try to get the next tower
-                Tower nextTower = null;
-                try {
-                    nextTower = ALL_TOWERS.get(i+1);
-                } catch (IndexOutOfBoundsException e) {
-                    // if process fails then no more towers to unlock
-                    Log.e(TAG, "No more towers to unlock.");
-                }
-
-                // only if there is a next tower
-                if (nextTower != null) {
-                    // unlock next tower
-                    int[] playerUnlockedTowers = player.getUnlocked_towers();
-                    playerUnlockedTowers = Arrays.copyOf(playerUnlockedTowers, playerUnlockedTowers.length + 1);
-                    // store next tower's id in player unlocked towers
-                    playerUnlockedTowers[playerUnlockedTowers.length - 1] = nextTower.getId();
-                    // update player attribute
-                    player.setUnlocked_towers(playerUnlockedTowers);
-                    // restore player HP
-                    player.restoreHP();
-                    Log.d(TAG, "Unlocking new tower: "+nextTower.getName() + "\nSaving player data...");
-                    // update local instance
-                    PlayerManager.setInstance(player);
-                    // save to local json file
-                    PlayerManager.savePlayerData(this, player);
-                    // TODO: SAVE TO REMOTE FROM LOCAL
-                    if (mAuth.getCurrentUser() != null) {
-                        Log.d(TAG, "Attempting to save local data to remote...");
-                        PlayerManager.saveToRemoteFromLocal(this, mAuth.getCurrentUser());
+        // if player won, try to unlock next tower if possible
+        if (hasPlayerWon) {
+            for (int i = 0; i < ALL_TOWERS.size(); i++) {
+                // check for actual tower
+                if (ALL_TOWERS.get(i).getId() == tower.getId()) {
+                    // try to get the next tower
+                    Tower nextTower = null;
+                    try {
+                        nextTower = ALL_TOWERS.get(i+1);
+                    } catch (IndexOutOfBoundsException e) {
+                        // if process fails then no more towers to unlock
+                        Log.e(TAG, "No more towers to unlock.");
                     }
-                    break;
+
+                    // only if there is a next tower
+                    if (nextTower != null) {
+                        // unlock next tower
+                        int[] playerUnlockedTowers = player.getUnlocked_towers();
+                        playerUnlockedTowers = Arrays.copyOf(playerUnlockedTowers, playerUnlockedTowers.length + 1);
+                        // store next tower's id in player unlocked towers
+                        playerUnlockedTowers[playerUnlockedTowers.length - 1] = nextTower.getId();
+                        // update player attribute
+                        player.setUnlocked_towers(playerUnlockedTowers);
+                        Log.d(TAG, "Unlocking new tower: "+nextTower.getName() + "\nSaving player data...");
+
+
+                        break;
+                    }
                 }
             }
         }
 
+        // restore player HP
+        player.restoreHP();
+        // update local instance
+        PlayerManager.setInstance(player);
+        // save to local json file
+        PlayerManager.savePlayerData(this, player);
+
+        // SAVE TO REMOTE FROM LOCAL
+        if (mAuth.getCurrentUser() != null) {
+            Log.d(TAG, "Attempting to save local data to remote...");
+            PlayerManager.saveToRemoteFromLocal(this, mAuth.getCurrentUser());
+        }
+
+        // close battle screen and send to home screen
         this.finish();
 
         Log.d(TAG, "Sending to home screen...");
@@ -1137,7 +1147,11 @@ public class BattleScreen extends AppCompatActivity {
         }
 
         TextView amount = menu.findViewById(R.id.amount);
-        amount.setText("+"+(stage*TOWER_COINS_PER_STAGE));
+        int gainedTowerCoins = (int) (TOWER_COINS_PER_STAGE*tower.getMultiplier());
+        amount.setText("+"+gainedTowerCoins);
+        player.setTower_coins(player.getTower_coins()+gainedTowerCoins);
+
+        Log.d(TAG, "Player gained tower coins: "+gainedTowerCoins+"\nCalculation: towerCoinsPerStage="+TOWER_COINS_PER_STAGE+" * mult="+tower.getMultiplier());
 
         Log.d(TAG, "Showing end stage dialog...");
         // open pop up menu
@@ -1146,8 +1160,6 @@ public class BattleScreen extends AppCompatActivity {
         dialog.getWindow().setBackgroundDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.battle_screen_menu_bg, null));
 
         new Handler().postDelayed(dialog::show, delay);
-
-        player.setTower_coins(player.getTower_coins()+TOWER_COINS_PER_STAGE);
 
         dialog.setOnDismissListener(dialog1 -> {
             Log.d(TAG, "End stage dialog dismissed.");
@@ -1166,12 +1178,12 @@ public class BattleScreen extends AppCompatActivity {
                     Utils.playStoryNarration(this, storyNarrationBackground, storyNarrationView, tower.getDialogues(), new Callback_TCW() {
                         @Override
                         public void onSuccess() {
-                            showEndGameDialog(getResources().getString(R.string.you_won));
                         }
 
                         @Override
                         public void onSuccess(Context context) {
-
+                            showEndGameDialog(getResources().getString(R.string.you_won), true);
+                            hasEndDialogBeenShown = true;
                         }
 
                         @Override
@@ -1258,6 +1270,8 @@ public class BattleScreen extends AppCompatActivity {
         attackAnimation.start();
     }
 
+
+    // this methods are for dynamic language changing
     @Override
     protected void onResume() {
         super.onResume();

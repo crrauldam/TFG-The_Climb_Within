@@ -171,24 +171,24 @@
         app:layout_constraintTop_toBottomOf="@id/towerInfo"
         >
         <!--    SETTINGS BUTTON -->
-        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-            android:id="@+id/settingsButton"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
+<!--        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton-->
+<!--            android:id="@+id/settingsButton"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_weight="1"-->
 
-            app:layout_constraintTop_toBottomOf="@id/backtoBattleButton"
-            android:layout_margin="5dp"
+<!--            app:layout_constraintTop_toBottomOf="@id/backtoBattleButton"-->
+<!--            android:layout_margin="5dp"-->
 
-            app:icon="@drawable/settings_icon"
-            app:iconGravity="textStart"
-            app:iconTint="@color/gunmetal"
+<!--            app:icon="@drawable/settings_icon"-->
+<!--            app:iconGravity="textStart"-->
+<!--            app:iconTint="@color/gunmetal"-->
 
-            android:text="@string/settings"
-            android:textSize="20sp"
-            android:backgroundTint="@color/light_cyan"
-            android:textColor="@color/gunmetal"
-            />
+<!--            android:text="@string/settings"-->
+<!--            android:textSize="20sp"-->
+<!--            android:backgroundTint="@color/light_cyan"-->
+<!--            android:textColor="@color/gunmetal"-->
+<!--            />-->
 
         <!--    LEAVE GAME BUTTON -->
         <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
