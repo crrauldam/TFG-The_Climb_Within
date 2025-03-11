@@ -4,7 +4,7 @@
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
 
-<!--        TODO: CHANGES ALL KIND OF BG COLOR TO THAT ONE, TEMPORALLY DISABLED -->
+<!--        DONE: CHANGES ALL KIND OF BG COLOR TO THAT ONE, TEMPORALLY DISABLED -->
         <!--        <item name="android:background">@color/light_cyan</item>-->
     </style>
 

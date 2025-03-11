@@ -31,30 +31,31 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 public class Utils {
     // constants for game files
     private static final String SAVE_FILE = "save.json";
 
-    // TODO: CHANGE THIS DATA TO "DEFAULT_SAVE_DATA" AND CHANGE CONTENT TO **REAL** DEFAULT SAVE DATA
-    private static final String DEFAULT_TEST_SAVE_DATA = "{\n" +
+    // DONE: CHANGE THIS DATA TO "DEFAULT_SAVE_DATA" AND CHANGE CONTENT TO **REAL** DEFAULT SAVE DATA
+    private static final String DEFAULT_SAVE_DATA = "{\n" +
             "    \"player\": {\n" +
             "        \"isFirstTime\": true,\n" +
             "        \"timestamp\": 0,\n" +
-            "        \"name\": \"\",\n" +
+            "        \"name\": \"PlayerName\",\n" +
             "        \"maxhp\": 100,\n" +
             "        \"hp\": 100,\n" +
-            "        \"unlocked_cards\": [1000, 1001, 1002, 1003, 1004, 1005, 1006, 1007, 1008, 1009,  6003,5004,7000],\n" +
+//            this is for tests
+//            "        \"unlocked_cards\": [1000, 1001, 1002, 1003, 1004, 1005, 1006, 1007, 1008, 1009,  2000, 3000, 4000, 5000, 6000],\n" +
+            "        \"unlocked_cards\": [1000, 1001, 1002, 1003, 1004, 1005, 1006, 1007, 1008, 1009],\n" +
             "        \"tower_coins\": 0,\n" +
-            "        \"unlocked_towers\": [0, 1],\n" +
+            "        \"unlocked_towers\": [0],\n" +
             "        \"emotion_coins\": {\n" +
-            "            \"anger\": 100,\n" +
-            "            \"disgust\": 110,\n" +
-            "            \"fear\": 120,\n" +
-            "            \"happiness\": 130,\n" +
-            "            \"sadness\": 140,\n" +
-            "            \"surprise\": 150\n" +
+            "            \"anger\": 0,\n" +
+            "            \"disgust\": 0,\n" +
+            "            \"fear\": 0,\n" +
+            "            \"happiness\": 0,\n" +
+            "            \"sadness\": 0,\n" +
+            "            \"surprise\": 0\n" +
             "        },\n" +
             "        \"deck\": [],\n" +
             "        \"stats\": {\n" +
@@ -62,6 +63,9 @@ public class Utils {
             "            \"cards_played\": 0,\n" +
             "            \"damage_dealt\": 0,\n" +
             "            \"damage_received\": 0\n" +
+            "        },\n" +
+            "        \"settings\": {\n" +
+            "            \"language\": \"en\"\n" +
             "        }\n" +
             "    }\n" +
             "}";
@@ -140,13 +144,15 @@ public class Utils {
      *
      * @return 0 = English | 1 = Spanish
      */
-    public static int getLang() {
+    public static int getLang(Context context) {
         final String TAG = "Utils-getLang()";
         int lang = 0;
 
+        LanguagePreference languagePreference = new LanguagePreference(context);
+
         Log.d(TAG, "Retrieving language from system properties.");
         // if spanish, change language to spanish, if not it stays in english
-        if (Locale.getDefault().getLanguage().equalsIgnoreCase("es")) {
+        if (languagePreference.getLanguage().equalsIgnoreCase("es")) {
             lang = 1;
         }
 
@@ -155,14 +161,16 @@ public class Utils {
 
     /**
      * Get the properties of the game, returns data in device's language.
-     * See {@link #getLang()} for language retrieving.
+     * See {@link #getLang(Context context)} for language retrieving.
      *
      * @return A JsonObject containing the properties info in the specified language
      */
     public static JsonObject getProperties(Context context) {
         final String TAG = "Utils-getProperties()";
 
-        String file = (getLang() == 1) ? PROPERTIES_ES_FILE : PROPERTIES_EN_FILE;
+        Log.d(TAG, "Player language: " + PlayerManager.getInstance(context).getSettings().getLanguage());
+
+        String file = (getLang(context) == 1) ? PROPERTIES_ES_FILE : PROPERTIES_EN_FILE;
 
         String fileData = Utils.readFile(context, file);
 
@@ -266,7 +274,7 @@ public class Utils {
         if (!file.exists()) {
             Log.d(TAG, "creating and inserting default data into save.json in internal storage");
             try (FileOutputStream fos = context.openFileOutput(SAVE_FILE, Context.MODE_PRIVATE)) {
-                fos.write(DEFAULT_TEST_SAVE_DATA.getBytes());
+                fos.write(DEFAULT_SAVE_DATA.getBytes());
             } catch (IOException e) {
                 Log.e(TAG, "Failed to create save.json");
                 throw new RuntimeException(e);
@@ -292,7 +300,7 @@ public class Utils {
 
         Log.d(TAG, "resetting data into save.json in internal storage");
         try (FileOutputStream fos = context.openFileOutput(SAVE_FILE, Context.MODE_PRIVATE)) {
-            fos.write(DEFAULT_TEST_SAVE_DATA.getBytes());
+            fos.write(DEFAULT_SAVE_DATA.getBytes());
         } catch (IOException e) {
             Log.e(TAG, "Failed to reset save.json");
             throw new RuntimeException(e);
@@ -446,7 +454,7 @@ public class Utils {
 
         ArrayList<DialogueSet> storyData = getStoryData(context);
         DialogueSet narration = storyData.stream().filter(ds -> ds.getId().equalsIgnoreCase(target)).findFirst().orElse(new DialogueSet());
-//        // TODO: REMOVE WHEN NOT IN TESTING, LINE ABOVE IS FOR REAL GAME
+//        // TEST: REMOVE WHEN NOT IN TESTING, LINE ABOVE IS FOR REAL GAME
 //        DialogueSet narration = storyData.stream().filter(ds -> ds.getId().equalsIgnoreCase("intro")).findFirst().orElse(new DialogueSet());
 
         // change from gone to visible (though alpha is 0 for appearing effect)

@@ -3,10 +3,18 @@ package com.jatora.tfg_the_climb_within;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.res.ColorStateList;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -16,7 +24,9 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -32,13 +42,19 @@ import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
+import com.google.firebase.BuildConfig;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
+import java.io.IOException;
+import java.util.Locale;
+
 public class Settings extends AppCompatActivity {
+    private LanguagePreference languagePreference;
 
     private ActivityResultLauncher<Intent> googleSignInLauncher;
 
@@ -59,32 +75,47 @@ public class Settings extends AppCompatActivity {
 
     // private boolean showOneTapUI = true;
 
+    private ImageButton setLangENButton;
+    private ImageButton setLangESButton;
+
+    private ExtendedFloatingActionButton aboutButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        final String TAG = "Settings-onCreate()";
+
         super.onCreate(savedInstanceState);
+
+        languagePreference = new LanguagePreference(this);
+
+        applyLanguage();
+
+        Log.d(TAG, "Saved language: "+languagePreference.getLanguage());
+        Log.d(TAG, "Actual locale: "+ Locale.getDefault().getLanguage());
+
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_settings);
 
-        signOutButton = findViewById(R.id.signOutButton);
-
-        signOutButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                signnOut();
-            }
-        });
-
-        // Register the launcher here, before it's used
         googleSignInLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 result -> {
-                    // Handle the result here
-                    if (result.getResultCode() == Settings.RESULT_OK) {
-                        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
-                        googleSignInLauncher.launch(signInIntent);
+                    if (result.getResultCode() == RESULT_OK) {
+                        Intent data = result.getData();
+                        try {
+                            firebaseAuthenticate(data);
+                        } catch (ApiException e) {
+                            Log.d("Login-signUp", "Authentication failed: " + e.getMessage());
+                        }
+                    } else {
+                        Log.d("Login-signUp", "Sign-in failed or canceled.");
                     }
                 }
         );
+
+
+        signOutButton = findViewById(R.id.signOutButton);
+
+        signOutButton.setOnClickListener(view -> signnOut());
 
         googleBtnUi();
 
@@ -117,7 +148,6 @@ public class Settings extends AppCompatActivity {
                 .build();
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
-
 //        BeginSignInRequest signInRequest = BeginSignInRequest.builder()
 //                .setGoogleIdTokenRequestOptions(BeginSignInRequest.GoogleIdTokenRequestOptions.builder()
 //                        .setSupported(true)
@@ -132,8 +162,6 @@ public class Settings extends AppCompatActivity {
 //                .build();
 //
 //        mGoogleSignInClient = GoogleSignIn.getClient(this, signInRequest);
-
-
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
@@ -152,7 +180,120 @@ public class Settings extends AppCompatActivity {
 //            }
 //        });
 
+        setLangENButton = findViewById(R.id.setLangENButton);
+        setLangESButton = findViewById(R.id.setLangESButton);
+
+        boolean isLanguageEN = languagePreference.getLanguage().equalsIgnoreCase("en");
+
+        Log.d(TAG, "isLanguageEN: "+isLanguageEN);
+
+        setLangButtonsColors(isLanguageEN);
+
+        Player p = PlayerManager.getInstance(this);
+
+        // change language to english
+        setLangENButton.setOnClickListener(v -> {
+            // only change language to EN if it is not already set to EN (save processing)
+            if (!isLanguageEN) {
+                p.getSettings().setLanguage("en");
+                PlayerManager.setInstance(p);
+
+                languagePreference.setLanguage("en");
+                setLangButtonsColors(false);
+                recreate();
+            }
+        });
+
+        // change language to spanish
+        setLangESButton.setOnClickListener(v -> {
+            // only change language to ES if it is not already set to ES (save processing)
+            if (isLanguageEN) {
+                p.getSettings().setLanguage("es");
+                PlayerManager.setInstance(p);
+
+                languagePreference.setLanguage("es");
+                setLangButtonsColors(true);
+                recreate();
+            }
+        });
+
+        aboutButton = findViewById(R.id.aboutButton);
+
+        aboutButton.setOnClickListener(v -> {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            View menu = getLayoutInflater().inflate(R.layout.about_dialog, null);
+
+            TextView version = menu.findViewById(R.id.version);
+            try {
+                PackageInfo packageInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
+                String versionName = packageInfo.versionName;
+                version.setText(getString(R.string.version)+versionName);
+            } catch (PackageManager.NameNotFoundException e) {
+                throw new RuntimeException(e);
+            }
+
+
+            // open pop up menu
+            builder.setView(menu);
+            AlertDialog dialog = builder.create();
+            dialog.getWindow().setBackgroundDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.battle_screen_menu_bg, null));
+            dialog.show();
+
+            // set return to battle functionality
+            Button sourceButton = menu.findViewById(R.id.sourceButton);
+            sourceButton.setOnClickListener(v1 -> {
+                // send user to github repo
+                final String githubRepoURL = "https://github.com/crrauldam/TFG-The_Climb_Within";
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setData(Uri.parse(githubRepoURL));
+                startActivity(intent);
+            });
+
+            // set return to battle functionality
+            Button institutionButton = menu.findViewById(R.id.institutionButton);
+            institutionButton.setOnClickListener(v1 -> {
+                // send user to github repo
+                final String institutionURL = "https://site.educa.madrid.org/ies.juandelacierva.madrid/";
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setData(Uri.parse(institutionURL));
+                startActivity(intent);
+            });
+        });
     }
+
+    /**
+     * Set button colors depending on the language.
+     * @param isLanguageEN
+     */
+    private void setLangButtonsColors(boolean isLanguageEN) {
+        if (isLanguageEN) {
+            // set EN button as SELECTED
+            setLangENButton.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.light_cyan)));
+            // set ES button as UNSELECTED
+            setLangESButton.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.payne_gray)));
+        } else {
+            // set ES button as SELECTED
+            setLangESButton.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.light_cyan)));
+            // set EN button as UNSELECTED
+            setLangENButton.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.payne_gray)));
+        }
+    }
+
+    /**
+     * Apply language preference
+     */
+    private void applyLanguage() {
+        String languageCode = languagePreference.getLanguage();
+        LocaleHelper.updateLocale(this, languageCode);
+    }
+
+    // Ensure locale is applied before attaching the base context
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        LanguagePreference pref = new LanguagePreference(newBase);
+        super.attachBaseContext(LocaleHelper.updateLocale(newBase, pref.getLanguage()));
+    }
+
     private void signUp() {
         try {
             Intent signInIntent = mGoogleSignInClient.getSignInIntent();
@@ -160,6 +301,11 @@ public class Settings extends AppCompatActivity {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+        final String TAG = "Settings-signUp()";
+        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+        Log.d(TAG, String.valueOf(signInIntent));
+        Log.d(TAG, String.valueOf(googleSignInLauncher));
+        googleSignInLauncher.launch(signInIntent);
     }
 
     private void signIn() {
@@ -218,7 +364,6 @@ public class Settings extends AppCompatActivity {
             }
         }
     }
-
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -305,8 +450,5 @@ public class Settings extends AppCompatActivity {
             }
 
         }
-
     }
-
-
 }

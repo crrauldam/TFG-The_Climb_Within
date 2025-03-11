@@ -44,8 +44,7 @@ public class InGameShop extends AppCompatActivity {
 
     ExtendedFloatingActionButton continueButton;
 
-    // stores the last shop item selected
-    static int prevItem = 0;
+    Tower tower;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,7 +65,6 @@ public class InGameShop extends AppCompatActivity {
             public void handleOnBackPressed() {
             }
         });
-
 
         // retrieve actual tower from parent activity
         String actualTower = getIntent().getStringExtra("currentTower");
@@ -118,12 +116,12 @@ public class InGameShop extends AppCompatActivity {
      * Loops through the player cards and draws those who belong to the `searchedDeck` deck. If no
      * card was drawn proceed to show a message indicating so.
      * @param context
-     * @param searchedDeck
+     * @param actualTower
      * @param decks
      * @param playerUnlockedCards
      * @param targetLayout
      */
-    public void drawCards(Context context, Player player, String searchedDeck, ArrayList<Deck> decks, List<Card> playerUnlockedCards, LinearLayout targetLayout, ImageView coinImg, TextView totalEmotionCoins, ArrayList<Integer> pucs) {
+    public void drawCards(Context context, Player player, String actualTower, ArrayList<Deck> decks, List<Card> playerUnlockedCards, LinearLayout targetLayout, ImageView coinImg, TextView totalTowerCoins, ArrayList<Integer> pucs) {
         final String TAG = "InGameShop-drawCards";
 
         // clear layout so that there are no accumulated cards from previous tab selections
@@ -131,18 +129,36 @@ public class InGameShop extends AppCompatActivity {
         // set the "NO CARDS TO BE BOUGHT" message invisible by default
         noCardsToBeBought.setVisibility(View.INVISIBLE);
 
-        // gets the deck according to the tab we're in right now
-        Deck targetDeck = new Deck();
+        // gets the deck according to the tower we're in right now
+        Deck targetDeck = null;
         for (Deck d : decks) {
-            if (d.getName().equalsIgnoreCase(searchedDeck)) {
+            if (d.getName().equalsIgnoreCase(actualTower)) {
                 targetDeck = d;
             }
         }
 
+        // if the deck is null means there is no deck named as the tower
+        if (targetDeck == null) {
+            Log.d(TAG, "Tower is \"CALM\", selecting random deck for the shop...");
+            // means the tower is "calm", so we retrieve a random deck from the list
+            int randomIndex = (int) (Math.random() * decks.size());
+            targetDeck = decks.get(randomIndex);
+
+        }
+
+        for (Tower t : Utils.getTowersData(this)) {
+            if (t.getDialogues().equalsIgnoreCase(actualTower)) {
+                tower = t;
+                break;
+            }
+        }
+
+        Log.d(TAG, "Retrieving cards from deck: "+targetDeck.getName());
+        int[] targetCards = targetDeck.getCards();
+
         // set tower coins
         int coins = player.getTower_coins();
-
-        totalEmotionCoins.setText(String.valueOf(coins));
+        totalTowerCoins.setText(String.valueOf(coins));
 
         // set top label coin icon
         try {
@@ -171,12 +187,12 @@ public class InGameShop extends AppCompatActivity {
             // loop cards so they are added 3 by 3 in the layout (also control out of bounds)
             while (tempBatch.size() != 3 && i < playerUnlockedCards.size()) {
                 // loop through the cards of the deck's selected tab
-                for (int j = 0; j < targetDeck.getCards().length; j++) {
+                for (int j = 0; j < targetCards.length; j++) {
                     // check if the actual card (i) is stored in the target deck
                     // if out of bounds then stop checking so the while loop ends too
                     try {
                         boolean cardIsOnDeck = false;
-                        if (playerUnlockedCards.get(i).getId() == targetDeck.getCards()[j]) {
+                        if (playerUnlockedCards.get(i).getId() == targetCards[j]) {
                             // check if card is already in player's deck
                             for (Integer playerCardInDeck : player.getDeck()) {
                                 // if this unlocked card is in the players deck
@@ -212,7 +228,7 @@ public class InGameShop extends AppCompatActivity {
                 LinearLayout shopItemLayout = (LinearLayout) LayoutInflater.from(context).inflate(R.layout.card_shop, null);
                 ConstraintLayout card = shopItemLayout.findViewById(R.id.card);
                 // add corresponding info to the card
-                getCardLayout(context, searchedDeck, c, card);
+                getCardLayout(context, actualTower, c, card);
 
                 ImageView cardCoinImg = shopItemLayout.findViewById(R.id.cardCoinImg);
                 // set coin image
@@ -228,10 +244,11 @@ public class InGameShop extends AppCompatActivity {
 
                 // set price to the card price label
                 TextView cardPrice = shopItemLayout.findViewById(R.id.cardPrice);
-                cardPrice.setText(String.valueOf(c.getIn_game_cost()));
+                int cardPriceInt = (int)(c.getIn_game_cost()*tower.getMultiplier());
+                cardPrice.setText(String.valueOf(cardPriceInt));
 
                 // add click listener to card for it to be able to be bought
-                addClickListenerToShopItemLayoutTEST(context, player, searchedDeck, shopItemLayout, c, pucs, playerUnlockedCards, targetDeck);
+                addClickListenerToShopItemLayoutTEST(context, player, actualTower, shopItemLayout, c, pucs, playerUnlockedCards, targetDeck);
 
                 // add card to layout
                 newlinearLayout.addView(shopItemLayout);
@@ -287,7 +304,8 @@ public class InGameShop extends AppCompatActivity {
 
         TextView amount = menu.findViewById(R.id.confirmAmount);
         Log.d(TAG, "card cost: "+c.getIn_game_cost());
-        amount.setText(String.valueOf(c.getIn_game_cost()));
+        int cardPriceInt = (int)(c.getIn_game_cost()*tower.getMultiplier());
+        amount.setText(String.valueOf(cardPriceInt));
 
         // open pop up menu
         builder.setView(menu);
@@ -297,8 +315,8 @@ public class InGameShop extends AppCompatActivity {
 
         ExtendedFloatingActionButton yes = menu.findViewById(R.id.yes);
         yes.setOnClickListener(v -> {
-            // TODO: CHECK IF PLAYER HAS ENOUGH COINS TO BUY THAT CARD
-            if (player.getTower_coins() >= c.getIn_game_cost()) {
+            // DONE: CHECK IF PLAYER HAS ENOUGH COINS TO BUY THAT CARD
+            if (player.getTower_coins() >= cardPriceInt) {
                 // update player unlocked cards
                 // add the card's ID to the player's collection
                 Integer[] newDeck = new Integer[player.getDeck().length+1];
@@ -309,13 +327,13 @@ public class InGameShop extends AppCompatActivity {
                 player.setDeck(newDeck);
 
                 // update player emotion coins for that specific deck
-                player.setTower_coins(player.getTower_coins()-c.getIn_game_cost());
+                player.setTower_coins(player.getTower_coins()-cardPriceInt);
 
                 // update the non-unlocked cards list and remove
                 playerNonUnlockedCards.remove(c);
 
-                // DONT UPDATE JSON FILE, NOT NEEDED SINCE GAME IS ONLY LOCAL
-//                 TODO: AFTER ADDING NEW CARD, UPDATE SAVE.JSON FILE (MAKE METHOD IN UTILS CLASS)
+                // ************* DONT UPDATE JSON FILE, NOT NEEDED SINCE GAME IS ONLY LOCAL *************
+//                 AFTER ADDING NEW CARD, UPDATE SAVE.JSON FILE (MAKE METHOD IN UTILS CLASS)
 //                Log.d(TAG, "saving player data");
 //                PlayerManager.savePlayerData(v.getContext(), player);
 ////                            Utils.savePlayerData(context, player);
@@ -323,8 +341,10 @@ public class InGameShop extends AppCompatActivity {
 //
 //                Log.d(TAG, "player deck: "+ Arrays.toString(newDeck));
 
-                // reset item selected
-                prevItem = 0;
+                // set tower coins
+                int coins = player.getTower_coins();
+                totalTowerCoins.setText(String.valueOf(coins));
+
                 // show card as no available for buying
                 shopItemLayout.findViewById(R.id.hideCard).setVisibility(View.VISIBLE);
                 shopItemLayout.findViewById(R.id.hidePrice).setVisibility(View.VISIBLE);

@@ -65,8 +65,9 @@ public class SplashScreen extends AppCompatActivity {
         // CHECK IF PLAYER SAVE FILE EXISTS, IF NOT, IT CREATES IT
         Utils.checkSaveFileExistence(this);
 
-        // TODO: COMMENT THIS LINE WHEN NOT IN TESTING PHASES
-        // Utils.resetSaveFileContent(this);
+        // TEST: COMMENT THIS LINE WHEN NOT IN TESTING PHASES
+//        Utils.resetSaveFileContent(this);
+
 
         PlayerManager.getInstance(this);
 
