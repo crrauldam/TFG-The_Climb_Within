@@ -15,19 +15,19 @@ public class SelectionAdapter extends FragmentStateAdapter {
     public Fragment createFragment(int position) {
         switch (position) {
             case 1:
-                return FragmentTowerSelectionItem.newInstance("img/towers/surprise.png", position);
+                return FragmentTowerSelectionItem.newInstance("img/towers/surprise.jpg", position);
             case 2:
-                return FragmentTowerSelectionItem.newInstance("img/towers/disgust.png", position);
+                return FragmentTowerSelectionItem.newInstance("img/towers/disgust.jpg", position);
             case 3:
-                return FragmentTowerSelectionItem.newInstance("img/towers/anger.png", position);
+                return FragmentTowerSelectionItem.newInstance("img/towers/anger.jpg", position);
             case 4:
-                return FragmentTowerSelectionItem.newInstance("img/towers/sadness.png", position);
+                return FragmentTowerSelectionItem.newInstance("img/towers/sadness.jpg", position);
             case 5:
-                return FragmentTowerSelectionItem.newInstance("img/towers/fear.png", position);
+                return FragmentTowerSelectionItem.newInstance("img/towers/fear.jpg", position);
             case 6:
-                return FragmentTowerSelectionItem.newInstance("img/towers/calm.png", position);
+                return FragmentTowerSelectionItem.newInstance("img/towers/calm.jpg", position);
             default:
-                return FragmentTowerSelectionItem.newInstance("img/towers/happiness.png", position);
+                return FragmentTowerSelectionItem.newInstance("img/towers/happiness.jpg", position);
         }
     }
 
