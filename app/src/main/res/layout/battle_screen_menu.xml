@@ -28,13 +28,13 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_margin="10dp"
+            android:padding="5dp"
 
             android:text="[TOWER_NAME]"
             android:textColor="@color/fear"
             android:textAlignment="center"
-            android:textSize="35sp"
-            android:fontFamily="@font/comfortaa_bold"
+            android:textSize="30sp"
+            android:fontFamily="@font/kadwa_bold"
             />
 
         <LinearLayout

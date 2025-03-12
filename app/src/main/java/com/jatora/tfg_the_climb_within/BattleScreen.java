@@ -74,6 +74,9 @@ public class BattleScreen extends AppCompatActivity {
     // path to the corresponding emotion coin based on the tower
     String emotionCoin;
 
+    // color of the tower
+    String color = "";
+
     int floor = 1;
     int stage = 1;
 
@@ -269,6 +272,7 @@ public class BattleScreen extends AppCompatActivity {
         // set enemy name
         TextView towerName = menu.findViewById(R.id.towerName);
         towerName.setText(tower.getName().toUpperCase());
+        towerName.setTextColor(Color.parseColor(color));
 
         // set enemy image
         ImageView towerImg = menu.findViewById(R.id.towerImg);
@@ -368,7 +372,6 @@ public class BattleScreen extends AppCompatActivity {
         final String TAG = "BattleScreen-drawScreenElements";
 
         // get color for enemy hp bar based on tower's name match with deck
-        String color = "";
         // since calm deck does not exist, we have to check for it in order to set it manually
         if (tower.getDialogues().equalsIgnoreCase("calm")) {
             int colorResId = R.color.calm;

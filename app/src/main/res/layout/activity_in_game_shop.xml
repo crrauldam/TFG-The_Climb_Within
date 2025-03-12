@@ -23,7 +23,7 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/coins"
         android:background="@drawable/card_img_price"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="50dp"
         android:layout_marginLeft="40dp"
         android:layout_marginRight="40dp"
         android:layout_marginBottom="5dp"
