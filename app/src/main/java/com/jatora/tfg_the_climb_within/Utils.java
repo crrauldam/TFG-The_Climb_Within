@@ -172,7 +172,7 @@ public class Utils {
     public static JsonObject getProperties(Context context) {
         final String TAG = "Utils-getProperties()";
 
-        Log.d(TAG, "Player language: " + PlayerManager.getInstance(context).getSettings().getLanguage());
+        // Log.d(TAG, "Player language: " + PlayerManager.getInstance(context).getSettings().getLanguage());
 
         String file = (getLang(context) == 1) ? PROPERTIES_ES_FILE : PROPERTIES_EN_FILE;
 
