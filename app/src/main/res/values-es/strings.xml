@@ -61,4 +61,10 @@
     <string name="ra_quote1">Si tuviera una moneda por cada línea de código aquí…</string>
     <string name="ra_quote2">…tendría más de 5000 monedas.</string>
     <string name="to_quote1">Ojalá Ernesto encuentre este easter egg.</string>
+    <string name="tutorial_shop_title">Tienda</string>
+    <string name="tutorial_yc_title">Tus cartas</string>
+    <string name="tutorial_battle1_title">Batalla (1): mecánicas</string>
+    <string name="tutorial_battle2_title">Batalla (2): etapas</string>
+    <string name="tutorial_igs_title">Tienda en partida</string>
+    <string name="tutorial_lt_title">Torres bloqueadas</string>
 </resources>

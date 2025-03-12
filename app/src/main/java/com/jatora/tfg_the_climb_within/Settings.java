@@ -75,10 +75,8 @@ public class Settings extends AppCompatActivity {
 
     // private boolean showOneTapUI = true;
 
-    private ImageButton setLangENButton;
-    private ImageButton setLangESButton;
-
-    private ExtendedFloatingActionButton aboutButton;
+//    private ImageButton setLangENButton;
+//    private ImageButton setLangESButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,12 +84,12 @@ public class Settings extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
 
-        languagePreference = new LanguagePreference(this);
-
-        applyLanguage();
-
-        Log.d(TAG, "Saved language: "+languagePreference.getLanguage());
-        Log.d(TAG, "Actual locale: "+ Locale.getDefault().getLanguage());
+//        languagePreference = new LanguagePreference(this);
+//
+//        applyLanguage();
+//
+//        Log.d(TAG, "Saved language: "+languagePreference.getLanguage());
+//        Log.d(TAG, "Actual locale: "+ Locale.getDefault().getLanguage());
 
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_settings);
@@ -180,44 +178,45 @@ public class Settings extends AppCompatActivity {
 //            }
 //        });
 
-        setLangENButton = findViewById(R.id.setLangENButton);
-        setLangESButton = findViewById(R.id.setLangESButton);
 
-        boolean isLanguageEN = languagePreference.getLanguage().equalsIgnoreCase("en");
+//        setLangENButton = findViewById(R.id.setLangENButton);
+//        setLangESButton = findViewById(R.id.setLangESButton);
+//
+//        boolean isLanguageEN = languagePreference.getLanguage().equalsIgnoreCase("en");
+//
+//        Log.d(TAG, "isLanguageEN: "+isLanguageEN);
+//
+//        setLangButtonsColors(isLanguageEN);
+//
+//        Player p = PlayerManager.getInstance(this);
+//
+//        // change language to english
+//        setLangENButton.setOnClickListener(v -> {
+//            // only change language to EN if it is not already set to EN (save processing)
+//            if (!isLanguageEN) {
+//                p.getSettings().setLanguage("en");
+//                PlayerManager.setInstance(p);
+//
+//                languagePreference.setLanguage("en");
+//                setLangButtonsColors(false);
+//                recreate();
+//            }
+//        });
+//
+//        // change language to spanish
+//        setLangESButton.setOnClickListener(v -> {
+//            // only change language to ES if it is not already set to ES (save processing)
+//            if (isLanguageEN) {
+//                p.getSettings().setLanguage("es");
+//                PlayerManager.setInstance(p);
+//
+//                languagePreference.setLanguage("es");
+//                setLangButtonsColors(true);
+//                recreate();
+//            }
+//        });
 
-        Log.d(TAG, "isLanguageEN: "+isLanguageEN);
-
-        setLangButtonsColors(isLanguageEN);
-
-        Player p = PlayerManager.getInstance(this);
-
-        // change language to english
-        setLangENButton.setOnClickListener(v -> {
-            // only change language to EN if it is not already set to EN (save processing)
-            if (!isLanguageEN) {
-                p.getSettings().setLanguage("en");
-                PlayerManager.setInstance(p);
-
-                languagePreference.setLanguage("en");
-                setLangButtonsColors(false);
-                recreate();
-            }
-        });
-
-        // change language to spanish
-        setLangESButton.setOnClickListener(v -> {
-            // only change language to ES if it is not already set to ES (save processing)
-            if (isLanguageEN) {
-                p.getSettings().setLanguage("es");
-                PlayerManager.setInstance(p);
-
-                languagePreference.setLanguage("es");
-                setLangButtonsColors(true);
-                recreate();
-            }
-        });
-
-        aboutButton = findViewById(R.id.aboutButton);
+        ExtendedFloatingActionButton aboutButton = findViewById(R.id.aboutButton);
 
         aboutButton.setOnClickListener(v -> {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -280,39 +279,39 @@ public class Settings extends AppCompatActivity {
 
         });
     }
-
-    /**
-     * Set button colors depending on the language.
-     * @param isLanguageEN
-     */
-    private void setLangButtonsColors(boolean isLanguageEN) {
-        if (isLanguageEN) {
-            // set EN button as SELECTED
-            setLangENButton.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.light_cyan)));
-            // set ES button as UNSELECTED
-            setLangESButton.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.payne_gray)));
-        } else {
-            // set ES button as SELECTED
-            setLangESButton.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.light_cyan)));
-            // set EN button as UNSELECTED
-            setLangENButton.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.payne_gray)));
-        }
-    }
-
-    /**
-     * Apply language preference
-     */
-    private void applyLanguage() {
-        String languageCode = languagePreference.getLanguage();
-        LocaleHelper.updateLocale(this, languageCode);
-    }
-
-    // Ensure locale is applied before attaching the base context
-    @Override
-    protected void attachBaseContext(Context newBase) {
-        LanguagePreference pref = new LanguagePreference(newBase);
-        super.attachBaseContext(LocaleHelper.updateLocale(newBase, pref.getLanguage()));
-    }
+//
+//    /**
+//     * Set button colors depending on the language.
+//     * @param isLanguageEN
+//     */
+//    private void setLangButtonsColors(boolean isLanguageEN) {
+//        if (isLanguageEN) {
+//            // set EN button as SELECTED
+//            setLangENButton.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.light_cyan)));
+//            // set ES button as UNSELECTED
+//            setLangESButton.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.payne_gray)));
+//        } else {
+//            // set ES button as SELECTED
+//            setLangESButton.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.light_cyan)));
+//            // set EN button as UNSELECTED
+//            setLangENButton.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.payne_gray)));
+//        }
+//    }
+//
+//    /**
+//     * Apply language preference
+//     */
+//    private void applyLanguage() {
+//        String languageCode = languagePreference.getLanguage();
+//        LocaleHelper.updateLocale(this, languageCode);
+//    }
+//
+//    // Ensure locale is applied before attaching the base context
+//    @Override
+//    protected void attachBaseContext(Context newBase) {
+//        LanguagePreference pref = new LanguagePreference(newBase);
+//        super.attachBaseContext(LocaleHelper.updateLocale(newBase, pref.getLanguage()));
+//    }
 
     private void signUp() {
         try {

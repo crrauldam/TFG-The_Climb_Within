@@ -24,7 +24,7 @@ public class TutorialDialogFragment extends DialogFragment {
         ViewPager2 viewPager = view.findViewById(R.id.viewPager);
 
         // Create and set adapter
-        String[] titles = {"Shop", "Your cards", "Battle (1): mechanics", "Battle (2): stages", "In game shop", "Locked towers"};
+        String[] titles = {getString(R.string.tutorial_shop_title), getString(R.string.tutorial_yc_title), getString(R.string.tutorial_battle1_title), getString(R.string.tutorial_battle2_title), getString(R.string.tutorial_igs_title), getString(R.string.tutorial_lt_title)};
         int[] images = {R.drawable.tutorial_shop, R.drawable.tutorial_yc, R.drawable.tutorial_battle1, R.drawable.tutorial_battle2, R.drawable.tutorial_igs, R.drawable.tutorial_lt};
         String[] hints = {getString(R.string.tutorial_shop_str),
                 getString(R.string.tutorial_yc_str),

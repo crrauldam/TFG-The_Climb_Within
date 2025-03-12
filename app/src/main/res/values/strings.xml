@@ -71,4 +71,10 @@
     <string name="ra_quote1">If I just had a coin for every line of code here…</string>
     <string name="ra_quote2">…I\'d have +5000 coins.</string>
     <string name="to_quote1">Hope Ernesto finds this easter egg.</string>
+    <string name="tutorial_shop_title">Shop</string>
+    <string name="tutorial_yc_title">Your cards</string>
+    <string name="tutorial_battle1_title">Battle (1): mechanics</string>
+    <string name="tutorial_battle2_title">Battle (2): stages</string>
+    <string name="tutorial_igs_title">In game shop</string>
+    <string name="tutorial_lt_title">Locked towers</string>
 </resources>
