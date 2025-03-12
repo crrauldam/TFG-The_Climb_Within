@@ -11,9 +11,9 @@ android {
         applicationId = "com.jatora.tfg_the_climb_within"
         minSdk = 24
         targetSdk = 34
-        versionCode = 8
-        versionName = "0.4"
-        versionNameSuffix = "a"
+        versionCode = 9
+        versionName = "0.4.1"
+        versionNameSuffix = "b"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
