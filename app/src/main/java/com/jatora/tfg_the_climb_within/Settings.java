@@ -450,7 +450,7 @@ public class Settings extends AppCompatActivity {
                 userId.setText(user.getEmail());
                 userId.setVisibility(View.VISIBLE);
                 signOutButton.setVisibility(View.VISIBLE);
-                PlayerManager.checkRemotePlayerData(context, user);
+                PlayerManager.checkRemotePlayerData(context, user, true);
             } else {
 //                Toast.makeText(this, "Login failed", Toast.LENGTH_SHORT).show();
                 signOutButton.setVisibility(View.INVISIBLE);

@@ -93,7 +93,7 @@ public class PlayerManager {
         }
     }
 
-    public static void checkRemotePlayerData(Context context, FirebaseUser user) {
+    public static void checkRemotePlayerData(Context context, FirebaseUser user, boolean isLogin) {
         final String TAG = "PlayerManager-hasPlayerData";
 
         if(user != null) {
@@ -109,12 +109,16 @@ public class PlayerManager {
                             Player local = loadPlayerData(context);
                             Player remote = gson.fromJson(documentSnapshot.getString("save"), Player.class);
 
-                            if (local.getTimestamp() < remote.getTimestamp()) {
-                                Log.d(TAG, "LOCAL < REMOTE");
+                            if (isLogin) {
                                 loadFromRemoteToLocal(context, user, documentSnapshot);
-                            }else {
-                                Log.d(TAG, "LOCAL > REMOTE");
-                                saveToRemoteFromLocal(context, user);
+                            } else {
+                                if (local.getTimestamp() < remote.getTimestamp()) {
+                                    Log.d(TAG, "LOCAL < REMOTE");
+                                    loadFromRemoteToLocal(context, user, documentSnapshot);
+                                }else {
+                                    Log.d(TAG, "LOCAL > REMOTE");
+                                    saveToRemoteFromLocal(context, user);
+                                }
                             }
                         } else {
                             // El documento no existe

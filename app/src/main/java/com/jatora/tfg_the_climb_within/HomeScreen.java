@@ -90,7 +90,7 @@ public class HomeScreen extends AppCompatActivity {
             touchToStart.setClickable(false);
             touchToStart.postDelayed(() -> touchToStart.setClickable(true), 1000);
 
-            PlayerManager.checkRemotePlayerData(this, mAuth.getCurrentUser());
+            PlayerManager.checkRemotePlayerData(this, mAuth.getCurrentUser(), false);
             Utils.changeActivity(this, TowerSelection.class, R.anim.slide_out_left, R.anim.slide_in_right);
         });
 
@@ -98,7 +98,7 @@ public class HomeScreen extends AppCompatActivity {
             yourCardsButton.setClickable(false);
             yourCardsButton.postDelayed(() -> yourCardsButton.setClickable(true), 1000);
 
-            PlayerManager.checkRemotePlayerData(this, mAuth.getCurrentUser());
+            PlayerManager.checkRemotePlayerData(this, mAuth.getCurrentUser(), false);
             Utils.changeActivity(this, YourCards.class, R.anim.slide_out_top, R.anim.slide_in_bottom);
         });
 
@@ -106,7 +106,7 @@ public class HomeScreen extends AppCompatActivity {
             shopButton.setClickable(false);
             shopButton.postDelayed(() -> shopButton.setClickable(true), 1000);
 
-            PlayerManager.checkRemotePlayerData(this, mAuth.getCurrentUser());
+            PlayerManager.checkRemotePlayerData(this, mAuth.getCurrentUser(), false);
             Utils.changeActivity(this, Shop.class, R.anim.slide_out_right, R.anim.slide_in_left);
         });
 
