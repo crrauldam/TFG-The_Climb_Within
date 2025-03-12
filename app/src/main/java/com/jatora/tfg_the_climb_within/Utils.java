@@ -31,6 +31,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class Utils {
     // constants for game files
@@ -148,11 +149,14 @@ public class Utils {
         final String TAG = "Utils-getLang()";
         int lang = 0;
 
-        LanguagePreference languagePreference = new LanguagePreference(context);
+//        LanguagePreference languagePreference = new LanguagePreference(context);
 
         Log.d(TAG, "Retrieving language from system properties.");
         // if spanish, change language to spanish, if not it stays in english
-        if (languagePreference.getLanguage().equalsIgnoreCase("es")) {
+//        if (languagePreference.getLanguage().equalsIgnoreCase("es")) {
+//            lang = 1;
+//        }
+        if (Locale.getDefault().getLanguage().equalsIgnoreCase("es")) {
             lang = 1;
         }
 

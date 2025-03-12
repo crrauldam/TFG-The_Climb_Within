@@ -52,10 +52,10 @@ import java.util.stream.Collectors;
 public class BattleScreen extends AppCompatActivity {
     // firebase things
     FirebaseAuth mAuth;
-
-    // language settings
-    private LanguagePreference languagePreference;
-    private String currentLanguage;
+//
+//    // language settings
+//    private LanguagePreference languagePreference;
+//    private String currentLanguage;
 
     // readonly data
     ArrayList<Deck> ALL_DECKS;
@@ -117,11 +117,11 @@ public class BattleScreen extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        languagePreference = new LanguagePreference(this);
-        currentLanguage = languagePreference.getLanguage();  // Save the initial language
-
-        applyLanguage();  // Apply saved language
+//
+//        languagePreference = new LanguagePreference(this);
+//        currentLanguage = languagePreference.getLanguage();  // Save the initial language
+//
+//        applyLanguage();  // Apply saved language
 
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_battle_screen);
@@ -1008,11 +1008,11 @@ public class BattleScreen extends AppCompatActivity {
         title.setText(titleText);
 
         TextView towerProgress = menu.findViewById(R.id.towerProgress);
-        if (currentLanguage.equalsIgnoreCase("es")) {
-            towerProgress.setText("Torre: " + tower.getName() + "\nPlanta: " + floor + "\nEtapa: " + (stage - (STAGES_TO_REST * (floor - 1))));
-        } else {
+//        if (currentLanguage.equalsIgnoreCase("es")) {
+//            towerProgress.setText("Torre: " + tower.getName() + "\nPlanta: " + floor + "\nEtapa: " + (stage - (STAGES_TO_REST * (floor - 1))));
+//        } else {
             towerProgress.setText("Tower: " + tower.getName() + "\nFloor: " + floor + "\nStage: " + (stage - (STAGES_TO_REST * (floor - 1))));
-        }
+//        }
 
         // set tower coin image
         ImageView coinImg = menu.findViewById(R.id.coinImg);
@@ -1276,27 +1276,27 @@ public class BattleScreen extends AppCompatActivity {
     }
 
 
-    // this methods are for dynamic language changing
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-        // Check if language preference has changed
-        String newLanguage = languagePreference.getLanguage();
-        if (!newLanguage.equals(currentLanguage)) {
-            currentLanguage = newLanguage;  // Update the current language
-            recreate();  // Reload the activity to apply language change
-        }
-    }
-
-    private void applyLanguage() {
-        String languageCode = languagePreference.getLanguage();
-        LocaleHelper.updateLocale(this, languageCode);
-    }
-
-    @Override
-    protected void attachBaseContext(Context newBase) {
-        LanguagePreference pref = new LanguagePreference(newBase);
-        super.attachBaseContext(LocaleHelper.updateLocale(newBase, pref.getLanguage()));
-    }
+//    // this methods are for dynamic language changing
+//    @Override
+//    protected void onResume() {
+//        super.onResume();
+//
+//        // Check if language preference has changed
+//        String newLanguage = languagePreference.getLanguage();
+//        if (!newLanguage.equals(currentLanguage)) {
+//            currentLanguage = newLanguage;  // Update the current language
+//            recreate();  // Reload the activity to apply language change
+//        }
+//    }
+//
+//    private void applyLanguage() {
+//        String languageCode = languagePreference.getLanguage();
+//        LocaleHelper.updateLocale(this, languageCode);
+//    }
+//
+//    @Override
+//    protected void attachBaseContext(Context newBase) {
+//        LanguagePreference pref = new LanguagePreference(newBase);
+//        super.attachBaseContext(LocaleHelper.updateLocale(newBase, pref.getLanguage()));
+//    }
 }

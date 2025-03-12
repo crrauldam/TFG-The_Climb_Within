@@ -26,11 +26,11 @@ public class HomeScreen extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        languagePreference = new LanguagePreference(this);
-        currentLanguage = languagePreference.getLanguage();  // Save the initial language
-
-        applyLanguage();  // Apply saved language
+//
+//        languagePreference = new LanguagePreference(this);
+//        currentLanguage = languagePreference.getLanguage();  // Save the initial language
+//
+//        applyLanguage();  // Apply saved language
 
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_home_screen);
@@ -129,28 +129,28 @@ public class HomeScreen extends AppCompatActivity {
         TutorialDialogFragment tutorialDialog = new TutorialDialogFragment();
         tutorialDialog.show(getSupportFragmentManager(), "TutorialDialog");
     }
-
-    // for dynamic language change
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-        // Check if language preference has changed
-        String newLanguage = languagePreference.getLanguage();
-        if (!newLanguage.equals(currentLanguage)) {
-            currentLanguage = newLanguage;  // Update the current language
-            recreate();  // Reload the activity to apply language change
-        }
-    }
-
-    private void applyLanguage() {
-        String languageCode = languagePreference.getLanguage();
-        LocaleHelper.updateLocale(this, languageCode);
-    }
-
-    @Override
-    protected void attachBaseContext(Context newBase) {
-        LanguagePreference pref = new LanguagePreference(newBase);
-        super.attachBaseContext(LocaleHelper.updateLocale(newBase, pref.getLanguage()));
-    }
+//
+//    // for dynamic language change
+//    @Override
+//    protected void onResume() {
+//        super.onResume();
+//
+//        // Check if language preference has changed
+//        String newLanguage = languagePreference.getLanguage();
+//        if (!newLanguage.equals(currentLanguage)) {
+//            currentLanguage = newLanguage;  // Update the current language
+//            recreate();  // Reload the activity to apply language change
+//        }
+//    }
+//
+//    private void applyLanguage() {
+//        String languageCode = languagePreference.getLanguage();
+//        LocaleHelper.updateLocale(this, languageCode);
+//    }
+//
+//    @Override
+//    protected void attachBaseContext(Context newBase) {
+//        LanguagePreference pref = new LanguagePreference(newBase);
+//        super.attachBaseContext(LocaleHelper.updateLocale(newBase, pref.getLanguage()));
+//    }
 }
