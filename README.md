@@ -45,12 +45,12 @@ Below are some screenshots of application, so you can catch a quick glimpse
 </details>
 
 <details>
-  <summary>Tower Selection</summary>
+  <summary>Global card shop & Your card inventory</summary>
   <img src="img/readme2.png" width="60%">
 </details>
 
 <details>
-  <summary>Global card shop & Your card inventory</summary>
+  <summary>Tower Selection</summary>
   <img src="img/readme3.png" width="60%">
 </details>
 
