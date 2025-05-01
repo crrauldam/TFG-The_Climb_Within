@@ -165,6 +165,17 @@
         "unlock_cost": 75,
         "in_game_cost": 12
     },
+    "2005": {
+        "id": 2005,
+        "name": "2005.name",
+        "description": "2005.description",
+        "effect": -1,
+        "type": "EVADE",
+        "icon": "2005.icon",
+        "unlockable": true,
+        "unlock_cost": 80,
+        "in_game_cost": 15
+    },
 
     "3000": {
         "id": 3000,
@@ -220,6 +231,17 @@
         "unlockable": true,
         "unlock_cost": 75,
         "in_game_cost": 12
+    },
+    "3005": {
+        "id": 3005,
+        "name": "3005.name",
+        "description": "3005.description",
+        "effect": -1,
+        "type": "EVADE",
+        "icon": "3005.icon",
+        "unlockable": true,
+        "unlock_cost": 80,
+        "in_game_cost": 15
     },
 
     "4000": {
@@ -277,6 +299,17 @@
         "unlock_cost": 75,
         "in_game_cost": 12
     },
+    "4005": {
+        "id": 4005,
+        "name": "4005.name",
+        "description": "4005.description",
+        "effect": -1,
+        "type": "EVADE",
+        "icon": "4005.icon",
+        "unlockable": true,
+        "unlock_cost": 80,
+        "in_game_cost": 15
+    },
 
     "5000": {
         "id": 5000,
@@ -332,6 +365,17 @@
         "unlockable": true,
         "unlock_cost": 75,
         "in_game_cost": 12
+    },
+    "5005": {
+        "id": 5005,
+        "name": "5005.name",
+        "description": "5005.description",
+        "effect": -1,
+        "type": "EVADE",
+        "icon": "5005.icon",
+        "unlockable": true,
+        "unlock_cost": 80,
+        "in_game_cost": 15
     },
 
     "6000": {
@@ -389,6 +433,17 @@
         "unlock_cost": 75,
         "in_game_cost": 12
     },
+    "6005": {
+        "id": 6005,
+        "name": "6005.name",
+        "description": "6005.description",
+        "effect": -1,
+        "type": "EVADE",
+        "icon": "6005.icon",
+        "unlockable": true,
+        "unlock_cost": 80,
+        "in_game_cost": 15
+    },
 
     "7000": {
         "id": 7000,
@@ -444,5 +499,16 @@
         "unlockable": true,
         "unlock_cost": 75,
         "in_game_cost": 12
+    },
+    "7005": {
+        "id": 7005,
+        "name": "7005.name",
+        "description": "7005.description",
+        "effect": -1,
+        "type": "EVADE",
+        "icon": "7005.icon",
+        "unlockable": true,
+        "unlock_cost": 80,
+        "in_game_cost": 15
     }
 }

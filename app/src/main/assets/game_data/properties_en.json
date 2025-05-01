@@ -82,6 +82,9 @@
         "2004.name": "ABSORB",
         "2004.description": "Deal 6 damage, heal 6 HP",
         "2004.icon": "img/cards/absorb.png",
+        "2005.name": "EVADE",
+        "2005.description": "Evade the enemy's next attack",
+        "2005.icon": "img/cards/evade.png",
 
         "3000.name": "ATTACK",
         "3000.description": "Deal 7 damage.",
@@ -98,6 +101,9 @@
         "3004.name": "ABSORB",
         "3004.description": "Deal 7 damage, heal 7 HP",
         "3004.icon": "img/cards/absorb.png",
+        "3005.name": "EVADE",
+        "3005.description": "Evade the enemy's next attack",
+        "3005.icon": "img/cards/evade.png",
 
         "4000.name": "ATTACK",
         "4000.description": "Deal 9 damage.",
@@ -114,6 +120,9 @@
         "4004.name": "ABSORB",
         "4004.description": "Deal 9 damage, heal 9 HP",
         "4004.icon": "img/cards/absorb.png",
+        "4005.name": "EVADE",
+        "4005.description": "Evade the enemy's next attack",
+        "4005.icon": "img/cards/evade.png",
 
         "5000.name": "ATTACK",
         "5000.description": "Deal 10 damage.",
@@ -130,6 +139,9 @@
         "5004.name": "ABSORB",
         "5004.description": "Deal 10 damage, heal 10 HP",
         "5004.icon": "img/cards/absorb.png",
+        "5005.name": "EVADE",
+        "5005.description": "Evade the enemy's next attack",
+        "5005.icon": "img/cards/evade.png",
 
         "6000.name": "ATTACK",
         "6000.description": "Deal 12 damage.",
@@ -146,6 +158,9 @@
         "6004.name": "ABSORB",
         "6004.description": "Deal 12 damage, heal 12 HP",
         "6004.icon": "img/cards/absorb.png",
+        "6005.name": "EVADE",
+        "6005.description": "Evade the enemy's next attack",
+        "6005.icon": "img/cards/evade.png",
 
         "7000.name": "ATTACK",
         "7000.description": "Deal 15 damage.",
@@ -161,7 +176,10 @@
         "7003.icon": "img/cards/shield.png",
         "7004.name": "ABSORB",
         "7004.description": "Deal 15 damage, heal 15 HP",
-        "7004.icon": "img/cards/absorb.png"
+        "7004.icon": "img/cards/absorb.png",
+        "7005.name": "EVADE",
+        "7005.description": "Evade the enemy's next attack",
+        "7005.icon": "img/cards/evade.png"
     },
     "enemies": {
         "2100.name": "Whisp of Happiness",

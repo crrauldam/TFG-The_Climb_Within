@@ -82,6 +82,9 @@
         "2004.name": "ABSORCIÓN",
         "2004.description": "Inflige 6 de daño y cura 6 PS.",
         "2004.icon": "img/cards/absorb.png",
+        "2005.name": "EVADIR",
+        "2005.description": "Evade el siguiente ataque del enemigo.",
+        "2005.icon": "img/cards/evade.png",
 
         "3000.name": "ATAQUE",
         "3000.description": "Inflige 7 de daño.",
@@ -98,6 +101,9 @@
         "3004.name": "ABSORCIÓN",
         "3004.description": "Inflige 7 de daño y cura 7 PS.",
         "3004.icon": "img/cards/absorb.png",
+        "3005.name": "EVADIR",
+        "3005.description": "Evade el siguiente ataque del enemigo.",
+        "3005.icon": "img/cards/evade.png",
 
         "4000.name": "ATAQUE",
         "4000.description": "Inflige 9 de daño.",
@@ -114,6 +120,9 @@
         "4004.name": "ABSORCIÓN",
         "4004.description": "Inflige 9 de daño y cura 9 PS.",
         "4004.icon": "img/cards/absorb.png",
+        "4005.name": "EVADIR",
+        "4005.description": "Evade el siguiente ataque del enemigo.",
+        "4005.icon": "img/cards/evade.png",
 
         "5000.name": "ATAQUE",
         "5000.description": "Inflige 10 de daño.",
@@ -130,6 +139,9 @@
         "5004.name": "ABSORCIÓN",
         "5004.description": "Inflige 10 de daño y cura 10 PS.",
         "5004.icon": "img/cards/absorb.png",
+        "5005.name": "EVADIR",
+        "5005.description": "Evade el siguiente ataque del enemigo.",
+        "5005.icon": "img/cards/evade.png",
 
         "6000.name": "ATAQUE",
         "6000.description": "Inflige 12 de daño.",
@@ -146,6 +158,9 @@
         "6004.name": "ABSORCIÓN",
         "6004.description": "Inflige 12 de daño y cura 12 PS.",
         "6004.icon": "img/cards/absorb.png",
+        "6005.name": "EVADIR",
+        "6005.description": "Evade el siguiente ataque del enemigo.",
+        "6005.icon": "img/cards/evade.png",
 
         "7000.name": "ATAQUE",
         "7000.description": "Inflige 15 de daño.",
@@ -161,7 +176,10 @@
         "7003.icon": "img/cards/shield.png",
         "7004.name": "ABSORCIÓN",
         "7004.description": "Inflige 15 de daño y cura 15 PS.",
-        "7004.icon": "img/cards/absorb.png"
+        "7004.icon": "img/cards/absorb.png",
+        "7005.name": "EVADIR",
+        "7005.description": "Evade el siguiente ataque del enemigo.",
+        "7005.icon": "img/cards/evade.png"
     },
     "enemies": {
         "2100.name": "Susurro de Felicidad",
