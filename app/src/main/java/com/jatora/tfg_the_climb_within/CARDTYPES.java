@@ -8,5 +8,6 @@ public enum CARDTYPES {
     HALF_PROB,
     SACRIFICE,
     ABSORB,
-    FINAL
+    FINAL,
+    EVADE
 }

@@ -63,8 +63,9 @@ public class BattleScreen extends AppCompatActivity {
     ArrayList<Enemy> ALL_ENEMIES;
     ArrayList<Tower> ALL_TOWERS;
 
-    final int TOTAL_STAGES = 5; // total stages the player will face in the tower
+    final int STAGES_PER_FLOOR = 5; // total stages for a floor
     final int TOTAL_FLOORS = 3; // 3 floors
+    final int TOTAL_STAGES = STAGES_PER_FLOOR * TOTAL_FLOORS; // total stages the player will face in the tower
     final int STAGES_TO_REST = 2; // how many stages the player will have to fight to go to shop and rest
 
     // DONE: DEFINE GAME ECONOMY
