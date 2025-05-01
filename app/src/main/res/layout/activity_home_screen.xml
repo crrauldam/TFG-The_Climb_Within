@@ -7,65 +7,68 @@
     android:layout_height="match_parent"
     tools:context=".HomeScreen">
 
+<!--&lt;!&ndash;    CONTINUE BUTTON &ndash;&gt;-->
+<!--    <androidx.appcompat.widget.AppCompatButton-->
+<!--        android:id="@+id/Continue"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:background="@drawable/custom_button"-->
+<!--        android:fontFamily="@font/comfortaa_bold"-->
+<!--        android:text="@string/continueButton"-->
+<!--        android:textAlignment="center"-->
+<!--        android:textColor="@color/white"-->
+<!--        app:layout_constraintBottom_toTopOf="@+id/newGame"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/logo" />-->
 
+<!--&lt;!&ndash;    NEW GAME BUTTON &ndash;&gt;-->
+<!--    <androidx.appcompat.widget.AppCompatButton-->
+<!--        android:id="@+id/newGame"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:background="@drawable/custom_button"-->
+<!--        android:text="@string/new_game"-->
+<!--        android:fontFamily="@font/comfortaa_bold"-->
+<!--        android:textAlignment="center"-->
+<!--        android:textColor="@color/white"-->
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/Continue"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/custom_button"
-        android:fontFamily="@font/comfortaa_bold"
-        android:text="CONTINUE"
-        android:textAlignment="center"
-        android:textColor="@color/white"
-        app:layout_constraintBottom_toTopOf="@+id/newGame"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/imageView" />
+<!--        app:layout_constraintBottom_toTopOf="@+id/yourCards"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/Continue"/>-->
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/newGame"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/custom_button"
-        android:text="NEW GAME"
-        android:fontFamily="@font/comfortaa_bold"
-        android:textAlignment="center"
-        android:textColor="@color/white"
+<!--&lt;!&ndash;    YOUR CARDS BUTTON&ndash;&gt;-->
+<!--    <androidx.appcompat.widget.AppCompatButton-->
+<!--        android:id="@+id/yourCards"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:background="@drawable/custom_button"-->
+<!--        android:text="@string/your_cards"-->
+<!--        android:fontFamily="@font/comfortaa_bold"-->
+<!--        android:textAlignment="center"-->
+<!--        android:textColor="@color/white"-->
+<!--        app:layout_constraintBottom_toTopOf="@+id/shop"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/newGame"/>-->
 
-        app:layout_constraintBottom_toTopOf="@+id/yourCards"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/Continue"/>
+<!--&lt;!&ndash;    SHOP BUTTON &ndash;&gt;-->
+<!--    <androidx.appcompat.widget.AppCompatButton-->
+<!--        android:id="@+id/shop"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:background="@drawable/custom_button"-->
+<!--        android:text="@string/shop"-->
+<!--        android:fontFamily="@font/comfortaa_bold"-->
+<!--        android:textAlignment="center"-->
+<!--        android:textColor="@color/white"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/yourCards"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent" />-->
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/yourCards"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/custom_button"
-        android:text="YOUR CARDS"
-        android:fontFamily="@font/comfortaa_bold"
-        android:textAlignment="center"
-        android:textColor="@color/white"
-        app:layout_constraintBottom_toTopOf="@+id/shop"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/newGame"/>
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/shop"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/custom_button"
-        android:text="SHOP"
-        android:fontFamily="@font/comfortaa_bold"
-        android:textAlignment="center"
-        android:textColor="@color/white"
-        app:layout_constraintTop_toBottomOf="@id/yourCards"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
+<!--    SCREEN BACKGROUND -->
     <ImageView
         android:id="@+id/background"
         android:layout_width="0dp"
@@ -76,18 +79,18 @@
         app:layout_constraintEnd_toEndOf="@id/main"
         app:layout_constraintStart_toStartOf="@id/main" />
 
+<!--    GAME TITLE LOGO -->
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/logo"
         android:layout_width="match_parent"
         android:layout_height="280dp"
-        app:layout_constraintBottom_toTopOf="@id/Continue"
+
         app:layout_constraintEnd_toEndOf="@id/main"
         app:layout_constraintStart_toStartOf="@id/main"
         app:layout_constraintTop_toTopOf="@id/main"
         app:srcCompat="@drawable/title"/>
 
-
-
+<!--    SETTINGS BUTTON-->
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/settingsButton"
         android:layout_width="50dp"
@@ -97,6 +100,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_margin="20dp" />
 
+<!--    TUTORIAL BUTTON -->
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/faq"
         android:layout_width="50dp"
@@ -105,5 +109,75 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         android:layout_margin="20dp" />
+
+    <View
+        android:id="@+id/touchToStart"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/logo"
+        app:layout_constraintBottom_toTopOf="@id/buttonsContainer"
+        >
+
+    </View>
+
+    <!--    TOUCH TO START **GUIDE** -->
+    <TextView
+        android:id="@+id/touchToStartGuide"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        app:layout_constraintTop_toTopOf="@id/touchToStart"
+        app:layout_constraintBottom_toBottomOf="@id/touchToStart"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+
+        android:text="@string/touch_to_start"
+        android:textColor="@color/white"
+        android:textSize="30sp"
+        android:fontFamily="@font/comfortaa_bold"
+        />
+
+    <LinearLayout
+        android:id="@+id/buttonsContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        >
+
+        <ImageButton
+            android:id="@+id/yourCards"
+            android:layout_width="0dp"
+            android:layout_height="150dp"
+            android:layout_weight="1"
+            android:padding="40dp"
+            android:layout_margin="20dp"
+
+            android:background="@drawable/bordered_button_bg"
+            android:layout_gravity="center"
+            android:src="@drawable/your_cards_icon"
+            android:scaleType="fitCenter"
+            android:contentDescription="Your Cards Button"
+            app:tint="@color/white"
+            />
+
+        <ImageButton
+            android:id="@+id/shop"
+            android:layout_width="0dp"
+            android:layout_height="150dp"
+            android:layout_weight="1"
+            android:padding="40dp"
+            android:layout_margin="20dp"
+
+            android:background="@drawable/bordered_button_bg"
+            android:layout_gravity="center"
+            android:src="@drawable/shop_icon"
+            android:scaleType="fitCenter"
+            android:contentDescription="Shop Button"
+            app:tint="@color/white"
+
+            />
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

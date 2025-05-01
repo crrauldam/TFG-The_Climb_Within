@@ -3,22 +3,36 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".FragmentTowerSelectionItem">
 
     <ImageView
         android:id="@+id/towerImg"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:src="@drawable/example_tower"
+        android:scaleType="centerCrop"
         />
 
     <View
         android:id="@+id/isLocked"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/black"
-        android:alpha=".5"
+        android:background="@color/translucent_black"
+        android:alpha="1"
         android:visibility="invisible"
+        />
+
+    <ImageView
+        android:id="@+id/lockImg"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:src="@drawable/lock_icon"
+        android:layout_gravity="center"
+        app:tint="@color/white"
+        android:alpha="1"
+        android:visibility="invisible"
+
+        android:contentDescription="lock icon"
         />
 
 </FrameLayout>

@@ -8,44 +8,46 @@
     tools:context=".Shop"
     android:background="@drawable/shopbackground">
 
+<!--    DECK-RELATED INFO-->
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/playerCoins"
+        android:id="@+id/coins"
         android:background="@drawable/card_img_price"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="50dp"
         android:layout_marginLeft="40dp"
         android:layout_marginRight="40dp"
         android:layout_marginBottom="5dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/horiscroll"
+        app:layout_constraintTop_toTopOf="parent"
         >
 
         <ImageView
-            android:id="@+id/coin"
-            android:layout_width="wrap_content"
+            android:id="@+id/coinImg"
+            android:layout_width="30dp"
             android:layout_height="30dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginLeft="30dp"
+            android:layout_marginStart="30dp"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
             android:src="@drawable/custom_faq"
             />
 
         <TextView
-            android:id="@+id/totalEmotionCoin"
+            android:id="@+id/totalEmotionCoins"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent"
             android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/coin"
-            android:layout_marginRight="80dp"
+            app:layout_constraintStart_toEndOf="@id/coinImg"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="50dp"
             android:text="500"
             android:textColor="@color/black"
             android:fontFamily="@font/comfortaa_bold"/>
@@ -53,41 +55,158 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+<!--    DECK TAB MENU -->
     <HorizontalScrollView
         android:id="@+id/horiscroll"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_marginTop="50dp"
-        app:layout_constraintTop_toTopOf="@id/main"
-        app:layout_constraintStart_toStartOf="@id/main"
-        app:layout_constraintEnd_toEndOf="@id/main"
-        app:layout_constraintBottom_toTopOf="@id/scroll"
 
-        android:alpha="0.3"
-        android:background="@color/white">
+        android:layout_marginTop="10dp"
 
+        app:layout_constraintTop_toBottomOf="@id/coins"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        >
 
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            >
+
+            <Button
+                android:id="@+id/fearTab"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_margin="3dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+
+                android:text="@string/fear"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:fontFamily="@font/comfortaa_bold"
+                android:backgroundTint="@color/fear"
+                />
+            <Button
+                android:id="@+id/angerTab"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_margin="3dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+
+                android:text="@string/anger"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:fontFamily="@font/comfortaa_bold"
+                android:backgroundTint="@color/anger"
+                />
+            <Button
+                android:id="@+id/sadnessTab"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_margin="3dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+
+                android:text="@string/sadness"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:fontFamily="@font/comfortaa_bold"
+                android:backgroundTint="@color/sadness"
+                />
+            <Button
+                android:id="@+id/disgustTab"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_margin="3dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+
+                android:text="@string/disgust"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:fontFamily="@font/comfortaa_bold"
+                android:backgroundTint="@color/disgust"
+                />
+            <Button
+                android:id="@+id/happinessTab"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_margin="3dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+
+                android:text="@string/happiness"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:fontFamily="@font/comfortaa_bold"
+                android:backgroundTint="@color/happiness"
+                />
+            <Button
+                android:id="@+id/surpriseTab"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_margin="3dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+
+                android:text="@string/surprise"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:fontFamily="@font/comfortaa_bold"
+                android:backgroundTint="@color/surprise"
+                />
+        </LinearLayout>
     </HorizontalScrollView>
 
+<!--    CARDS LIST -->
     <ScrollView
         android:id="@+id/scroll"
         android:layout_width="match_parent"
-        android:layout_height="758dp"
-        android:alpha="0.3"
-        android:background="@color/white"
-        android:padding="16dp"
+        android:layout_height="0dp"
+        android:alpha="1"
+        android:background="@android:color/transparent"
+
         app:layout_constraintBottom_toBottomOf="@id/main"
         app:layout_constraintEnd_toEndOf="@id/main"
-
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@id/main">
-
-        <GridLayout
-            android:id="@+id/gridLayout"
+        app:layout_constraintStart_toStartOf="@id/main"
+        app:layout_constraintTop_toBottomOf="@id/horiscroll"
+        android:padding="15dp"
+        >
+        <LinearLayout
+            android:id="@+id/linearLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:columnCount="3" />
-    </ScrollView>
+            android:orientation="vertical"
+            >
 
+        </LinearLayout>
+    </ScrollView>
+    
+<!--    <LinearLayout-->
+<!--        android:layout_width=""-->
+<!--        android:layout_height=""-->
+
+<!--    -->
+    <TextView
+        android:id="@+id/noCardsToBeBought"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        app:layout_constraintTop_toBottomOf="@id/horiscroll"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:padding="20dp"
+        android:layout_margin="30dp"
+
+        android:text="@string/you_have_all_cards_of_this_deck_unlocked_already"
+        android:textSize="30sp"
+        android:textColor="@color/white"
+        android:textAlignment="center"
+        android:background="@drawable/message_bg"
+        android:fontFamily="@font/comfortaa_bold"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

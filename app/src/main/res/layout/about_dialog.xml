@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+
+    android:padding="20dp"
+    >
+
+<!--    THE BACKGROUND IS ADDED FROM THE CODE-->
+
+    <TextView
+        android:id="@+id/authorsTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+
+        android:text="@string/brought_to_you_by"
+        android:fontFamily="@font/comfortaa_bold"
+        android:textSize="25sp"
+        android:textAlignment="center"
+        android:layout_margin="10dp"
+        android:textColor="@color/white"
+        />
+
+    <LinearLayout
+        android:id="@+id/authorsContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+
+        app:layout_constraintTop_toBottomOf="@id/authorsTitle"
+        android:textAlignment="center"
+        android:layout_margin="10dp"
+        >
+        <TextView
+            android:id="@+id/ja"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/alejandro"
+            android:textSize="17sp"
+            android:textAlignment="center"
+            android:layout_margin="7dp"
+            android:fontFamily="@font/comfortaa_bold"
+            android:textColor="@color/white"
+            />
+        <TextView
+            android:id="@+id/to"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/tom_s"
+            android:textSize="17sp"
+            android:textAlignment="center"
+            android:layout_margin="7dp"
+            android:fontFamily="@font/comfortaa_bold"
+            android:textColor="@color/white"
+            />
+        <TextView
+            android:id="@+id/ra"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/ra_l"
+            android:textSize="17sp"
+            android:textAlignment="center"
+            android:layout_margin="7dp"
+            android:fontFamily="@font/comfortaa_bold"
+            android:textColor="@color/white"
+            />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/sourceTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        app:layout_constraintTop_toBottomOf="@id/authorsContainer"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_margin="30dp"
+
+        android:fontFamily="@font/comfortaa_bold"
+        android:text="@string/you_can_find_the_source_code_in_our_github_repo"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        />
+
+    <LinearLayout
+        android:id="@+id/buttonsContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        app:layout_constraintTop_toBottomOf="@id/sourceTitle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        >
+
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:id="@+id/sourceButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+
+            android:layout_marginTop="5dp"
+            android:layout_margin="10dp"
+
+            app:icon="@drawable/github_logo"
+            app:iconTint="@color/white"
+            android:text="@string/source_code"
+            android:textColor="@color/white"
+            android:fontFamily="@font/comfortaa_bold"
+
+            android:backgroundTint="@color/black"
+            app:cornerRadius="0dp"
+            />
+
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:id="@+id/institutionButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+
+            android:layout_marginTop="5dp"
+            android:layout_margin="10dp"
+
+            app:icon="@drawable/institution_logo"
+            app:iconTint="@null"
+            android:text="@string/institution_name"
+            android:textColor="@color/black"
+            android:fontFamily="@font/comfortaa_bold"
+
+            android:backgroundTint="@color/white"
+            app:cornerRadius="0dp"
+            />
+    </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/version"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        app:layout_constraintTop_toBottomOf="@id/buttonsContainer"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+
+        android:layout_margin="20dp"
+        android:textColor="@color/white"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

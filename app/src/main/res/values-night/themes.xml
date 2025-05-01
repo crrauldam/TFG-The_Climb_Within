@@ -4,7 +4,7 @@
         <!-- Customize your dark theme here. -->
         <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
 
-<!--        TODO: CHANGES ALL KIND OF BG COLOR TO THAT ONE, TEMPORALLY DISABLED -->
+<!--        DONE: CHANGES ALL KIND OF BG COLOR TO THAT ONE, TEMPORALLY DISABLED -->
 <!--        <item name="android:background">@color/gunmetal</item>-->
     </style>
 

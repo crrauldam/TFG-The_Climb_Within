@@ -7,6 +7,7 @@
     android:layout_height="match_parent"
     tools:context=".Settings">
 
+<!--    BACKGROUND -->
     <ImageView
         android:id="@+id/background"
         android:layout_width="0dp"
@@ -17,6 +18,34 @@
         app:layout_constraintEnd_toEndOf="@id/main"
         app:layout_constraintStart_toStartOf="@id/main" />
 
+    <!--
+    <Button
+        android:id="@+id/customSignInButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/googleBlue"
+        android:text="Sign in with Google"
+        android:textColor="@android:color/white"
+        android:drawableStart="@drawable/ic_google_logo"
+        android:padding="12dp"
+        android:drawablePadding="8dp"
+        android:fontFamily="sans-serif-medium"
+        />
+    -->
+
+
+<!--    <Button-->
+<!--        android:id="@+id/signUpButton"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="Sign Up with Google"-->
+<!--        android:textColor="@android:color/white"-->
+<!--        android:backgroundTint="@color/googleGreen"-->
+<!--        android:padding="12dp"-->
+<!--        android:layout_marginTop="16dp"-->
+<!--        />-->
+
+<!--    SETTINGS MENU CONTAINER -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="332dp"
         android:layout_height="437dp"
@@ -26,25 +55,125 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent">
 
+<!--        GOOGLE SIGN IN BUTTON/LABEL -->
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout"
             android:layout_width="260dp"
             android:layout_height="62dp"
             android:layout_marginTop="45dp"
             android:background="@drawable/google_view_settings"
-            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            >
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.gms.common.SignInButton
+                android:id="@+id/google_button"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentTop="true"
+                android:layout_margin="10dp"
+                android:text="Text"
+                android:textSize="18sp"
+                tools:layout_editor_absoluteX="10dp"
+                tools:layout_editor_absoluteY="10dp" />
+
+            <TextView
+                android:id="@+id/userId"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fontFamily="@font/comfortaa_bold"
+                android:textAlignment="center"
+                android:textColor="@color/gunmetal"
+                android:textSize="20sp"
+                android:visibility="invisible" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+<!--        SIGN OUT BUTTON -->
         <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-            android:id="@+id/about"
+            android:id="@+id/signOutButton"
+            android:layout_width="200dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="15dp"
+            android:backgroundTint="@android:color/holo_red_light"
+
+            android:text="@string/signOut"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+
+            app:icon="@drawable/sign_out"
+            app:iconGravity="textStart"
+            app:iconTint="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
+
+
+<!--        LANGUAGE CHANGING-->
+<!--        <LinearLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="80dp"-->
+<!--            android:orientation="vertical"-->
+
+<!--            app:layout_constraintTop_toBottomOf="@id/signOutButton"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            android:layout_margin="30dp"-->
+<!--            >-->
+
+<!--            <TextView-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="0dp"-->
+<!--                android:layout_weight="1"-->
+
+<!--                android:text="@string/language"-->
+<!--                android:textSize="14sp"-->
+<!--                android:textColor="@color/white"-->
+<!--                android:textAlignment="center"-->
+<!--                android:fontFamily="@font/comfortaa_bold"-->
+<!--                />-->
+
+
+<!--            <LinearLayout-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="0dp"-->
+<!--                android:layout_weight="2"-->
+<!--                android:orientation="horizontal"-->
+<!--                android:layout_gravity="center"-->
+<!--                >-->
+<!--                <ImageButton-->
+<!--                    android:id="@+id/setLangENButton"-->
+<!--                    android:layout_width="60dp"-->
+<!--                    android:layout_height="50dp"-->
+<!--                    android:contentDescription="@string/english_language_flag"-->
+<!--                    android:src="@drawable/en_flag"-->
+<!--                    android:scaleType="fitCenter"-->
+<!--                    android:backgroundTint="@color/light_cyan"-->
+<!--                    android:layout_margin="5dp"-->
+<!--                    />-->
+<!--                <ImageButton-->
+<!--                    android:id="@+id/setLangESButton"-->
+<!--                    android:layout_width="60dp"-->
+<!--                    android:layout_height="50dp"-->
+<!--                    android:contentDescription="@string/spanish_language_flag"-->
+<!--                    android:src="@drawable/es_flag"-->
+<!--                    android:scaleType="fitCenter"-->
+<!--                    android:backgroundTint="@color/payne_gray"-->
+<!--                    android:layout_margin="5dp"-->
+<!--                    />-->
+<!--            </LinearLayout>-->
+
+<!--        </LinearLayout>-->
+
+
+<!--        ABOUT SECTION BUTTON -->
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:id="@+id/aboutButton"
             android:layout_width="282dp"
             android:layout_height="52dp"
             android:layout_marginBottom="45dp"
-            android:text="About"
+            android:text="@string/about"
             android:fontFamily="@font/comfortaa_bold"
             app:icon="@drawable/about_icon"
             app:iconTint="@color/gunmetal"
@@ -55,6 +184,8 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             />
+
+
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

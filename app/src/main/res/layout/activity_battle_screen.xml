@@ -159,7 +159,7 @@
 
     </LinearLayout>
 
-    <!--    NARRATION VIEW -->
+    <!--    NARRATION VIEW (NOT STORY, JUST HINTS) -->
     <TextView
         android:id="@+id/narrationView"
         android:layout_width="match_parent"
@@ -208,19 +208,40 @@
     <!--    PLAYABLE CARDS -->
     <GridLayout
         android:id="@+id/playableCards"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="210dp"
         android:rowCount="1"
-        android:columnCount="4"
+        android:columnCount="3"
 
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toTopOf="@id/playerHPContainer"
         android:layout_marginBottom="20dp"
-        android:paddingBottom="5dp"
-        android:paddingTop="50dp"
+        android:paddingBottom="0dp"
+        android:paddingTop="55dp"
         android:clipToPadding="false"
         >
     </GridLayout>
+
+<!--    TRANSPARENT VIEW FOR BLOCKING CLICKING -->
+    <View
+        android:id="@+id/blockCardClicking"
+        android:layout_width="wrap_content"
+        android:layout_height="210dp"
+        android:visibility="gone"
+        android:focusable="true"
+        android:clickable="true"
+        android:background="@android:color/transparent"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/playerHPContainer"
+        android:layout_marginBottom="20dp"
+        android:paddingBottom="0dp"
+        android:paddingTop="55dp"
+        android:clipToPadding="false"
+        />
+
 
     <!--    PLAYER HP AND SHIELD -->
     <LinearLayout
@@ -257,7 +278,7 @@
         <!--            HP BAR -->
         <com.jatora.tfg_the_climb_within.HealthBarView
             android:id="@+id/playerHPBar"
-            android:layout_width="200dp"
+            android:layout_width="170dp"
             android:layout_height="20dp"
 
             app:healthBarColor="@color/black"
@@ -305,5 +326,44 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>
 
+<!--    FOR STORY NARRATIONS IN THE GAME, SET AS GONE FOR CHECKING GAME LAYOUT -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/storyNarrationBackground"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clickable="true"
+        android:contextClickable="true"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:longClickable="true"
+        android:visibility="gone"
+        android:alpha="0"
+
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:padding="50dp"
+
+        android:background="@color/black"
+        >
+
+        <TextView
+            android:id="@+id/storyNarrationView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+
+            android:fontFamily="@font/kadwa_bold"
+            android:textSize="25sp"
+            android:textColor="@color/white"
+            android:textAlignment="center"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
