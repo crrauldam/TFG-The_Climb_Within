@@ -344,5 +344,6 @@
         "tower5.img": "img/towers/fear.png",
         "tower6.name": "calm",
         "tower6.img": "img/towers/calm.png"
-    }
+    },
+    "stageTransition": ["Your determination grows", "You keep climbing", "Successful progress"]
 }

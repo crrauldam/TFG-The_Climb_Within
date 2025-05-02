@@ -366,4 +366,151 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <!--   StageTransition -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/bossStageTransition"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:alpha="0"
+        android:background="@drawable/boss_stage_transition_gradient"
+        android:clickable="true"
+        android:contextClickable="true"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:longClickable="true"
+
+        android:padding="50dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0">
+
+        <TextView
+            android:id="@+id/bossFloorView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/kadwa_bold"
+            android:text="Planta {n}"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="50sp"
+
+            app:layout_constraintBottom_toTopOf="@id/bossHeaderView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/bossHeaderView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/kadwa_bold"
+            android:text="Tu determinacion crece"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="25sp"
+
+            app:layout_constraintBottom_toTopOf="@id/bossStageClearedView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/bossFloorView" />
+        <TextView
+            android:id="@+id/bossStageClearedView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/kadwa_bold"
+            android:text="Fase Completada"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="25sp"
+
+
+            app:layout_constraintBottom_toTopOf="@id/bossImg"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/bossFloorView" />
+
+        <ImageView
+            android:id="@+id/bossImg"
+            android:layout_width="206dp"
+            android:layout_height="230dp"
+            android:src="@drawable/calavera"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/bossStageClearedView" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!--   StageTransition -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/stageTransition"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:alpha="0"
+        android:background="@color/black"
+        android:clickable="true"
+        android:contextClickable="true"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:longClickable="true"
+
+        android:padding="50dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/floorView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/kadwa_bold"
+            android:text="Planta {n}"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="50sp"
+
+            app:layout_constraintBottom_toTopOf="@id/headerView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/headerView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/kadwa_bold"
+            android:text="Tu determinacion crece"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="25sp"
+
+            app:layout_constraintBottom_toTopOf="@id/stageClearedView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/floorView" />
+        <TextView
+            android:id="@+id/stageClearedView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/kadwa_bold"
+            android:text="Fase Completada"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="25sp"
+
+
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/floorView" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
