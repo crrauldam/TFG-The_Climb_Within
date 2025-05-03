@@ -85,6 +85,10 @@
         "2005.name": "EVADE",
         "2005.description": "Evade the enemy's next attack",
         "2005.icon": "img/cards/evade.png",
+        "2006.name": "DOUBLE_ATTACK",
+        "2006.description": "Attack twice on your next turn.",
+        "2006.icon": "img/cards/doubleAttack.png",
+
 
         "3000.name": "ATTACK",
         "3000.description": "Deal 7 damage.",
@@ -104,6 +108,9 @@
         "3005.name": "EVADE",
         "3005.description": "Evade the enemy's next attack",
         "3005.icon": "img/cards/evade.png",
+        "3006.name": "DOUBLE_ATTACK",
+        "3006.description": "Attack twice on your next turn.",
+        "3006.icon": "img/cards/doubleAttack.png",
 
         "4000.name": "ATTACK",
         "4000.description": "Deal 9 damage.",
@@ -123,6 +130,9 @@
         "4005.name": "EVADE",
         "4005.description": "Evade the enemy's next attack",
         "4005.icon": "img/cards/evade.png",
+        "4006.name": "DOUBLE_ATTACK",
+        "4006.description": "Attack twice on your next turn.",
+        "4006.icon": "img/cards/doubleAttack.png",
 
         "5000.name": "ATTACK",
         "5000.description": "Deal 10 damage.",
@@ -142,6 +152,9 @@
         "5005.name": "EVADE",
         "5005.description": "Evade the enemy's next attack",
         "5005.icon": "img/cards/evade.png",
+        "5006.name": "DOUBLE_ATTACK",
+        "5006.description": "Attack twice on your next turn.",
+        "5006.icon": "img/cards/doubleAttack.png",
 
         "6000.name": "ATTACK",
         "6000.description": "Deal 12 damage.",
@@ -161,6 +174,9 @@
         "6005.name": "EVADE",
         "6005.description": "Evade the enemy's next attack",
         "6005.icon": "img/cards/evade.png",
+        "6006.name": "DOUBLE_ATTACK",
+        "6006.description": "Attack twice on your next turn.",
+        "6006.icon": "img/cards/doubleAttack.png",
 
         "7000.name": "ATTACK",
         "7000.description": "Deal 15 damage.",
@@ -179,7 +195,10 @@
         "7004.icon": "img/cards/absorb.png",
         "7005.name": "EVADE",
         "7005.description": "Evade the enemy's next attack",
-        "7005.icon": "img/cards/evade.png"
+        "7005.icon": "img/cards/evade.png",
+        "7006.name": "DOUBLE_ATTACK",
+        "7006.description": "Attack twice on your next turn.",
+        "7006.icon": "img/cards/doubleAttack.png"
     },
     "enemies": {
         "2100.name": "Whisp of Happiness",

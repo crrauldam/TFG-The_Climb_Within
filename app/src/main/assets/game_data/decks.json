@@ -9,36 +9,36 @@
         "icon": "img/decks/anger.png",
         "color": "#FFB09C",
         "coin": "img/coins/anger.png",
-        "cards": [2000, 2001, 2002, 2003, 2004, 2005]
+        "cards": [2000, 2001, 2002, 2003, 2004, 2005, 2005]
     },
     "disgust": {
         "icon": "img/decks/disgust.png",
         "color": "#C8E1CC",
         "coin": "img/coins/disgust.png",
-        "cards": [3000, 3001, 3002, 3003, 3004, 3005]
+        "cards": [3000, 3001, 3002, 3003, 3004, 3005, 3005]
     },
     "fear": {
         "icon": "img/decks/fear.png",
         "color": "#F3CCFF",
         "coin": "img/coins/fear.png",
-        "cards": [4000, 4001, 4002, 4003, 4004, 4005]
+        "cards": [4000, 4001, 4002, 4003, 4004, 4005, 4005]
     },
     "happiness": {
         "icon": "img/decks/happiness.png",
         "color": "#FFFDB7",
         "coin": "img/coins/happiness.png",
-        "cards": [5000, 5001, 5002, 5003, 5004, 5005]
+        "cards": [5000, 5001, 5002, 5003, 5004, 5005, 5005]
     },
     "sadness": {
         "icon": "img/decks/sadness.png",
         "color": "#C8D9ED",
         "coin": "img/coins/sadness.png",
-        "cards": [6000, 6001, 6002, 6003, 6004, 6005]
+        "cards": [6000, 6001, 6002, 6003, 6004, 6005, 6005]
     },
     "surprise": {
         "icon": "img/decks/surprise.png",
         "color": "#FFFFFF",
         "coin": "img/coins/surprise.png",
-        "cards": [7000, 7001, 7002, 7003, 7004, 7005]
+        "cards": [7000, 7001, 7002, 7003, 7004, 7005, 7005]
     }
 }
