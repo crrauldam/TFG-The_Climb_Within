@@ -119,6 +119,7 @@ public class BattleScreen extends AppCompatActivity {
     boolean hasEndDialogBeenShown;
 
     boolean isCritical = false;
+    boolean isEvade = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -749,6 +750,12 @@ public class BattleScreen extends AppCompatActivity {
             case CRITICAL:
                 isCritical = true;
                 break;
+            case EVADE:
+                if(isCritical) {
+                    isCritical = false;
+                }
+                isEvade = true;
+                break;
         }
 
         if (playResult != -1) {
@@ -781,49 +788,58 @@ public class BattleScreen extends AppCompatActivity {
     private void attack(Entity target, int dmg, int[] targetShield, TextView targetShieldView, TextView targetHP, HealthBarView targetHPBar, Callback_TCW callback, boolean critical) {
         final String TAG = "BattleScreen-attack";
         Log.d(TAG, "Attacking to target: " + target.getName());
-
-        // DONE: PLAY ENEMY ATTACK ANIMATION
-        if (target instanceof Player) {
-            playEnemyAttackAnimation();
-        } else {
-            playEnemyGetDamageAnimation();
-        }
-
-        if (targetShield[0] > 0) {
-            // control overflowing damage that the shield can't cover
-            dmg -= targetShield[0];
-
-            // if even after taking into account the shield amount there is damage to be done
-            if (dmg > 0) {
-                targetShield[0] = 0; // means shield has no more amount
-//                playSFX("break_shield");
-                target.setHp(target.getHp() - dmg); // and the target gets damaged
-//                playSFX("take_damage");
-            } else {
-                // if after the attack there is no more damage to be done, it means
-                // the shield remains some points, so we update them
-                if (dmg == 0) {
-                    targetShield[0] = 0;
-                } else {
-                    targetShield[0] = Math.abs(dmg);
-                }
-//                playSFX("reduce_shield");
-            }
-            updateShield(targetShield, targetShieldView);
+        if(isEvade) {
+            // TODO: PLAY ENEMY EVADE ANIMATION
+            isEvade = false;
+            Log.d(TAG, "Attack evaded");
             callback.onSuccess();
+        }else {
+            // DONE: PLAY ENEMY ATTACK ANIMATION
+            if (target instanceof Player) {
+                playEnemyAttackAnimation();
+            } else {
+                playEnemyGetDamageAnimation();
+            }
 
-        } else {
-            target.setHp(target.getHp() - dmg);
+            if (targetShield[0] > 0) {
+                // control overflowing damage that the shield can't cover
+                dmg -= targetShield[0];
+
+                // if even after taking into account the shield amount there is damage to be done
+                if (dmg > 0) {
+                    targetShield[0] = 0; // means shield has no more amount
+//                playSFX("break_shield");
+                    target.setHp(target.getHp() - dmg); // and the target gets damaged
+//                playSFX("take_damage");
+                } else {
+                    // if after the attack there is no more damage to be done, it means
+                    // the shield remains some points, so we update them
+                    if (dmg == 0) {
+                        targetShield[0] = 0;
+                    } else {
+                        targetShield[0] = Math.abs(dmg);
+                    }
+//                playSFX("reduce_shield");
+                }
+                updateShield(targetShield, targetShieldView);
+                callback.onSuccess();
+
+            } else {
+                target.setHp(target.getHp() - dmg);
 //            playSFX("take_damage");
-        }
+            }
 
-        updateHP(target, targetHP, targetHPBar, callback);
+            updateHP(target, targetHP, targetHPBar, callback);
 
-        Log.d(TAG, "Attack to " + target.getName() + "\nNew HP: " + target.getHp() + "/" + target.getMaxhp() + " | Shield: " + targetShield[0]);
-
-        if(critical && target.getHp() > 0) {
-            isCritical = false;
-            attack(target, dmg, targetShield, targetShieldView, targetHP, targetHPBar, callback, false);
+            Log.d(TAG, "Attack to " + target.getName() + "\nNew HP: " + target.getHp() + "/" + target.getMaxhp() + " | Shield: " + targetShield[0]);
+            // critical dmg (x2 dmg)
+            if(critical && target.getHp() > 0) {
+                isCritical = false;
+                int finalDmg = dmg;
+                new Handler().postDelayed(() -> {
+                    attack(target, finalDmg, targetShield, targetShieldView, targetHP, targetHPBar, callback, false);
+                }, 1000);
+            }
         }
     }
 
