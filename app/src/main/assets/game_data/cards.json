@@ -176,6 +176,17 @@
         "unlock_cost": 80,
         "in_game_cost": 15
     },
+    "2006": {
+        "id": 2006,
+        "name": "2006.name",
+        "description": "2006.description",
+        "effect": -1,
+        "type": "DOUBLE_ATTACK",
+        "icon": "2006.icon",
+        "unlockable": true,
+        "unlock_cost": 80,
+        "in_game_cost": 15
+    },
 
     "3000": {
         "id": 3000,
@@ -239,6 +250,17 @@
         "effect": -1,
         "type": "EVADE",
         "icon": "3005.icon",
+        "unlockable": true,
+        "unlock_cost": 80,
+        "in_game_cost": 15
+    },
+    "3006": {
+        "id": 3006,
+        "name": "3006.name",
+        "description": "3006.description",
+        "effect": -1,
+        "type": "DOUBLE_ATTACK",
+        "icon": "3006.icon",
         "unlockable": true,
         "unlock_cost": 80,
         "in_game_cost": 15
@@ -310,6 +332,17 @@
         "unlock_cost": 80,
         "in_game_cost": 15
     },
+    "4006": {
+        "id": 4006,
+        "name": "4006.name",
+        "description": "4006.description",
+        "effect": -1,
+        "type": "DOUBLE_ATTACK",
+        "icon": "4006.icon",
+        "unlockable": true,
+        "unlock_cost": 80,
+        "in_game_cost": 15
+    },
 
     "5000": {
         "id": 5000,
@@ -373,6 +406,17 @@
         "effect": -1,
         "type": "EVADE",
         "icon": "5005.icon",
+        "unlockable": true,
+        "unlock_cost": 80,
+        "in_game_cost": 15
+    },
+    "5006": {
+        "id": 5006,
+        "name": "5006.name",
+        "description": "5006.description",
+        "effect": -1,
+        "type": "DOUBLE_ATTACK",
+        "icon": "5006.icon",
         "unlockable": true,
         "unlock_cost": 80,
         "in_game_cost": 15
@@ -444,6 +488,17 @@
         "unlock_cost": 80,
         "in_game_cost": 15
     },
+    "6006": {
+        "id": 6006,
+        "name": "6006.name",
+        "description": "6006.description",
+        "effect": -1,
+        "type": "DOUBLE_ATTACK",
+        "icon": "6006.icon",
+        "unlockable": true,
+        "unlock_cost": 80,
+        "in_game_cost": 15
+    },
 
     "7000": {
         "id": 7000,
@@ -507,6 +562,17 @@
         "effect": -1,
         "type": "EVADE",
         "icon": "7005.icon",
+        "unlockable": true,
+        "unlock_cost": 80,
+        "in_game_cost": 15
+    },
+    "7006": {
+        "id": 7006,
+        "name": "7006.name",
+        "description": "7006.description",
+        "effect": -1,
+        "type": "DOUBLE_ATTACK",
+        "icon": "7006.icon",
         "unlockable": true,
         "unlock_cost": 80,
         "in_game_cost": 15

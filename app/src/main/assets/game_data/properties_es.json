@@ -85,6 +85,9 @@
         "2005.name": "EVADIR",
         "2005.description": "Evade el siguiente ataque del enemigo.",
         "2005.icon": "img/cards/evade.png",
+        "2006.name": "CRÍTICO",
+        "2006.description": "Ataca dos veces en tu próximo turno.",
+        "2006.icon": "img/cards/doubleAttack.png",
 
         "3000.name": "ATAQUE",
         "3000.description": "Inflige 7 de daño.",
@@ -104,6 +107,9 @@
         "3005.name": "EVADIR",
         "3005.description": "Evade el siguiente ataque del enemigo.",
         "3005.icon": "img/cards/evade.png",
+        "3006.name": "CRÍTICO",
+        "3006.description": "Ataca dos veces en tu próximo turno.",
+        "3006.icon": "img/cards/doubleAttack.png",
 
         "4000.name": "ATAQUE",
         "4000.description": "Inflige 9 de daño.",
@@ -123,6 +129,9 @@
         "4005.name": "EVADIR",
         "4005.description": "Evade el siguiente ataque del enemigo.",
         "4005.icon": "img/cards/evade.png",
+        "4006.name": "CRÍTICO",
+        "4006.description": "Ataca dos veces en tu próximo turno.",
+        "4006.icon": "img/cards/doubleAttack.png",
 
         "5000.name": "ATAQUE",
         "5000.description": "Inflige 10 de daño.",
@@ -142,6 +151,9 @@
         "5005.name": "EVADIR",
         "5005.description": "Evade el siguiente ataque del enemigo.",
         "5005.icon": "img/cards/evade.png",
+        "5006.name": "CRÍTICO",
+        "5006.description": "Ataca dos veces en tu próximo turno.",
+        "5006.icon": "img/cards/doubleAttack.png",
 
         "6000.name": "ATAQUE",
         "6000.description": "Inflige 12 de daño.",
@@ -161,6 +173,9 @@
         "6005.name": "EVADIR",
         "6005.description": "Evade el siguiente ataque del enemigo.",
         "6005.icon": "img/cards/evade.png",
+        "6006.name": "CRÍTICO",
+        "6006.description": "Ataca dos veces en tu próximo turno.",
+        "6006.icon": "img/cards/doubleAttack.png",
 
         "7000.name": "ATAQUE",
         "7000.description": "Inflige 15 de daño.",
@@ -179,7 +194,10 @@
         "7004.icon": "img/cards/absorb.png",
         "7005.name": "EVADIR",
         "7005.description": "Evade el siguiente ataque del enemigo.",
-        "7005.icon": "img/cards/evade.png"
+        "7005.icon": "img/cards/evade.png",
+        "7006.name": "CRÍTICO",
+        "7006.description": "Ataca dos veces en tu próximo turno.",
+        "7006.icon": "img/cards/doubleAttack.png"
     },
     "enemies": {
         "2100.name": "Susurro de Felicidad",

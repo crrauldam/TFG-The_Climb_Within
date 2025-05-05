@@ -9,5 +9,6 @@ public enum CARDTYPES {
     SACRIFICE,
     ABSORB,
     FINAL,
+    DOUBLE_ATTACK,
     EVADE
 }
