@@ -63,9 +63,9 @@ public class BattleScreen extends AppCompatActivity {
     ArrayList<Enemy> ALL_ENEMIES;
     ArrayList<Tower> ALL_TOWERS;
 
-    final int STAGES_PER_FLOOR = 5; // total stages for a floor
+    final int STAGES_PER_FLOOR = 6; // total stages for a floor (to know when to boss = last stage of floor)
     final int TOTAL_FLOORS = 3; // 3 floors
-    final int TOTAL_STAGES = STAGES_PER_FLOOR * TOTAL_FLOORS; // total stages the player will face in the tower
+    final int TOTAL_STAGES = STAGES_PER_FLOOR * TOTAL_FLOORS; // total stages the player will face in the tower (to know when to end run)
     final int STAGES_TO_REST = 2; // how many stages the player will have to fight to go to shop and rest
 
     // DONE: DEFINE GAME ECONOMY
@@ -250,9 +250,6 @@ public class BattleScreen extends AppCompatActivity {
         stage = 1;
 //        stage = 2; // this is for testing calm tower to speed up the game
 
-        // show pop up menu with enemy info and options
-        int[] finalFloor = {floor};
-        int[] finalStage = {stage};
 
         menuButton.setOnClickListener(v -> {
             showMenu(v.getContext());
@@ -350,7 +347,7 @@ public class BattleScreen extends AppCompatActivity {
         // by default set cards clickable
         blockCardClicking.setVisibility(View.GONE);
 
-        Enemy enemy = generateEnemy(tower, floor);
+        Enemy enemy = generateEnemy();
 
         try {
             drawScreenElements(player, enemy);
@@ -630,17 +627,18 @@ public class BattleScreen extends AppCompatActivity {
     /**
      * Generates a random enemy for the player to face based on the tower and floor its in.
      *
-     * @param tower
-     * @param floor
      * @return The Enemy object representing the chosen enemy.
      */
-    private Enemy generateEnemy(Tower tower, int floor) {
+    private Enemy generateEnemy() {
         final String TAG = "BattleScreen-generateEnemy";
 
         Enemy enemy = null;
 
         Log.d(TAG, "Generating random enemy for tower: " + tower.getName() + " floor: " + floor);
-        int[] floorEnemies = tower.getEnemies().getFloor(floor);
+
+        int[] floorEnemies;
+
+        floorEnemies = tower.getEnemies().getFloor(floor);
 
         //
         int enemyID = floorEnemies[(int) (Math.random() * floorEnemies.length)];
@@ -1202,6 +1200,8 @@ public class BattleScreen extends AppCompatActivity {
                     });
 
                 }, 1000);
+
+            } else if (stage % (STAGES_PER_FLOOR-1) == 0) { // floor boss
 
             } else { // next stage
                 Log.d(TAG, "Play next stage.");
