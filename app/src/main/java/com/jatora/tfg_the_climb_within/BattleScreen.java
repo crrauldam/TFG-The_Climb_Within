@@ -118,6 +118,8 @@ public class BattleScreen extends AppCompatActivity {
     // flag to know battle state
     boolean hasEndDialogBeenShown;
 
+    boolean isCritical = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -511,7 +513,7 @@ public class BattleScreen extends AppCompatActivity {
                                                 public void onFailure(String errorMessage) {
 
                                                 }
-                                            });
+                                            }, false);
                                             checkWinner(player, enemy); // check if in enemy's turn someone won
 
                                     }, 1100);
@@ -718,9 +720,12 @@ public class BattleScreen extends AppCompatActivity {
 
         switch (c.getType()) {
             case ATTACK:
-                attack(enemy, c.getEffect(), enemyShield, enemyShieldView, enemyHP, enemyHPBar, callback);
+                attack(enemy, c.getEffect(), enemyShield, enemyShieldView, enemyHP, enemyHPBar, callback, isCritical);
                 break;
             case HEAL:
+                if(isCritical) {
+                    isCritical = false;
+                }
                 if (player.getHp() == player.getMaxhp()) {
                     showBattleNarration(getString(R.string.hp_is_full));
                     playResult = -1;
@@ -729,10 +734,20 @@ public class BattleScreen extends AppCompatActivity {
                 }
                 break;
             case SHIELD:
+                if(isCritical) {
+                    isCritical = false;
+                }
                 increaseShield(playerShield, c.getEffect(), playerShieldView);
                 break;
-            case ABSORB: // damage and heal same amount
+            case ABSORB:
+                if(isCritical) {
+                    isCritical = false;
+                }
+                // damage and heal same amount
                 absorb(c, player, enemy, enemyShield, enemyShieldView, playerHP, playerHPBar, enemyHP, enemyHPBar, callback);
+                break;
+            case CRITICAL:
+                isCritical = true;
                 break;
         }
 
@@ -763,7 +778,7 @@ public class BattleScreen extends AppCompatActivity {
      * @param dmg
      * @param targetShield
      */
-    private void attack(Entity target, int dmg, int[] targetShield, TextView targetShieldView, TextView targetHP, HealthBarView targetHPBar, Callback_TCW callback) {
+    private void attack(Entity target, int dmg, int[] targetShield, TextView targetShieldView, TextView targetHP, HealthBarView targetHPBar, Callback_TCW callback, boolean critical) {
         final String TAG = "BattleScreen-attack";
         Log.d(TAG, "Attacking to target: " + target.getName());
 
@@ -805,6 +820,11 @@ public class BattleScreen extends AppCompatActivity {
         updateHP(target, targetHP, targetHPBar, callback);
 
         Log.d(TAG, "Attack to " + target.getName() + "\nNew HP: " + target.getHp() + "/" + target.getMaxhp() + " | Shield: " + targetShield[0]);
+
+        if(critical && target.getHp() > 0) {
+            isCritical = false;
+            attack(target, dmg, targetShield, targetShieldView, targetHP, targetHPBar, callback, false);
+        }
     }
 
     /**
@@ -859,7 +879,7 @@ public class BattleScreen extends AppCompatActivity {
         heal(player, c.getEffect(), playerHP, playerHPBar, callback);
 
         Log.d(TAG, "Attacking to enemy: " + enemy.getName());
-        attack(enemy, c.getEffect(), enemyShield, enemyShieldView, enemyHP, enemyHPBar, callback);
+        attack(enemy, c.getEffect(), enemyShield, enemyShieldView, enemyHP, enemyHPBar, callback, isCritical);
     }
 
     /**
