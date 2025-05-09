@@ -149,7 +149,7 @@ public class BattleScreen extends AppCompatActivity {
                         // update player object after rest
                         player = PlayerManager.getInstance(this);
                         // if rest, then means next floor
-                        floor++;
+//                        floor++;
                         stage++;
 //                        // TEST: ERASE THE FOLLOWING LINE, ONLY FOR TEST PURPOSES!!
 //                        // add "de estrangis" extra card of that tower for letting it complete the tower
@@ -291,7 +291,7 @@ public class BattleScreen extends AppCompatActivity {
 
         // set stage
         TextView stageView = menu.findViewById(R.id.stage);
-        stageView.setText(getString(R.string.stage) + (stage - (STAGES_TO_REST * (floor - 1))));
+        stageView.setText(getString(R.string.stage) + (stage - (STAGES_PER_FLOOR * (floor-1))));
 
         // set total amount of tower coins
         TextView totalTowerCoins = menu.findViewById(R.id.amount);
@@ -641,7 +641,13 @@ public class BattleScreen extends AppCompatActivity {
 
         int[] floorEnemies;
 
-        floorEnemies = tower.getEnemies().getFloor(floor);
+        // if this stage is the floor boss then pick the corresponding one
+        if (stage % STAGES_PER_FLOOR == 0) {
+            // generate a 1-sized array with the ID of the boss for that floor
+            floorEnemies = new int[]{tower.getBosses().getFloor(floor)};
+        } else { // if not boss then generate any enemy from the floor pool
+            floorEnemies = tower.getEnemies().getFloor(floor);
+        }
 
         //
         int enemyID = floorEnemies[(int) (Math.random() * floorEnemies.length)];
@@ -790,6 +796,7 @@ public class BattleScreen extends AppCompatActivity {
         Log.d(TAG, "Attacking to target: " + target.getName());
         if(isEvade) {
             // TODO: PLAY ENEMY EVADE ANIMATION
+            playEnemyAttackAnimation();
             isEvade = false;
             Log.d(TAG, "Attack evaded");
             callback.onSuccess();
@@ -799,6 +806,11 @@ public class BattleScreen extends AppCompatActivity {
                 playEnemyAttackAnimation();
             } else {
                 playEnemyGetDamageAnimation();
+            }
+
+            // critical dmg (x2 dmg)
+            if (critical) {
+                dmg *= 2;
             }
 
             if (targetShield[0] > 0) {
@@ -832,14 +844,14 @@ public class BattleScreen extends AppCompatActivity {
             updateHP(target, targetHP, targetHPBar, callback);
 
             Log.d(TAG, "Attack to " + target.getName() + "\nNew HP: " + target.getHp() + "/" + target.getMaxhp() + " | Shield: " + targetShield[0]);
-            // critical dmg (x2 dmg)
-            if(critical && target.getHp() > 0) {
-                isCritical = false;
-                int finalDmg = dmg;
-                new Handler().postDelayed(() -> {
-                    attack(target, finalDmg, targetShield, targetShieldView, targetHP, targetHPBar, callback, false);
-                }, 1000);
-            }
+//            // critical dmg (x2 dmg)
+//            if(critical && target.getHp() > 0) {
+//                isCritical = false;
+//                int finalDmg = dmg;
+//                new Handler().postDelayed(() -> {
+//                    attack(target, finalDmg, targetShield, targetShieldView, targetHP, targetHPBar, callback, false);
+//                }, 1000);
+//            }
         }
     }
 
@@ -1205,13 +1217,7 @@ public class BattleScreen extends AppCompatActivity {
         dialog.setOnDismissListener(dialog1 -> {
             Log.d(TAG, "End stage dialog dismissed.");
             // what to do when dismissing the STAGE END DIALOG (play next stage / rest (if applicable))
-            if ((stage % STAGES_TO_REST) == 0) { // rest
-                Log.d(TAG, stage + " % " + STAGES_TO_REST + " = " + (stage % STAGES_TO_REST));
-                Log.d(TAG, "REST");
-
-                rest(player, tower);
-
-            } else if (stage >= TOTAL_STAGES) { // end game
+            if (stage >= TOTAL_STAGES) { // end game
                 Log.d(TAG, "Tower ended, player won.");
 
                 new Handler().postDelayed(() -> {
@@ -1237,8 +1243,17 @@ public class BattleScreen extends AppCompatActivity {
 
                 }, 1000);
 
-            } else if (stage % (STAGES_PER_FLOOR-1) == 0) { // floor boss
+            } else if (stage % (STAGES_PER_FLOOR) == 0) { // floor boss
+                Log.d(TAG, "floorboss: ");
+//                TODO: SHOW FLOOR BOSS TRANSITION DIALOG
+                floor++;
+                rest(player, tower);
+                playStage(player, tower, floor, stage);
+            } else if ((stage % STAGES_TO_REST) == 0) { // rest
+                Log.d(TAG, stage + " % " + STAGES_TO_REST + " = " + (stage % STAGES_TO_REST));
+                Log.d(TAG, "REST");
 
+                rest(player, tower);
             } else { // next stage
                 Log.d(TAG, "Play next stage.");
                 stage++;
@@ -1268,6 +1283,7 @@ public class BattleScreen extends AppCompatActivity {
         // this launch wont have custom transition
         activityResultLauncher.launch(intent);
 
+//        stage++;
 //        Utils.changeActivity(intent, this, R.anim.slide_out_left, R.anim.slide_in_right);
     }
 
