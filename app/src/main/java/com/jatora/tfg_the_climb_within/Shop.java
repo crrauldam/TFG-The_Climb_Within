@@ -38,8 +38,10 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Shop extends AppCompatActivity {
-    LinearLayout linearLayout;
 
+    private FullScreenHelper fullScreenHelper;
+
+    LinearLayout linearLayout;
     ImageView coinImg;
     TextView totalEmotionCoins;
 
@@ -63,6 +65,10 @@ public class Shop extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_shop);
+
+        fullScreenHelper = new FullScreenHelper(this);
+        fullScreenHelper.enableFullScreen();
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -420,5 +426,11 @@ public class Shop extends AppCompatActivity {
                 cardImageFrame.setBackground(AppCompatResources.getDrawable(context, R.drawable.card_img_surprise));
                 break;
         }
+    }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        fullScreenHelper.onWindowFocusChanged(hasFocus);
     }
 }

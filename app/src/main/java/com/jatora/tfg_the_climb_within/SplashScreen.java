@@ -9,6 +9,7 @@ import android.util.Log;
 
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.Button;
 import android.widget.ImageView;
 
 import androidx.activity.EdgeToEdge;
@@ -23,6 +24,8 @@ import java.util.ArrayList;
 @SuppressLint("CustomSplashScreen")
 public class SplashScreen extends AppCompatActivity {
 
+    private FullScreenHelper fullScreenHelper;
+
     private FirebaseAuth mAuth;
     private final Handler handler= new Handler();
     private Runnable runnable;
@@ -32,6 +35,9 @@ public class SplashScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_splash_screen);
+
+        fullScreenHelper = new FullScreenHelper(this);
+        fullScreenHelper.enableFullScreen();
 
         final String TAG = "SplashScreen-onCreate";
 
@@ -122,5 +128,11 @@ public class SplashScreen extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         handler.removeCallbacks(runnable);
+    }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        fullScreenHelper.onWindowFocusChanged(hasFocus);
     }
 }

@@ -50,6 +50,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class BattleScreen extends AppCompatActivity {
+
+    private FullScreenHelper fullScreenHelper;
+
     // firebase things
     FirebaseAuth mAuth;
 //
@@ -132,6 +135,10 @@ public class BattleScreen extends AppCompatActivity {
 
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_battle_screen);
+
+        fullScreenHelper = new FullScreenHelper(this);
+        fullScreenHelper.enableFullScreen();
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -1329,6 +1336,12 @@ public class BattleScreen extends AppCompatActivity {
         AnimatorSet attackAnimation = new AnimatorSet();
         attackAnimation.playSequentially(moveDown, moveUp);
         attackAnimation.start();
+    }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        fullScreenHelper.onWindowFocusChanged(hasFocus);
     }
 
 

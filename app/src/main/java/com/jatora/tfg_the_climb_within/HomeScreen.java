@@ -20,6 +20,9 @@ import androidx.core.view.WindowInsetsCompat;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class HomeScreen extends AppCompatActivity {
+
+    private FullScreenHelper fullScreenHelper;
+
     private LanguagePreference languagePreference;
     private String currentLanguage;
 
@@ -34,6 +37,10 @@ public class HomeScreen extends AppCompatActivity {
 
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_home_screen);
+
+        fullScreenHelper = new FullScreenHelper(this);
+        fullScreenHelper.enableFullScreen();
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -129,6 +136,13 @@ public class HomeScreen extends AppCompatActivity {
         TutorialDialogFragment tutorialDialog = new TutorialDialogFragment();
         tutorialDialog.show(getSupportFragmentManager(), "TutorialDialog");
     }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        fullScreenHelper.onWindowFocusChanged(hasFocus);
+    }
+
 //
 //    // for dynamic language change
 //    @Override

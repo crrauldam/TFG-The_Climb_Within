@@ -22,6 +22,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator;
 
 public class TowerSelection extends AppCompatActivity {
+
+    private FullScreenHelper fullScreenHelper;
+
     FirebaseAuth mAuth;
 
     private Player player;
@@ -38,6 +41,10 @@ public class TowerSelection extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_tower_selection);
+
+        fullScreenHelper = new FullScreenHelper(this);
+        fullScreenHelper.enableFullScreen();
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -184,5 +191,11 @@ public class TowerSelection extends AppCompatActivity {
                 playButton.postDelayed(setPlayButtonClickableAgain, 1000);
             }
         });
+    }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        fullScreenHelper.onWindowFocusChanged(hasFocus);
     }
 }
