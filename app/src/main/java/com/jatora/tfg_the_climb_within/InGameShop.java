@@ -34,6 +34,9 @@ import java.util.Arrays;
 import java.util.List;
 
 public class InGameShop extends AppCompatActivity {
+
+    private FullScreenHelper fullScreenHelper;
+
     final String towerCoinsImgPath = "img/coins/tower.png";
     LinearLayout linearLayout;
 
@@ -53,6 +56,10 @@ public class InGameShop extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_in_game_shop);
+
+        fullScreenHelper = new FullScreenHelper(this);
+        fullScreenHelper.enableFullScreen();
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -417,5 +424,11 @@ public class InGameShop extends AppCompatActivity {
                 cardImageFrame.setBackground(AppCompatResources.getDrawable(context, R.drawable.card_img_surprise));
                 break;
         }
+    }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        fullScreenHelper.onWindowFocusChanged(hasFocus);
     }
 }

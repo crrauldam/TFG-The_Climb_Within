@@ -50,6 +50,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class BattleScreen extends AppCompatActivity {
+
+    private FullScreenHelper fullScreenHelper;
+
     // firebase things
     FirebaseAuth mAuth;
 //
@@ -63,8 +66,9 @@ public class BattleScreen extends AppCompatActivity {
     ArrayList<Enemy> ALL_ENEMIES;
     ArrayList<Tower> ALL_TOWERS;
 
-    final int TOTAL_STAGES = 5; // total stages the player will face in the tower
+    final int STAGES_PER_FLOOR = 6; // total stages for a floor (to know when to boss = last stage of floor)
     final int TOTAL_FLOORS = 3; // 3 floors
+    final int TOTAL_STAGES = STAGES_PER_FLOOR * TOTAL_FLOORS; // total stages the player will face in the tower (to know when to end run)
     final int STAGES_TO_REST = 2; // how many stages the player will have to fight to go to shop and rest
 
     // DONE: DEFINE GAME ECONOMY
@@ -117,6 +121,9 @@ public class BattleScreen extends AppCompatActivity {
     // flag to know battle state
     boolean hasEndDialogBeenShown;
 
+    boolean isCritical = false;
+    boolean isEvade = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -128,6 +135,10 @@ public class BattleScreen extends AppCompatActivity {
 
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_battle_screen);
+
+        fullScreenHelper = new FullScreenHelper(this);
+        fullScreenHelper.enableFullScreen();
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -145,7 +156,7 @@ public class BattleScreen extends AppCompatActivity {
                         // update player object after rest
                         player = PlayerManager.getInstance(this);
                         // if rest, then means next floor
-                        floor++;
+//                        floor++;
                         stage++;
 //                        // TEST: ERASE THE FOLLOWING LINE, ONLY FOR TEST PURPOSES!!
 //                        // add "de estrangis" extra card of that tower for letting it complete the tower
@@ -249,9 +260,6 @@ public class BattleScreen extends AppCompatActivity {
         stage = 1;
 //        stage = 2; // this is for testing calm tower to speed up the game
 
-        // show pop up menu with enemy info and options
-        int[] finalFloor = {floor};
-        int[] finalStage = {stage};
 
         menuButton.setOnClickListener(v -> {
             showMenu(v.getContext());
@@ -290,7 +298,7 @@ public class BattleScreen extends AppCompatActivity {
 
         // set stage
         TextView stageView = menu.findViewById(R.id.stage);
-        stageView.setText(getString(R.string.stage) + (stage - (STAGES_TO_REST * (floor - 1))));
+        stageView.setText(getString(R.string.stage) + (stage - (STAGES_PER_FLOOR * (floor-1))));
 
         // set total amount of tower coins
         TextView totalTowerCoins = menu.findViewById(R.id.amount);
@@ -349,7 +357,7 @@ public class BattleScreen extends AppCompatActivity {
         // by default set cards clickable
         blockCardClicking.setVisibility(View.GONE);
 
-        Enemy enemy = generateEnemy(tower, floor);
+        Enemy enemy = generateEnemy();
 
         try {
             drawScreenElements(player, enemy);
@@ -513,7 +521,7 @@ public class BattleScreen extends AppCompatActivity {
                                                 public void onFailure(String errorMessage) {
 
                                                 }
-                                            });
+                                            }, false);
                                             checkWinner(player, enemy); // check if in enemy's turn someone won
 
                                     }, 1100);
@@ -629,17 +637,24 @@ public class BattleScreen extends AppCompatActivity {
     /**
      * Generates a random enemy for the player to face based on the tower and floor its in.
      *
-     * @param tower
-     * @param floor
      * @return The Enemy object representing the chosen enemy.
      */
-    private Enemy generateEnemy(Tower tower, int floor) {
+    private Enemy generateEnemy() {
         final String TAG = "BattleScreen-generateEnemy";
 
         Enemy enemy = null;
 
         Log.d(TAG, "Generating random enemy for tower: " + tower.getName() + " floor: " + floor);
-        int[] floorEnemies = tower.getEnemies().getFloor(floor);
+
+        int[] floorEnemies;
+
+        // if this stage is the floor boss then pick the corresponding one
+        if (stage % STAGES_PER_FLOOR == 0) {
+            // generate a 1-sized array with the ID of the boss for that floor
+            floorEnemies = new int[]{tower.getBosses().getFloor(floor)};
+        } else { // if not boss then generate any enemy from the floor pool
+            floorEnemies = tower.getEnemies().getFloor(floor);
+        }
 
         //
         int enemyID = floorEnemies[(int) (Math.random() * floorEnemies.length)];
@@ -719,9 +734,12 @@ public class BattleScreen extends AppCompatActivity {
 
         switch (c.getType()) {
             case ATTACK:
-                attack(enemy, c.getEffect(), enemyShield, enemyShieldView, enemyHP, enemyHPBar, callback);
+                attack(enemy, c.getEffect(), enemyShield, enemyShieldView, enemyHP, enemyHPBar, callback, isCritical);
                 break;
             case HEAL:
+                if(isCritical) {
+                    isCritical = false;
+                }
                 if (player.getHp() == player.getMaxhp()) {
                     showBattleNarration(getString(R.string.hp_is_full));
                     playResult = -1;
@@ -730,10 +748,26 @@ public class BattleScreen extends AppCompatActivity {
                 }
                 break;
             case SHIELD:
+                if(isCritical) {
+                    isCritical = false;
+                }
                 increaseShield(playerShield, c.getEffect(), playerShieldView);
                 break;
-            case ABSORB: // damage and heal same amount
+            case ABSORB:
+                if(isCritical) {
+                    isCritical = false;
+                }
+                // damage and heal same amount
                 absorb(c, player, enemy, enemyShield, enemyShieldView, playerHP, playerHPBar, enemyHP, enemyHPBar, callback);
+                break;
+            case CRITICAL:
+                isCritical = true;
+                break;
+            case EVADE:
+                if(isCritical) {
+                    isCritical = false;
+                }
+                isEvade = true;
                 break;
         }
 
@@ -764,48 +798,68 @@ public class BattleScreen extends AppCompatActivity {
      * @param dmg
      * @param targetShield
      */
-    private void attack(Entity target, int dmg, int[] targetShield, TextView targetShieldView, TextView targetHP, HealthBarView targetHPBar, Callback_TCW callback) {
+    private void attack(Entity target, int dmg, int[] targetShield, TextView targetShieldView, TextView targetHP, HealthBarView targetHPBar, Callback_TCW callback, boolean critical) {
         final String TAG = "BattleScreen-attack";
         Log.d(TAG, "Attacking to target: " + target.getName());
-
-        // DONE: PLAY ENEMY ATTACK ANIMATION
-        if (target instanceof Player) {
+        if(isEvade) {
+            // TODO: PLAY ENEMY EVADE ANIMATION
             playEnemyAttackAnimation();
-        } else {
-            playEnemyGetDamageAnimation();
-        }
-
-        if (targetShield[0] > 0) {
-            // control overflowing damage that the shield can't cover
-            dmg -= targetShield[0];
-
-            // if even after taking into account the shield amount there is damage to be done
-            if (dmg > 0) {
-                targetShield[0] = 0; // means shield has no more amount
-//                playSFX("break_shield");
-                target.setHp(target.getHp() - dmg); // and the target gets damaged
-//                playSFX("take_damage");
-            } else {
-                // if after the attack there is no more damage to be done, it means
-                // the shield remains some points, so we update them
-                if (dmg == 0) {
-                    targetShield[0] = 0;
-                } else {
-                    targetShield[0] = Math.abs(dmg);
-                }
-//                playSFX("reduce_shield");
-            }
-            updateShield(targetShield, targetShieldView);
+            isEvade = false;
+            Log.d(TAG, "Attack evaded");
             callback.onSuccess();
+        }else {
+            // DONE: PLAY ENEMY ATTACK ANIMATION
+            if (target instanceof Player) {
+                playEnemyAttackAnimation();
+            } else {
+                playEnemyGetDamageAnimation();
+            }
 
-        } else {
-            target.setHp(target.getHp() - dmg);
+            // critical dmg (x2 dmg)
+            if (critical) {
+                dmg *= 2;
+            }
+
+            if (targetShield[0] > 0) {
+                // control overflowing damage that the shield can't cover
+                dmg -= targetShield[0];
+
+                // if even after taking into account the shield amount there is damage to be done
+                if (dmg > 0) {
+                    targetShield[0] = 0; // means shield has no more amount
+//                playSFX("break_shield");
+                    target.setHp(target.getHp() - dmg); // and the target gets damaged
+//                playSFX("take_damage");
+                } else {
+                    // if after the attack there is no more damage to be done, it means
+                    // the shield remains some points, so we update them
+                    if (dmg == 0) {
+                        targetShield[0] = 0;
+                    } else {
+                        targetShield[0] = Math.abs(dmg);
+                    }
+//                playSFX("reduce_shield");
+                }
+                updateShield(targetShield, targetShieldView);
+                callback.onSuccess();
+
+            } else {
+                target.setHp(target.getHp() - dmg);
 //            playSFX("take_damage");
+            }
+
+            updateHP(target, targetHP, targetHPBar, callback);
+
+            Log.d(TAG, "Attack to " + target.getName() + "\nNew HP: " + target.getHp() + "/" + target.getMaxhp() + " | Shield: " + targetShield[0]);
+//            // critical dmg (x2 dmg)
+//            if(critical && target.getHp() > 0) {
+//                isCritical = false;
+//                int finalDmg = dmg;
+//                new Handler().postDelayed(() -> {
+//                    attack(target, finalDmg, targetShield, targetShieldView, targetHP, targetHPBar, callback, false);
+//                }, 1000);
+//            }
         }
-
-        updateHP(target, targetHP, targetHPBar, callback);
-
-        Log.d(TAG, "Attack to " + target.getName() + "\nNew HP: " + target.getHp() + "/" + target.getMaxhp() + " | Shield: " + targetShield[0]);
     }
 
     /**
@@ -860,7 +914,7 @@ public class BattleScreen extends AppCompatActivity {
         heal(player, c.getEffect(), playerHP, playerHPBar, callback);
 
         Log.d(TAG, "Attacking to enemy: " + enemy.getName());
-        attack(enemy, c.getEffect(), enemyShield, enemyShieldView, enemyHP, enemyHPBar, callback);
+        attack(enemy, c.getEffect(), enemyShield, enemyShieldView, enemyHP, enemyHPBar, callback, isCritical);
     }
 
     /**
@@ -1014,7 +1068,7 @@ public class BattleScreen extends AppCompatActivity {
 //        if (currentLanguage.equalsIgnoreCase("es")) {
 //            towerProgress.setText("Torre: " + tower.getName() + "\nPlanta: " + floor + "\nEtapa: " + (stage - (STAGES_TO_REST * (floor - 1))));
 //        } else {
-            towerProgress.setText("Tower: " + tower.getName() + "\nFloor: " + floor + "\nStage: " + (stage - (STAGES_TO_REST * (floor - 1))));
+            towerProgress.setText("Tower: " + tower.getName() + "\nFloor: " + floor + "\nStage: " + (stage - (STAGES_PER_FLOOR * (floor-1))));
 //        }
 
         // set tower coin image
@@ -1170,13 +1224,7 @@ public class BattleScreen extends AppCompatActivity {
         dialog.setOnDismissListener(dialog1 -> {
             Log.d(TAG, "End stage dialog dismissed.");
             // what to do when dismissing the STAGE END DIALOG (play next stage / rest (if applicable))
-            if ((stage % STAGES_TO_REST) == 0) { // rest
-                Log.d(TAG, stage + " % " + STAGES_TO_REST + " = " + (stage % STAGES_TO_REST));
-                Log.d(TAG, "REST");
-
-                rest(player, tower);
-
-            } else if (stage >= TOTAL_STAGES) { // end game
+            if (stage >= TOTAL_STAGES) { // end game
                 Log.d(TAG, "Tower ended, player won.");
 
                 new Handler().postDelayed(() -> {
@@ -1202,6 +1250,17 @@ public class BattleScreen extends AppCompatActivity {
 
                 }, 1000);
 
+            } else if (stage % (STAGES_PER_FLOOR) == 0) { // floor boss
+                Log.d(TAG, "floorboss: ");
+//                TODO: SHOW FLOOR BOSS TRANSITION DIALOG
+                floor++;
+                rest(player, tower);
+                playStage(player, tower, floor, stage);
+            } else if ((stage % STAGES_TO_REST) == 0) { // rest
+                Log.d(TAG, stage + " % " + STAGES_TO_REST + " = " + (stage % STAGES_TO_REST));
+                Log.d(TAG, "REST");
+
+                rest(player, tower);
             } else { // next stage
                 Log.d(TAG, "Play next stage.");
                 stage++;
@@ -1231,6 +1290,7 @@ public class BattleScreen extends AppCompatActivity {
         // this launch wont have custom transition
         activityResultLauncher.launch(intent);
 
+//        stage++;
 //        Utils.changeActivity(intent, this, R.anim.slide_out_left, R.anim.slide_in_right);
     }
 
@@ -1276,6 +1336,12 @@ public class BattleScreen extends AppCompatActivity {
         AnimatorSet attackAnimation = new AnimatorSet();
         attackAnimation.playSequentially(moveDown, moveUp);
         attackAnimation.start();
+    }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        fullScreenHelper.onWindowFocusChanged(hasFocus);
     }
 
 

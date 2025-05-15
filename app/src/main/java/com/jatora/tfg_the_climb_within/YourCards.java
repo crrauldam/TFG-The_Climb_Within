@@ -27,6 +27,9 @@ import java.util.Arrays;
 import java.util.List;
 
 public class YourCards extends AppCompatActivity {
+
+    private FullScreenHelper fullScreenHelper;
+
     LinearLayout linearLayout;
 
     ImageButton basicTab;
@@ -45,6 +48,10 @@ public class YourCards extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_your_cards);
+
+        fullScreenHelper = new FullScreenHelper(this);
+        fullScreenHelper.enableFullScreen();
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -248,5 +255,11 @@ public class YourCards extends AppCompatActivity {
         }
 
         return cardLayout;
+    }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        fullScreenHelper.onWindowFocusChanged(hasFocus);
     }
 }

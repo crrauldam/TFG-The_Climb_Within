@@ -98,8 +98,10 @@
             android:background="@color/black"
 
             android:alpha=".7"
+            android:visibility="gone"
+            android:focusable="true"
+            android:clickable="true"
 
-            android:visibility="invisible"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -154,7 +156,9 @@
             android:background="@color/black"
             android:alpha=".7"
 
-            android:visibility="invisible"
+            android:visibility="gone"
+            android:focusable="true"
+            android:clickable="true"
 
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"

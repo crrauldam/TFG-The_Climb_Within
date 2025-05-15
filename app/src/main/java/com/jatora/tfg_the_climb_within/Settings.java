@@ -54,6 +54,8 @@ import java.io.IOException;
 import java.util.Locale;
 
 public class Settings extends AppCompatActivity {
+
+    private FullScreenHelper fullScreenHelper;
     private LanguagePreference languagePreference;
 
     private ActivityResultLauncher<Intent> googleSignInLauncher;
@@ -93,6 +95,9 @@ public class Settings extends AppCompatActivity {
 
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_settings);
+
+        fullScreenHelper = new FullScreenHelper(this);
+        fullScreenHelper.enableFullScreen();
 
         googleSignInLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
@@ -469,5 +474,11 @@ public class Settings extends AppCompatActivity {
             }
 
         }
+    }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        fullScreenHelper.onWindowFocusChanged(hasFocus);
     }
 }
