@@ -1068,7 +1068,7 @@ public class BattleScreen extends AppCompatActivity {
 //        if (currentLanguage.equalsIgnoreCase("es")) {
 //            towerProgress.setText("Torre: " + tower.getName() + "\nPlanta: " + floor + "\nEtapa: " + (stage - (STAGES_TO_REST * (floor - 1))));
 //        } else {
-            towerProgress.setText("Tower: " + tower.getName() + "\nFloor: " + floor + "\nStage: " + (stage - (STAGES_TO_REST * (floor - 1))));
+            towerProgress.setText("Tower: " + tower.getName() + "\nFloor: " + floor + "\nStage: " + (stage - (STAGES_PER_FLOOR * (floor-1))));
 //        }
 
         // set tower coin image
