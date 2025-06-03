@@ -125,6 +125,6 @@ This project uses the following third party libraries:
 
 ### Authors
 - [@crrauldam](https://www.github.com/crrauldam)
-- [@AstroFeo](https://github.com/APerezH-C)
+- [@APerezH-C](https://github.com/APerezH-C)
 - [@garciatomaschavez](https://www.github.com/garciatomaschavez)
 
