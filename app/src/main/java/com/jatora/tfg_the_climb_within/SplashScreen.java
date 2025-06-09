@@ -82,7 +82,7 @@ public class SplashScreen extends AppCompatActivity {
         Player p = PlayerManager.getInstance(this);
 
         // TODO: COMMENT THIS LINES WHEN NOT IN TESTING PHASES (UNLOCKS ALL CARDS AND GIVES LOT OF COINS)
-        Log.d(TAG, "TEST: UNLOCKING ALL CARDS");
+        /*Log.d(TAG, "TEST: UNLOCKING ALL CARDS");
         Integer[] allCardIDs = {
                 1000, 1001, 1002, 1003, 1004, 1005, 1006, 1007, 1008, 1009,
                 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009,
@@ -92,7 +92,10 @@ public class SplashScreen extends AppCompatActivity {
                 6000, 6001, 6002, 6003, 6004, 6005, 6006, 6007, 6008, 6009,
                 7000, 7001, 7002, 7003, 7004, 7005, 7006, 7007, 7008, 7009
         };
-        p.setUnlocked_cards(allCardIDs);
+        p.setUnlocked_cards(allCardIDs);*/
+
+
+
         Log.d(TAG, "TEST: GIVING THE PLAYER A BUNCH OF COINS");
         p.setTower_coins(99999);
         Player.EmotionCoins allCoins = new Player.EmotionCoins();
@@ -103,6 +106,8 @@ public class SplashScreen extends AppCompatActivity {
         allCoins.setCoin("sadness", 99999);
         allCoins.setCoin("surprise", 99999);
         p.setEmotion_coins(allCoins);
+
+        PlayerManager.savePlayerData(this, p);
 
         FirebaseUser user = mAuth.getCurrentUser();
         if(user != null) {
