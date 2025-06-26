@@ -81,28 +81,31 @@ public class SplashScreen extends AppCompatActivity {
 
         Player p = PlayerManager.getInstance(this);
 
-        // TODO: COMMENT THIS LINES WHEN NOT IN TESTING PHASES (UNLOCKS ALL CARDS AND GIVES LOT OF COINS)
-        Log.d(TAG, "TEST: UNLOCKING ALL CARDS");
-        Integer[] allCardIDs = {
-                1000, 1001, 1002, 1003, 1004, 1005, 1006, 1007, 1008, 1009,
-                2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009,
-                3000, 3001, 3002, 3003, 3004, 3005, 3006, 3007, 3008, 3009,
-                4000, 4001, 4002, 4003, 4004, 4005, 4006, 4007, 4008, 4009,
-                5000, 5001, 5002, 5003, 5004, 5005, 5006, 5007, 5008, 5009,
-                6000, 6001, 6002, 6003, 6004, 6005, 6006, 6007, 6008, 6009,
-                7000, 7001, 7002, 7003, 7004, 7005, 7006, 7007, 7008, 7009
-        };
-        p.setUnlocked_cards(allCardIDs);
-        Log.d(TAG, "TEST: GIVING THE PLAYER A BUNCH OF COINS");
-        p.setTower_coins(99999);
-        Player.EmotionCoins allCoins = new Player.EmotionCoins();
-        allCoins.setCoin("anger", 99999);
-        allCoins.setCoin("disgust", 99999);
-        allCoins.setCoin("fear", 99999);
-        allCoins.setCoin("happiness", 99999);
-        allCoins.setCoin("sadness", 99999);
-        allCoins.setCoin("surprise", 99999);
-        p.setEmotion_coins(allCoins);
+        // TODO: COMMENT THIS LINES WHEN NOT IN TESTING PHASES (UNLOCKS ALL CARDS AND GIVES LOTS OF COINS)
+//        Log.d(TAG, "TEST: UNLOCKING ALL CARDS");
+//        Integer[] allCardIDs = {
+//                1000, 1001, 1002, 1003, 1004, 1005, 1006, 1007, 1008, 1009,
+//                2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009,
+//                3000, 3001, 3002, 3003, 3004, 3005, 3006, 3007, 3008, 3009,
+//                4000, 4001, 4002, 4003, 4004, 4005, 4006, 4007, 4008, 4009,
+//                5000, 5001, 5002, 5003, 5004, 5005, 5006, 5007, 5008, 5009,
+//                6000, 6001, 6002, 6003, 6004, 6005, 6006, 6007, 6008, 6009,
+//                7000, 7001, 7002, 7003, 7004, 7005, 7006, 7007, 7008, 7009
+//        };
+//        p.setUnlocked_cards(allCardIDs);
+//        Log.d(TAG, "TEST: GIVING THE PLAYER A BUNCH OF COINS");
+//        p.setTower_coins(99999);
+//        Player.EmotionCoins allCoins = new Player.EmotionCoins();
+//        allCoins.setCoin("anger", 99999);
+//        allCoins.setCoin("disgust", 99999);
+//        allCoins.setCoin("fear", 99999);
+//        allCoins.setCoin("happiness", 99999);
+//        allCoins.setCoin("sadness", 99999);
+//        allCoins.setCoin("surprise", 99999);
+//        p.setEmotion_coins(allCoins);
+        // -------------- END OF CHEATING, MAX-COMPLETING CODE
+
+        PlayerManager.savePlayerData(this, p);
 
         FirebaseUser user = mAuth.getCurrentUser();
         if(user != null) {
